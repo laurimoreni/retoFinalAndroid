@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/newTask"
+        android:icon="@mipmap/baseline_add_circle_outline_white_48"
+        android:title="@string/btn_new_task"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/userProfile"
+        android:icon="@mipmap/baseline_perm_identity_white_48"
+        android:title="@string/btn_profile"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/config"
+        android:title="@string/option_config"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/about"
+        android:title="@string/option_about"
+        app:showAsAction="never" />
+</menu>
