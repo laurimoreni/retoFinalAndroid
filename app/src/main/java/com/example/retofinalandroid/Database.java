@@ -1,9 +1,7 @@
 package com.example.retofinalandroid;
 
 import android.content.Context;
-import android.os.AsyncAlojamiento;
-import android.os.Bundle;
-import android.widget.EditText;
+import android.os.AsyncTask;
 import android.widget.TextView;
 
 import java.sql.Connection;
@@ -11,7 +9,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class Database extends AsyncAlojamiento {
+public class Database extends AsyncTask {
 
     private Context mContext;
     private TextView tv;

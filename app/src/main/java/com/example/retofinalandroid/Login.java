@@ -35,6 +35,9 @@ public class Login extends AppCompatActivity {
         String email = etEmail.getText().toString();
         String password = etPassword.getText().toString();
 
+        Intent i = new Intent(this, AlojamientoList.class);
+        startActivity(i);
+
 //        // if entered data is valid, get the user with with especified email from database
 //        if (!etEmail.equals("") & !etPassword.equals("")) {
 //

@@ -17,6 +17,12 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class AlojamientoList extends AppCompatActivity {
@@ -87,7 +93,9 @@ public class AlojamientoList extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        alojamientoList = new ArrayList<Alojamiento>();
+        //alojamientoList = new ArrayList<Alojamiento>();
+
+        alojamientoList = cargarAlojamientos();
 
         // FALTA CARGAR TODOS LOS ALOJAMIENTOS EN ARRAYLIST !!
         // get all alojamientos from database and add to an ArrayList of Alojamiento object
@@ -129,7 +137,10 @@ public class AlojamientoList extends AppCompatActivity {
     }
 
     public ArrayList<Alojamiento> viewAllAlojamientos() {
-        ArrayList<Alojamiento> alojamientoList = new ArrayList<Alojamiento>();
+        //ArrayList<Alojamiento> alojamientoList = new ArrayList<Alojamiento>();
+
+        alojamientoList = cargarAlojamientos();
+
         // FALTA CARGAR TODOS LOS ALOJAMIENTOS EN ARRAYLIST !!
         // get all alojamientos from database and add to an ArrayList of Alojamiento object
        /* AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this, "todolistBD", null, 1);
@@ -212,13 +223,13 @@ public class AlojamientoList extends AppCompatActivity {
             // get fields
             TextView name = (TextView) item.findViewById(R.id.tvName);
             TextView desc = (TextView) item.findViewById(R.id.tvDesc);
-            TextView date = (TextView) item.findViewById(R.id.tvEmail);
-            TextView hour = (TextView) item.findViewById(R.id.tvHour);
+            TextView loc = (TextView) item.findViewById(R.id.tvLoc);
+            TextView type = (TextView) item.findViewById(R.id.tvType);
 
             SharedPreferences prefe = getSharedPreferences("datos", Context.MODE_PRIVATE);
             String showDesc = prefe.getString("show_desc","");
-            String showDate = prefe.getString("show_date","");
-            String showHour = prefe.getString("show_hour","");
+            String showLoc = prefe.getString("show_loc","");
+            String showType = prefe.getString("show_type","");
 
             // show name
             name.setText(alojamientoList.get(position).getDocumentname());
@@ -231,20 +242,20 @@ public class AlojamientoList extends AppCompatActivity {
                 desc.setText(alojamientoList.get(position).getTurismdescription());
             }
 
-            // show date
-            if (showDate.equals("false")) {
-                date.setVisibility(View.GONE);
+            // show loc
+            if (showLoc.equals("false")) {
+                loc.setVisibility(View.GONE);
             } else {
-                date.setVisibility(View.VISIBLE);
-                date.setText(alojamientoList.get(position).getDate());
+                loc.setVisibility(View.VISIBLE);
+                loc.setText(alojamientoList.get(position).getProvincia().getNombre() + ", " + alojamientoList.get(position).getMunicipality());
             }
 
-            // show hour
-            if (showHour.equals("false")) {
-                hour.setVisibility(View.GONE);
+            // show type
+            if (showType.equals("false")) {
+                type.setVisibility(View.GONE);
             } else {
-                hour.setVisibility(View.VISIBLE);
-                hour.setText(alojamientoList.get(position).getHour());
+                type.setVisibility(View.VISIBLE);
+                type.setText(alojamientoList.get(position).getLodgingtype());
             }
 
             return (item);
@@ -290,5 +301,52 @@ public class AlojamientoList extends AppCompatActivity {
         Intent i = new Intent(this, AlojamientoDetails.class);
         i.putExtra("alojamiento", alojamiento);
         startActivity(i);
+    }
+
+    public ArrayList<Alojamiento> cargarAlojamientos() {
+        ArrayList<Alojamiento> alojamientos = new ArrayList<Alojamiento>();
+        try {
+            JSONArray jarray = new JSONArray(loadJSONFromAsset("alojamientos.json"));
+            for (int i = 0, size = jarray.length(); i < size; i++) {
+                Alojamiento alojamiento = new Alojamiento();
+                JSONObject objectInArray = jarray.getJSONObject(i);
+                alojamiento.setSignatura(objectInArray.getInt("signatura"));
+                alojamiento.setDocumentname(objectInArray.getString("documentname"));
+                alojamiento.setTurismdescription(objectInArray.getString("turismdescription"));
+                alojamiento.setLodgingtype(objectInArray.getString("lodgingtype"));
+                alojamiento.setAddress(objectInArray.getString("address"));
+                alojamiento.setPhone(objectInArray.getString("phone"));
+                alojamiento.setTourismemail(objectInArray.getString("tourismemail"));
+                alojamiento.setWeb(objectInArray.getString("web"));
+                alojamiento.setMarks(objectInArray.getString("marks"));
+                alojamiento.setMunicipality(objectInArray.getString("municipality"));
+                alojamiento.setLatwgs84(objectInArray.getInt("latwgs84"));
+                alojamiento.setLonwgs84(objectInArray.getInt("lonwgs84"));
+                alojamiento.setPostalcode(objectInArray.getString("postalcode"));
+                alojamiento.setCapacity(objectInArray.getInt("capacity"));
+                alojamiento.setRestaurant(objectInArray.getInt("restaurant"));
+                alojamiento.setStore(objectInArray.getInt("store"));
+                alojamiento.setAutocaravana(objectInArray.getInt("autocaravana"));
+            }
+        } catch (JSONException e) {
+            e.getMessage();
+        }
+        return alojamientos;
+    }
+
+    public String loadJSONFromAsset(String filename) {
+        String json = null;
+        try {
+            InputStream is = getApplicationContext().getAssets().open(filename);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
     }
 }

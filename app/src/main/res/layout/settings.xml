@@ -53,7 +53,7 @@
         app:layout_constraintTop_toBottomOf="@+id/view" />
 
     <TextView
-        android:id="@+id/tvEmail"
+        android:id="@+id/tvLoc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -74,7 +74,7 @@
         app:layout_constraintTop_toBottomOf="@+id/swDesc" />
 
     <TextView
-        android:id="@+id/tvHour"
+        android:id="@+id/tvType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -82,7 +82,7 @@
         android:text="@string/settings_hour"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/tvLoc" />
 
     <Switch
         android:id="@+id/swHour"

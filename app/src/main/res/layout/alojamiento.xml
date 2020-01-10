@@ -6,6 +6,17 @@
     android:layout_height="wrap_content"
     android:paddingBottom="24dp">
 
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="97dp"
+        android:layout_height="95dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:contentDescription="@string/text_alojamiento_img"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
     <TextView
         android:id="@+id/tvName"
         android:layout_width="0dp"
@@ -13,12 +24,40 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:text="Name"
+        android:text="@string/text_alojamiento_name"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cbDone"
+        app:layout_constraintStart_toEndOf="@+id/image"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvLoc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:drawablePadding="5dp"
+        android:text="@string/text_alojamiento_loc"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/tvType"
+        app:layout_constraintStart_toEndOf="@+id/image"
+        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+    <TextView
+        android:id="@+id/tvType"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:drawablePadding="5dp"
+        android:text="@string/text_alojamiento_type"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvLoc"
+        app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
     <TextView
         android:id="@+id/tvDesc"
@@ -27,52 +66,11 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
-        android:text="@string/hint_alojamiento_desc"
+        android:text="@string/text_alojamiento_desc"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cbDone"
-        app:layout_constraintTop_toBottomOf="@+id/tvName" />
-
-    <TextView
-        android:id="@+id/tvEmail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:drawableLeft="@mipmap/baseline_calendar_today_black_24"
-        android:drawablePadding="5dp"
-        android:text="Date"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/tvHour"
-        app:layout_constraintStart_toEndOf="@+id/cbDone"
-        app:layout_constraintTop_toBottomOf="@+id/tvDesc" />
-
-    <TextView
-        android:id="@+id/tvHour"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:drawableLeft="@mipmap/baseline_access_time_black_24"
-        android:drawablePadding="5dp"
-        android:text="Hour"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tvEmail"
-        app:layout_constraintTop_toBottomOf="@+id/tvDesc" />
-
-    <CheckBox
-        android:id="@+id/cbDone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/image"
+        app:layout_constraintTop_toBottomOf="@+id/tvLoc" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

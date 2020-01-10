@@ -54,8 +54,8 @@ public class UserProfile extends AppCompatActivity {
         tvDni = (TextView) findViewById(R.id.tvDni);
         tvName = (TextView) findViewById(R.id.tvName);
         tvLastName = (TextView) findViewById(R.id.tvLastName);
-        tvEmail = (TextView) findViewById(R.id.tvEmail);
-        tvTel = (TextView) findViewById(R.id.tvTel);
+        tvEmail = (TextView) findViewById(R.id.tvLoc);
+        tvTel = (TextView) findViewById(R.id.tvMore);
 
         // show user info
         tvDni.setText(user.getDni());

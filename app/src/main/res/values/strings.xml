@@ -46,6 +46,7 @@
     <string name="dialog_confirm">Confirm</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="btn_save_task">Save</string>
+    <string name="btn_delete">Delete</string>
     <string name="btn_cancel_task">Cancel</string>
     <!-- Alojamiento List -->
     <string name="alojamiento_list_show">Show:</string>
@@ -58,11 +59,13 @@
         <item>Campings</item>
     </string-array>
     <!-- Alojamiento Details -->
-    <string name="btn_delete">Delete</string>
-    <string name="btn_done">Done</string>
-    <string name="text_alojamiento_delete">Alojamiento Deleted</string>
-    <string name="text_alojamiento_no_delete">Alojamiento could not be deleted</string>
-    <string name="text_alojamiento_done">Alojamiento marked as done</string>
+    <string name="text_alojamiento_name">Name</string>
+    <string name="text_alojamiento_loc">Location</string>
+    <string name="text_alojamiento_type">Type</string>
+    <string name="text_alojamiento_desc">Description</string>
+    <string name="text_alojamiento_details">More details</string>
+    <string name="text_alojamiento_img">Alojamiento image</string>
+    <string name="btn_reservar">Reservar</string>
     <string name="text_alojamiento_no_done">Alojamiento could not be marked as done</string>
     <!-- About -->
     <string name="developer">This app has been developed by Laura Moreno Gonzalez.</string>

@@ -30,20 +30,20 @@ public class Settings extends AppCompatActivity {
 
         SharedPreferences prefe = getSharedPreferences("datos", Context.MODE_PRIVATE);
         String showDesc = prefe.getString("show_desc","");
-        String showDate = prefe.getString("show_date","");
-        String showHour = prefe.getString("show_hour","");
+        String showLoc = prefe.getString("show_loc","");
+        String showType = prefe.getString("show_type","");
 
         if (showDesc.equals("false")) {
             swDesc.setChecked(false);
         } else {
             swDesc.setChecked(true);
         }
-        if (showDate.equals("false")) {
+        if (showLoc.equals("false")) {
             swDate.setChecked(false);
         } else {
             swDate.setChecked(true);
         }
-        if (showHour.equals("false")) {
+        if (showType.equals("false")) {
             swHour.setChecked(false);
         } else {
             swHour.setChecked(true);

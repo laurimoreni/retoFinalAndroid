@@ -1,6 +1,8 @@
 package com.example.retofinalandroid;
 
-public class Alojamiento {
+import java.io.Serializable;
+
+public class Alojamiento implements Serializable {
 
     private int signatura;
     private String documentname;

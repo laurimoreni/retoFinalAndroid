@@ -16,8 +16,8 @@ import android.widget.Toast;
 
 public class AlojamientoDetails extends AppCompatActivity {
 
-    private TextView tvName, tvDesc, tvDate, tvHour, tvTime, tvPriority;
-    private Button btnDone;
+    private TextView tvName, tvDesc, tvLoc, tvType, tvMore, tvPriority;
+    private Button btnReservar;
     private Alojamiento alojamiento;
 
     @Override
@@ -35,24 +35,17 @@ public class AlojamientoDetails extends AppCompatActivity {
         // get fields
         tvName = (TextView) findViewById(R.id.tvName);
         tvDesc = (TextView) findViewById(R.id.tvLastName);
-        tvDate = (TextView) findViewById(R.id.tvEmail);
-        tvHour = (TextView) findViewById(R.id.tvHour);
-        tvTime = (TextView) findViewById(R.id.tvTel);
-        tvPriority = (TextView) findViewById(R.id.tvPriority);
-        btnDone = (Button) findViewById(R.id.btnEdit);
+        tvLoc = (TextView) findViewById(R.id.tvLoc);
+        tvType = (TextView) findViewById(R.id.tvType);
+        tvMore = (TextView) findViewById(R.id.tvMore);
+        btnReservar = (Button) findViewById(R.id.btnReservar);
 
         // show alojamiento info in the fields
-        tvName.setText(alojamiento.getName());
-        tvDesc.setText(alojamiento.getDesc());
-        tvDate.setText(alojamiento.getDate());
-        tvHour.setText(alojamiento.getHour());
-        tvTime.setText(alojamiento.getTime());
-        tvPriority.setText(alojamiento.getPriority());
-        if (alojamiento.getDone() == 1) {
-            btnDone.setVisibility(View.INVISIBLE);
-        } else {
-            btnDone.setVisibility(View.VISIBLE);
-        }
+        tvName.setText(alojamiento.getDocumentname());
+        tvDesc.setText(alojamiento.getTurismdescription());
+        tvLoc.setText(alojamiento.getProvincia().getNombre() + ", " + alojamiento.getMunicipality());
+        tvType.setText(alojamiento.getLodgingtype());
+        tvMore.setText("Capacidad:" + alojamiento.getCapacity());
     }
 
     /**
@@ -93,19 +86,9 @@ public class AlojamientoDetails extends AppCompatActivity {
     /**
      * Delete alojamiento from database
      */
-    public void deleteAlojamiento(View v) {
-        int cod = alojamiento.getCod();
-        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this, "todolistBD", null, 1);
-        SQLiteDatabase bd = admin.getWritableDatabase();
-        int cant = bd.delete("alojamientos", "cod=" + cod, null);
-        bd.close();
-        if (cant == 1) {
-            Toast.makeText(this, R.string.text_alojamiento_delete, Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(this, AlojamientoList.class );
-            startActivity(i);
-        } else {
-            Toast.makeText(this, R.string.text_alojamiento_no_delete, Toast.LENGTH_SHORT).show();
-        }
+    public void reservarAlojamiento(View v) {
+        int cod = alojamiento.getSignatura();
+        // FALTA ENVIAR A ACTIVITY DE RESERVA
     }
 
 }

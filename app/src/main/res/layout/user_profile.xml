@@ -48,14 +48,14 @@
         android:layout_marginEnd="24dp"
         android:text="@string/hint_lastname"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/tvEmail"
+        app:layout_constraintBottom_toTopOf="@+id/tvLoc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
     <TextView
-        android:id="@+id/tvEmail"
+        android:id="@+id/tvLoc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -64,14 +64,14 @@
         android:layout_marginBottom="16dp"
         android:text="@string/hint_email"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/tvTel"
+        app:layout_constraintBottom_toTopOf="@+id/tvMore"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvLastName" />
 
     <TextView
-        android:id="@+id/tvTel"
+        android:id="@+id/tvMore"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -82,7 +82,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/tvLoc" />
 
     <Button
         android:id="@+id/button"
@@ -97,12 +97,12 @@
         android:textColor="@color/colorWhite"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnEdit"
+        app:layout_constraintEnd_toStartOf="@+id/btnReservar"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnEdit"
+        android:id="@+id/btnReservar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
