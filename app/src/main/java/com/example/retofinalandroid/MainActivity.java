@@ -13,10 +13,13 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView prueba;
+    private Connection con;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,27 @@ public class MainActivity extends AppCompatActivity {
 
         // cargar los datos de los archivos json en los objetos
         ArrayList<Alojamiento> alojamientos = cargarAlojamientos();
+
+        //Conexion a la base de datos
+        con = DBConnection.getConnection();
+
+        //Codigo para hacer una consulta a la base de datos
+        //Hay que hacer una nueva instanvia para cada consulta (por ser AsyncTask)
+        //Las vistas imgView y txtEstado son del ejemplo
+        //La clase ConsultaBD tambiçén es un ejemplo
+//        ConsultaBD conexionBD = new ConsultaBD(imgView, txtEstado, con);
+//        conexionBD.execute(1);
+    }
+
+    @Override
+    protected void onDestroy() {
+        try {
+            if (con != null) {
+                con.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public ArrayList<Alojamiento> cargarAlojamientos() {
