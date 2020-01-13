@@ -1,6 +1,6 @@
 <resources>
     <!-- Action Bar -->
-    <string name="app_name" translatable="false">ToDoList</string>
+    <string name="app_name" translatable="false">RetoFinal</string>
     <string name="btn_profile">Profile</string>
     <string name="option_config">Settings</string>
     <string name="option_about">About</string>
