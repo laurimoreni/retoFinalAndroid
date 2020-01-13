@@ -18,12 +18,11 @@ public class Database extends AsyncTask {
     public Database(Context context, TextView tv){
         this.mContext = context;
         this.tv = tv;
-        tv.setText(doInBackground(null));
     }
 
     @Override
     public String doInBackground(Object[] objects) {
-        String url = "jdbc:mysql://188.213.5.150:3306/prueba?serverTimezone=UTC";
+        String url = "jdbc:mysql://188.213.5.150:3306/prueba?useSSL=false";
         String user = "ldmj";
         String pass = "ladamijo";
         Connection con = null;
@@ -34,12 +33,18 @@ public class Database extends AsyncTask {
             con = DriverManager.getConnection(url, user, pass);
             ps = con.prepareStatement("select count(*) from alojamientos");
             rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 count = rs.getString(1);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return count;
+    }
+
+    @Override
+    protected void onPostExecute(Object o) {
+        super.onPostExecute(o);
+        tv.setText(o.toString());
     }
 }

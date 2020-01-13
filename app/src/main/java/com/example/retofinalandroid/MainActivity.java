@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         new Database(getApplicationContext(), prueba).execute();
 
         // cargar los datos de los archivos json en los objetos
-        ArrayList<Alojamiento> alojamientos = cargarAlojamientos();
+        //ArrayList<Alojamiento> alojamientos = cargarAlojamientos();
     }
 
     public ArrayList<Alojamiento> cargarAlojamientos() {

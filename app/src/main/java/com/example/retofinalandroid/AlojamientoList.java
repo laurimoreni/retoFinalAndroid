@@ -28,6 +28,7 @@ import java.util.ArrayList;
 public class AlojamientoList extends AppCompatActivity {
 
     private ArrayList<Alojamiento> alojamientoList;
+    private ArrayList<Provincia> provinciasList;
     private ListView list;
     private int selectView = 0;
 
@@ -42,7 +43,7 @@ public class AlojamientoList extends AppCompatActivity {
         alojamientoView.setAdapter(viewsAdapter);
 
         // load alojamientos into ArrayList
-        alojamientoList = new ArrayList<Alojamiento>();
+        provinciasList = cargarProvincias();
         alojamientoList = viewAllAlojamientos();
 
         // add alojamientoList to the ListView
@@ -95,7 +96,7 @@ public class AlojamientoList extends AppCompatActivity {
 
         //alojamientoList = new ArrayList<Alojamiento>();
 
-        alojamientoList = cargarAlojamientos();
+        alojamientoList = viewAllAlojamientos();
 
         // FALTA CARGAR TODOS LOS ALOJAMIENTOS EN ARRAYLIST !!
         // get all alojamientos from database and add to an ArrayList of Alojamiento object
@@ -303,10 +304,27 @@ public class AlojamientoList extends AppCompatActivity {
         startActivity(i);
     }
 
+    public ArrayList<Provincia> cargarProvincias() {
+        ArrayList<Provincia> provincias = new ArrayList<Provincia>();
+        try {
+            JSONArray jarray = new JSONArray(loadJSONFromAsset("provincias.json"));
+            for (int i = 0; i < jarray.length(); i++) {
+                Provincia provincia = new Provincia();
+                JSONObject objectInArray = jarray.getJSONObject(i);
+                provincia.setId(objectInArray.getInt("id"));
+                provincia.setNombre(objectInArray.getString("nombre"));
+                provincias.add(provincia);
+            }
+        } catch (JSONException e) {
+            e.getMessage();
+        }
+        return provincias;
+    }
+
     public ArrayList<Alojamiento> cargarAlojamientos() {
         ArrayList<Alojamiento> alojamientos = new ArrayList<Alojamiento>();
         try {
-            JSONArray jarray = new JSONArray(loadJSONFromAsset("alojamientos.json"));
+            JSONArray jarray = new JSONArray(loadJSONFromAsset("alojamientos1.json"));
             for (int i = 0, size = jarray.length(); i < size; i++) {
                 Alojamiento alojamiento = new Alojamiento();
                 JSONObject objectInArray = jarray.getJSONObject(i);
@@ -318,7 +336,11 @@ public class AlojamientoList extends AppCompatActivity {
                 alojamiento.setPhone(objectInArray.getString("phone"));
                 alojamiento.setTourismemail(objectInArray.getString("tourismemail"));
                 alojamiento.setWeb(objectInArray.getString("web"));
-                alojamiento.setMarks(objectInArray.getString("marks"));
+                //alojamiento.setMarks(objectInArray.getString("marks"));
+                // falta la provincia
+                // falta la imagen
+                int idProvincia = objectInArray.getJSONObject("provincia").getInt("id");
+                alojamiento.setProvincia(buscarProvincia(idProvincia));
                 alojamiento.setMunicipality(objectInArray.getString("municipality"));
                 alojamiento.setLatwgs84(objectInArray.getInt("latwgs84"));
                 alojamiento.setLonwgs84(objectInArray.getInt("lonwgs84"));
@@ -327,9 +349,10 @@ public class AlojamientoList extends AppCompatActivity {
                 alojamiento.setRestaurant(objectInArray.getInt("restaurant"));
                 alojamiento.setStore(objectInArray.getInt("store"));
                 alojamiento.setAutocaravana(objectInArray.getInt("autocaravana"));
+                alojamientos.add(alojamiento);
             }
         } catch (JSONException e) {
-            e.getMessage();
+            System.out.println("error: " + e.getMessage());
         }
         return alojamientos;
     }
@@ -348,5 +371,14 @@ public class AlojamientoList extends AppCompatActivity {
             return null;
         }
         return json;
+    }
+
+    Provincia buscarProvincia(int id) {
+        for(Provincia provincia : provinciasList) {
+            if(provincia.getId() == id) {
+                return provincia;
+            }
+        }
+        return null;
     }
 }
