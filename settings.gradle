@@ -1,2 +1,2 @@
-include ':app', ':mysql-connector-java-5.1.47'
+include ':app'
 rootProject.name='retoFinalAndroid'
