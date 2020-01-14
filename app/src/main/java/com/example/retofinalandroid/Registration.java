@@ -182,7 +182,7 @@ public class Registration extends AppCompatActivity {
         @Override
         protected void onPostExecute(Object result) {
             super.onPostExecute(result);
-            if (result == 0) {
+            if (result.toString() == "1") {
                 Toast.makeText(mContext, R.string.new_user_success, Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(mContext, R.string.new_user_error, Toast.LENGTH_SHORT).show();
