@@ -1,8 +1,9 @@
 package com.example.retofinalandroid;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Reserva {
+public class Reserva implements Serializable {
 
     private int id;
     private Usuario usuario;

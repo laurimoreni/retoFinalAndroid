@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,10 +16,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Login extends AppCompatActivity {
 
     private EditText etEmail, etPassword;
+    private ModeloDatos mod;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,10 @@ public class Login extends AppCompatActivity {
         // get fields
         etEmail = (EditText)findViewById(R.id.etEmail);
         etPassword = (EditText)findViewById(R.id.etPassword);
+
+        Bundle args = getIntent().getBundleExtra("bundle");
+        ModeloDatos mod = (ModeloDatos) args.getSerializable("modelo");
+
     }
 
     /**

@@ -1,8 +1,9 @@
 package com.example.retofinalandroid;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ModeloDatos {
+public class ModeloDatos implements Serializable {
     private ArrayList<Alojamiento> alojamientos;
     private ArrayList<Usuario> usuarios;
     private ArrayList<Provincia> provincias;

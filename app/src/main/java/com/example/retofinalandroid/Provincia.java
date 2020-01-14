@@ -1,6 +1,8 @@
 package com.example.retofinalandroid;
 
-public class Provincia {
+import java.io.Serializable;
+
+public class Provincia implements Serializable {
 
     private int id;
     private String nombre;

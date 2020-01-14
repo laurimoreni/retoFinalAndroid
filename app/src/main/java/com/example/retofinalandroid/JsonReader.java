@@ -27,7 +27,7 @@ public class JsonReader extends AppCompatActivity {
                 alojamiento.setPhone(objectInArray.getString("phone"));
                 alojamiento.setTourismemail(objectInArray.getString("tourismemail"));
                 alojamiento.setWeb(objectInArray.getString("web"));
-                alojamiento.setMarks(objectInArray.getString("marks"));
+                //alojamiento.setMarks(objectInArray.getString("marks"));
                 alojamiento.setMunicipality(objectInArray.getString("municipality"));
                 alojamiento.setLatwgs84(objectInArray.getInt("latwgs84"));
                 alojamiento.setLonwgs84(objectInArray.getInt("lonwgs84"));

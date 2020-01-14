@@ -1,6 +1,8 @@
 package com.example.retofinalandroid;
 
-public class Usuario {
+import java.io.Serializable;
+
+public class Usuario implements Serializable {
 
 
     private String dni;
@@ -9,18 +11,20 @@ public class Usuario {
     private String email;
     private String contrasena;
     private int telefono;
+    private int administrador;
 
     public Usuario() {
 
     }
 
-    public Usuario(String dni, String nombre, String apellidos, String email, String contrasena, int telefono) {
+    public Usuario(String dni, String nombre, String apellidos, String email, String contrasena, int telefono, int administrador) {
         this.dni = dni;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.email = email;
         this.contrasena = contrasena;
         this.telefono = telefono;
+        this.administrador = administrador;
     }
 
     public String getDni() {
@@ -47,6 +51,10 @@ public class Usuario {
         return telefono;
     }
 
+    public int getAdministrador() {
+        return administrador;
+    }
+
     public void setDni(String dni) {
         this.dni = dni;
     }
@@ -69,5 +77,9 @@ public class Usuario {
 
     public void setTelefono(int telefono) {
         this.telefono = telefono;
+    }
+
+    public void setAdministrador(int administrador) {
+        this.administrador = administrador;
     }
 }
