@@ -28,14 +28,16 @@ import java.util.Locale;
 
 public class Registration extends AppCompatActivity {
 
-    private EditText etDni, etFirstName, etLastName, etUsername, etEmail, etPassword, etPasswordRepeat, etTel;
-    private String dni, firstName, lastName, username, email, password, passwordRepeat;
-    private int telephone;
+    private EditText etDni, etFirstName, etLastName, etEmail, etPassword, etPasswordRepeat, etTel;
+    private String dni, firstName, lastName, email, password, passwordRepeat, telephone;
+    private Validations validations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration);
+
+        validations = new Validations();
 
         // add back button to the action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -75,13 +77,7 @@ public class Registration extends AppCompatActivity {
         email = etEmail.getText().toString();
         password = etPassword.getText().toString();
         passwordRepeat = etPasswordRepeat.getText().toString();
-        try {
-            if(etTel.getText().toString() != null) {
-                telephone = Integer.parseInt(etTel.getText().toString());
-            }
-        } catch (NumberFormatException e) {
-            telephone = 0;
-        }
+        telephone = etTel.getText().toString();
 
         // if data entered is valid, make the insert
         if (dataValidation()) {
@@ -94,9 +90,12 @@ public class Registration extends AppCompatActivity {
      * @return
      */
     public boolean dataValidation() {
-        // FALTA VALIDAR QUE EL DNI, EL EMAIL Y EL TELEFONO TENGAN VALORES VALIDOS
         if (dni.equals("")) {
             Toast.makeText(this, R.string.empty_dni, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!validations.validateDNI(dni)) {
+            Toast.makeText(this, R.string.incorrect_dni, Toast.LENGTH_SHORT).show();
             return false;
         }
         if (firstName.equals("")) {
@@ -111,6 +110,10 @@ public class Registration extends AppCompatActivity {
             Toast.makeText(this, R.string.empty_email, Toast.LENGTH_SHORT).show();
             return false;
         }
+        if (!validations.validateEmail(email)) {
+            Toast.makeText(this, R.string.incorrect_email, Toast.LENGTH_SHORT).show();
+            return false;
+        }
         if (password.equals("")) {
             Toast.makeText(this, R.string.empty_password, Toast.LENGTH_SHORT).show();
             return false;
@@ -119,12 +122,16 @@ public class Registration extends AppCompatActivity {
             Toast.makeText(this, R.string.empty_password2, Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (telephone == 0) {
+        if (!password.equals(passwordRepeat)) {
+            Toast.makeText(this, R.string.password_confirm_error, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (telephone.equals("")) {
             Toast.makeText(this, R.string.empty_tel, Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (!password.equals(passwordRepeat)) {
-            Toast.makeText(this, R.string.password_confirm_error, Toast.LENGTH_SHORT).show();
+        if (!validations.validatePhoneNumber(telephone)) {
+            Toast.makeText(this, R.string.incorrect_tel, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -132,11 +139,10 @@ public class Registration extends AppCompatActivity {
 
     public class userInsert extends AsyncTask {
 
-        private String dni, firstName, lastName, email, password;
-        private int telephone;
+        private String dni, firstName, lastName, email, password, telephone;
         private Context mContext;
 
-        public userInsert(String dni, String firstName, String lastName, String email, String password, int telephone, Context context){
+        public userInsert(String dni, String firstName, String lastName, String email, String password, String telephone, Context context){
           this.dni = dni;
           this.firstName = firstName;
           this.lastName = lastName;
@@ -162,7 +168,7 @@ public class Registration extends AppCompatActivity {
                 ps.setString(2, firstName);
                 ps.setString(3, lastName);
                 ps.setString(4, password);
-                ps.setInt(5, telephone);
+                ps.setString(5, telephone);
                 ps.setString(6, email);
                 ps.setInt(7, 0);
                 rs = ps.executeUpdate();
@@ -176,7 +182,11 @@ public class Registration extends AppCompatActivity {
         @Override
         protected void onPostExecute(Object result) {
             super.onPostExecute(result);
-            Toast.makeText(mContext, result.toString(), Toast.LENGTH_SHORT).show();
+            if (result == 0) {
+                Toast.makeText(mContext, R.string.new_user_success, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(mContext, R.string.new_user_error, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }
