@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -208,11 +209,17 @@ public class Registration extends AppCompatActivity {
         protected void onPostExecute(Object result) {
             super.onPostExecute(result);
             if (result.toString().equals("1")) {
+                // add new user to users arraylist of the model
                 ArrayList<Usuario> usuarios = mod.getUsuarios();
                 usuarios.add(new Usuario(dni, firstName, lastName, email, password, telephone, 0));
                 mod.setUsuarios(usuarios);
+                // show success message
                 Toast.makeText(mContext, R.string.new_user_success, Toast.LENGTH_SHORT).show();
+                //
+                Bundle args = new Bundle();
+                args.putSerializable("modelo",(Serializable) mod);
                 Intent i = new Intent(mContext, Login.class );
+                i.putExtra("bundle", args);
                 startActivity(i);
             } else {
                 Toast.makeText(mContext, R.string.new_user_error, Toast.LENGTH_SHORT).show();
