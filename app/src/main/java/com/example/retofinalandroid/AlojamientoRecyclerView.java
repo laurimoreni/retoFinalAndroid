@@ -11,18 +11,21 @@ public class AlojamientoRecyclerView extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private ModeloDatos mod;
+    private Modelo appMod;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alojamiento_recycler_view);
 
-        Bundle args = getIntent().getBundleExtra("bundle");
-        mod = (ModeloDatos) args.getSerializable("modelo");
+//        Bundle args = getIntent().getBundleExtra("bundle");
+//        mod = (ModeloDatos) args.getSerializable("modelo");
+
+        appMod = (Modelo) getApplication();
 
         RecyclerView rvAlojamientos = (RecyclerView) findViewById(R.id.rvAlojamientos);
 
-        Adaptador_RecyclerView adapter = new Adaptador_RecyclerView(mod.getAlojamientos());
+        Adaptador_RecyclerView adapter = new Adaptador_RecyclerView(appMod.getAlojamientos());
         rvAlojamientos.setAdapter(adapter);
         rvAlojamientos.setLayoutManager(new LinearLayoutManager(this));
     }

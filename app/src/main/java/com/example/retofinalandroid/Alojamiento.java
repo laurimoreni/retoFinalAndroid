@@ -1,5 +1,7 @@
 package com.example.retofinalandroid;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 import java.sql.Blob;
 
@@ -81,7 +83,7 @@ public class Alojamiento implements Serializable {
         this.web = web;
     }
 
-    public void setImagen(Blob marks) {
+    public void setImagen(Blob imagen) {
         this.imagen = imagen;
     }
 

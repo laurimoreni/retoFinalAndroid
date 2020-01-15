@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +16,7 @@ import android.widget.ImageView;
 import com.mysql.jdbc.Connection;
 
 import java.io.Serializable;
+import java.sql.Blob;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -22,23 +25,20 @@ import java.util.concurrent.ExecutionException;
 
 
 public class Inicio extends AppCompatActivity {
-    ModeloDatos mod;
-
+    Modelo appMod;
+    ImageView img;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inicio);
 
-        mod = new ModeloDatos();
+        appMod = (Modelo) getApplication();
 
-        new descargarBD(mod).execute();
+        new descargarBD(appMod).execute();
     }
 
     public void pasarALogin() {
-        Intent intent = new Intent(this, Login.class);
-        Bundle args = new Bundle();
-        args.putSerializable("modelo",(Serializable) mod);
-        intent.putExtra("bundle", args);
+        Intent intent = new Intent(this, AlojamientoRecyclerView.class);
         startActivity(intent);
         finish();
     }
@@ -60,11 +60,12 @@ public class Inicio extends AppCompatActivity {
         private String url = "jdbc:mysql://188.213.5.150:3306/prueba";
         private String user = "ldmj";
         private String pass = "ladamijo";
-        private ModeloDatos mod;
+        private Modelo appMod;
         private Connection con;
+        private Bitmap btm;
 
-        public descargarBD(ModeloDatos mod) {
-            this.mod = mod;
+        public descargarBD(Modelo appMod) {
+            this.appMod = appMod;
         }
 
         @Override
@@ -72,10 +73,10 @@ public class Inicio extends AppCompatActivity {
             try {
                 con = (Connection) DriverManager.getConnection(url, user, pass);
 
-                mod.setProvincias(descargarProvincias());
-                mod.setAlojamientos(descargarAlojamientos());
-                mod.setUsuarios(descargarUsuarios());
-                mod.setReservas(descargarReservas());
+                appMod.setProvincias(descargarProvincias());
+                appMod.setAlojamientos(descargarAlojamientos());
+                appMod.setUsuarios(descargarUsuarios());
+                appMod.setReservas(descargarReservas());
 
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -146,7 +147,7 @@ public class Inicio extends AppCompatActivity {
                     aloj.setWeb(rs.getString(8));
                     aloj.setMunicipality(rs.getString(9));
                     int territory = rs.getInt(10);
-                    for (Provincia prov : mod.getProvincias()) {
+                    for (Provincia prov : appMod.getProvincias()) {
                         if (prov.getId() == territory) {
                             aloj.setProvincia(prov);
                         }
@@ -157,7 +158,9 @@ public class Inicio extends AppCompatActivity {
                     aloj.setRestaurant(rs.getInt(14));
                     aloj.setStore(rs.getInt(15));
                     aloj.setAutocaravana(rs.getInt(16));
-                    aloj.setImagen(rs.getBlob(17));
+                    Blob blob = rs.getBlob("imagen");
+                    aloj.setImagen(blob);
+
                     alojamientos.add(aloj);
                 }
             } catch (Exception ex) {
@@ -227,7 +230,7 @@ public class Inicio extends AppCompatActivity {
                     Reserva res = new Reserva();
                     res.setId(rs.getInt(1));
                     String dni = rs.getString(2);
-                    for (Usuario user : mod.getUsuarios()) {
+                    for (Usuario user : appMod.getUsuarios()) {
                         if (user.getDni().equals(dni)) {
                             res.setUsuario(user);
                             break;
@@ -235,7 +238,7 @@ public class Inicio extends AppCompatActivity {
                     }
                     res.setFecha(rs.getDate(3));
                     int signatura = rs.getInt(4);
-                    for (Alojamiento aloj : mod.getAlojamientos()) {
+                    for (Alojamiento aloj : appMod.getAlojamientos()) {
                         if (aloj.getSignatura() == (signatura)) {
                             res.setAlojamiento(aloj);
                             break;

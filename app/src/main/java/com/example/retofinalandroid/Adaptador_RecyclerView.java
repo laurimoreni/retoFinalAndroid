@@ -69,7 +69,7 @@ public class Adaptador_RecyclerView extends RecyclerView.Adapter<Adaptador_Recyc
             btm = BitmapFactory.decodeByteArray(blobAsBytes, 0, blobAsBytes.length);
             holder.image.setImageBitmap(btm);
         } catch (Exception e) {
-            holder.image.setImageResource(R.mipmap.alerta);
+            //holder.image.setImageBitmap(R.mipmap.alerta);
         }
     }
 
