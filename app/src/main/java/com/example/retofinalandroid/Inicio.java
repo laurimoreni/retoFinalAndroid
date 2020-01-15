@@ -1,7 +1,10 @@
 package com.example.retofinalandroid;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,6 +30,7 @@ public class Inicio extends AppCompatActivity {
         setContentView(R.layout.inicio);
 
         mod = new ModeloDatos();
+
         new descargarBD(mod).execute();
     }
 
@@ -36,6 +40,20 @@ public class Inicio extends AppCompatActivity {
         args.putSerializable("modelo",(Serializable) mod);
         intent.putExtra("bundle", args);
         startActivity(intent);
+        finish();
+    }
+
+    public void errorConexion() {
+        new AlertDialog.Builder(this)
+                .setIcon(R.mipmap.alerta)
+                .setTitle(R.string.errorTitle)
+                .setMessage(R.string.connectionError)
+                .setPositiveButton(R.string.buttonOk, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                }).show();
     }
 
     private class descargarBD extends AsyncTask<Void, Void, Boolean> {
@@ -61,15 +79,19 @@ public class Inicio extends AppCompatActivity {
 
             } catch (Exception ex) {
                 ex.printStackTrace();
+                return false;
             }
-
 
             return true;
         }
 
         @Override
-        protected void onPostExecute(Boolean b) {
-            pasarALogin();
+        protected void onPostExecute(Boolean cargaOk) {
+            if (cargaOk) {
+                pasarALogin();
+            } else {
+                errorConexion();
+            }
         }
 
         private ArrayList<Provincia> descargarProvincias() {
