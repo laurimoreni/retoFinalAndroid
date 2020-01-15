@@ -35,7 +35,7 @@ public class Inicio extends AppCompatActivity {
     }
 
     public void pasarALogin() {
-        Intent intent = new Intent(this, Login.class);
+        Intent intent = new Intent(this, Adaptador_RecyclerView.class);
         Bundle args = new Bundle();
         args.putSerializable("modelo",(Serializable) mod);
         intent.putExtra("bundle", args);
