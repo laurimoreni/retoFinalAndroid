@@ -21,9 +21,6 @@ public class AlojamientoRecyclerView extends AppCompatActivity {
         mod = (ModeloDatos) args.getSerializable("modelo");
 
         RecyclerView rvAlojamientos = (RecyclerView) findViewById(R.id.rvAlojamientos);
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        recyclerView.setHasFixedSize(true);
 
         Adaptador_RecyclerView adapter = new Adaptador_RecyclerView(mod.getAlojamientos());
         rvAlojamientos.setAdapter(adapter);
