@@ -4,6 +4,13 @@
     <string name="btn_profile">Profile</string>
     <string name="option_config">Settings</string>
     <string name="option_about">About</string>
+    <!-- Inicio -->
+    <string name="connectionError">Database connection error!</string>
+    <string name="errorTitle">Error</string>
+    <string name="buttonOk">Ok</string>
+    <!-- Confirmación de salida -->
+    <string name="exitTitle">Exit</string>
+    <string name="exitMessage">Are you sure you want to exit App?</string>
     <!-- Register and Login -->
     <string name="hint_dni">DNI</string>
     <string name="hint_firstname">First Name</string>
