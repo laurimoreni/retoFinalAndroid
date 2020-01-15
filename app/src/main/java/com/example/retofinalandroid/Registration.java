@@ -131,7 +131,21 @@ public class Registration extends AppCompatActivity {
             Toast.makeText(this, R.string.incorrect_tel, Toast.LENGTH_SHORT).show();
             return false;
         }
+        if (checkUserExist(dni, email)) {
+            Toast.makeText(this, R.string.user_exists, Toast.LENGTH_SHORT).show();
+            return false;
+        }
         return true;
+    }
+
+    public boolean checkUserExist(String dni, String email){
+        ArrayList<Usuario> usuarios = mod.getUsuarios();
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (usuarios.get(i).getDni().equals(dni) || usuarios.get(i).getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

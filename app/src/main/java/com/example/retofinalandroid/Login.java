@@ -53,7 +53,7 @@ public class Login extends AppCompatActivity {
                 SharedPreferences.Editor editor = preferencias.edit();
                 editor.putString("user_dni", String.valueOf(usuario.getDni()));
                 editor.commit();
-                Intent i = new Intent(this, AlojamientoList.class );
+                Intent i = new Intent(this, AlojamientoRecyclerView.class );
                 startActivity(i);
             } else {
                 Toast.makeText(this, R.string.user_dont_exist, Toast.LENGTH_SHORT).show();

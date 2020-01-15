@@ -12,10 +12,33 @@ import java.util.ArrayList;
 
 public class JsonReader extends AppCompatActivity {
 
-    public ArrayList<Alojamiento> cargarAlojamientos() {
+    protected void ejemplo() {
+        // ejemplo de uso
+        ArrayList<Provincia> provinciasList = cargarProvincias();
+        ArrayList<Alojamiento> alojamientoList = cargarAlojamientos(provinciasList);
+    }
+
+    public ArrayList<Provincia> cargarProvincias() {
+        ArrayList<Provincia> provincias = new ArrayList<Provincia>();
+        try {
+            JSONArray jarray = new JSONArray(loadJSONFromAsset("provincias.json"));
+            for (int i = 0; i < jarray.length(); i++) {
+                Provincia provincia = new Provincia();
+                JSONObject objectInArray = jarray.getJSONObject(i);
+                provincia.setId(objectInArray.getInt("id"));
+                provincia.setNombre(objectInArray.getString("nombre"));
+                provincias.add(provincia);
+            }
+        } catch (JSONException e) {
+            e.getMessage();
+        }
+        return provincias;
+    }
+
+    public ArrayList<Alojamiento> cargarAlojamientos(ArrayList<Provincia> provinciasList) {
         ArrayList<Alojamiento> alojamientos = new ArrayList<Alojamiento>();
         try {
-            JSONArray jarray = new JSONArray(loadJSONFromAsset("alojamientos.json"));
+            JSONArray jarray = new JSONArray(loadJSONFromAsset("alojamientos1.json"));
             for (int i = 0, size = jarray.length(); i < size; i++) {
                 Alojamiento alojamiento = new Alojamiento();
                 JSONObject objectInArray = jarray.getJSONObject(i);
@@ -27,7 +50,8 @@ public class JsonReader extends AppCompatActivity {
                 alojamiento.setPhone(objectInArray.getString("phone"));
                 alojamiento.setTourismemail(objectInArray.getString("tourismemail"));
                 alojamiento.setWeb(objectInArray.getString("web"));
-                //alojamiento.setMarks(objectInArray.getString("marks"));
+                int idProvincia = objectInArray.getJSONObject("provincia").getInt("id");
+                alojamiento.setProvincia(buscarProvincia(idProvincia, provinciasList));
                 alojamiento.setMunicipality(objectInArray.getString("municipality"));
                 alojamiento.setLatwgs84(objectInArray.getInt("latwgs84"));
                 alojamiento.setLonwgs84(objectInArray.getInt("lonwgs84"));
@@ -36,9 +60,10 @@ public class JsonReader extends AppCompatActivity {
                 alojamiento.setRestaurant(objectInArray.getInt("restaurant"));
                 alojamiento.setStore(objectInArray.getInt("store"));
                 alojamiento.setAutocaravana(objectInArray.getInt("autocaravana"));
+                alojamientos.add(alojamiento);
             }
         } catch (JSONException e) {
-            e.getMessage();
+            System.out.println("error: " + e.getMessage());
         }
         return alojamientos;
     }
@@ -57,6 +82,15 @@ public class JsonReader extends AppCompatActivity {
             return null;
         }
         return json;
+    }
+
+    Provincia buscarProvincia(int id, ArrayList<Provincia> provinciasList) {
+        for(Provincia provincia : provinciasList) {
+            if(provincia.getId() == id) {
+                return provincia;
+            }
+        }
+        return null;
     }
 
 }

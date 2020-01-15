@@ -21,7 +21,6 @@
         </activity>
         <activity android:name=".Login"></activity>
         <activity android:name=".Registration" />
-        <activity android:name=".AlojamientoList" />
         <activity android:name=".AlojamientoDetails" />
         <activity android:name=".UserProfile" />
         <activity android:name=".EditUser" />

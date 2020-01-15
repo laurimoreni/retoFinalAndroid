@@ -37,6 +37,7 @@
     <string name="empty_tel">You must enter a telephone</string>
     <string name="incorrect_tel">You must enter a valid phone number</string>
     <string name="password_confirm_error">Passwords do not match</string>
+    <string name="user_exists">User with that dni or email already exists</string>
     <string name="new_user_success">New user created</string>
     <string name="new_user_error">An error has ocurred. The new user could not be created.</string>
     <!-- User Profile -->
