@@ -62,6 +62,7 @@ public class Adaptador_RecyclerView extends RecyclerView.Adapter<Adaptador_Recyc
         Alojamiento aloj = alojamientos.get(position);
         holder.tvName.setText(aloj.getDocumentname());
         holder.tvLoc.setText(aloj.getMunicipality());
+        holder.tvType.setText(aloj.getLodgingtype());
         holder.tvDesc.setText(aloj.getTurismdescription());
         Blob blob = aloj.getImagen();
         try {

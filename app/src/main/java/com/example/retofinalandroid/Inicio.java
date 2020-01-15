@@ -3,38 +3,33 @@ package com.example.retofinalandroid;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.ImageView;
 
 import com.mysql.jdbc.Connection;
 
-import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 
 public class Inicio extends AppCompatActivity {
-    Modelo appMod;
+    Modelo mod;
     ImageView img;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inicio);
 
-        appMod = (Modelo) getApplication();
+        mod = (Modelo) getApplication();
 
-        new descargarBD(appMod).execute();
+        new descargarBD(mod).execute();
     }
 
     public void pasarALogin() {
@@ -60,12 +55,12 @@ public class Inicio extends AppCompatActivity {
         private String url = "jdbc:mysql://188.213.5.150:3306/prueba";
         private String user = "ldmj";
         private String pass = "ladamijo";
-        private Modelo appMod;
+        private Modelo mod;
         private Connection con;
         private Bitmap btm;
 
-        public descargarBD(Modelo appMod) {
-            this.appMod = appMod;
+        public descargarBD(Modelo mod) {
+            this.mod = mod;
         }
 
         @Override
@@ -73,10 +68,10 @@ public class Inicio extends AppCompatActivity {
             try {
                 con = (Connection) DriverManager.getConnection(url, user, pass);
 
-                appMod.setProvincias(descargarProvincias());
-                appMod.setAlojamientos(descargarAlojamientos());
-                appMod.setUsuarios(descargarUsuarios());
-                appMod.setReservas(descargarReservas());
+                mod.setProvincias(descargarProvincias());
+                mod.setAlojamientos(descargarAlojamientos());
+                mod.setUsuarios(descargarUsuarios());
+                mod.setReservas(descargarReservas());
 
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -137,27 +132,27 @@ public class Inicio extends AppCompatActivity {
                 rs = st.executeQuery(query);
                 while (rs.next()) {
                     Alojamiento aloj = new Alojamiento();
-                    aloj.setSignatura(rs.getInt(1));
-                    aloj.setDocumentname(rs.getString(2));
-                    aloj.setTurismdescription(rs.getString(3));
-                    aloj.setLodgingtype(rs.getString(4));
-                    aloj.setAddress(rs.getString(5));
-                    aloj.setPhone(rs.getString(6));
-                    aloj.setTourismemail(rs.getString(7));
-                    aloj.setWeb(rs.getString(8));
-                    aloj.setMunicipality(rs.getString(9));
-                    int territory = rs.getInt(10);
-                    for (Provincia prov : appMod.getProvincias()) {
+                    aloj.setSignatura(rs.getInt("signatura"));
+                    aloj.setDocumentname(rs.getString("documentname"));
+                    aloj.setTurismdescription(rs.getString("turismdescription"));
+                    aloj.setLodgingtype(rs.getString("lodgingtype"));
+                    aloj.setAddress(rs.getString("address"));
+                    aloj.setPhone(rs.getString("phone"));
+                    aloj.setTourismemail(rs.getString("tourismemail"));
+                    aloj.setWeb(rs.getString("web"));
+                    aloj.setMunicipality(rs.getString("municipality"));
+                    int territory = rs.getInt("territory");
+                    for (Provincia prov : mod.getProvincias()) {
                         if (prov.getId() == territory) {
                             aloj.setProvincia(prov);
                         }
                     }
-                    aloj.setLatwgs84(rs.getFloat(11));
-                    aloj.setLonwgs84(rs.getFloat(12));
-                    aloj.setCapacity(rs.getInt(13));
-                    aloj.setRestaurant(rs.getInt(14));
-                    aloj.setStore(rs.getInt(15));
-                    aloj.setAutocaravana(rs.getInt(16));
+                    aloj.setLatwgs84(rs.getFloat("latwgs84"));
+                    aloj.setLonwgs84(rs.getFloat("lonwgs84"));
+                    aloj.setCapacity(rs.getInt("capacity"));
+                    aloj.setRestaurant(rs.getInt("restaurant"));
+                    aloj.setStore(rs.getInt("store"));
+                    aloj.setAutocaravana(rs.getInt("autocaravana"));
                     Blob blob = rs.getBlob("imagen");
                     aloj.setImagen(blob);
 
@@ -191,13 +186,13 @@ public class Inicio extends AppCompatActivity {
                 rs = st.executeQuery(query);
                 while (rs.next()) {
                     Usuario usuario = new Usuario();
-                    usuario.setDni(rs.getString(1));
-                    usuario.setNombre(rs.getString(2));
-                    usuario.setApellidos(rs.getString(3));
-                    usuario.setContrasena(rs.getString(4));
-                    usuario.setTelefono(rs.getString(5));
-                    usuario.setEmail(rs.getString(6));
-                    usuario.setAdministrador(rs.getInt(7));
+                    usuario.setDni(rs.getString("dni"));
+                    usuario.setNombre(rs.getString("nombre"));
+                    usuario.setApellidos(rs.getString("apellido"));
+                    usuario.setContrasena(rs.getString("contrasena"));
+                    usuario.setTelefono(rs.getString("telefono"));
+                    usuario.setEmail(rs.getString("email"));
+                    usuario.setAdministrador(rs.getInt("administrador"));
                     usuarios.add(usuario);
                 }
             } catch (Exception ex) {
@@ -228,23 +223,23 @@ public class Inicio extends AppCompatActivity {
                 rs = st.executeQuery(query);
                 while (rs.next()) {
                     Reserva res = new Reserva();
-                    res.setId(rs.getInt(1));
-                    String dni = rs.getString(2);
-                    for (Usuario user : appMod.getUsuarios()) {
+                    res.setId(rs.getInt("id"));
+                    String dni = rs.getString("dni");
+                    for (Usuario user : mod.getUsuarios()) {
                         if (user.getDni().equals(dni)) {
                             res.setUsuario(user);
                             break;
                         }
                     }
-                    res.setFecha(rs.getDate(3));
-                    int signatura = rs.getInt(4);
-                    for (Alojamiento aloj : appMod.getAlojamientos()) {
+                    res.setFecha(rs.getDate("fecha"));
+                    int signatura = rs.getInt("alojamiento");
+                    for (Alojamiento aloj : mod.getAlojamientos()) {
                         if (aloj.getSignatura() == (signatura)) {
                             res.setAlojamiento(aloj);
                             break;
                         }
                     }
-                    res.setPersonas(rs.getInt(5));
+                    res.setPersonas(rs.getInt("personas"));
                     reservas.add(res);
                 }
             } catch (Exception ex) {

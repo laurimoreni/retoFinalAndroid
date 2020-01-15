@@ -24,15 +24,14 @@ public class Registration extends AppCompatActivity {
     private EditText etDni, etFirstName, etLastName, etEmail, etPassword, etPasswordRepeat, etTel;
     private String dni, firstName, lastName, email, password, passwordRepeat, telephone;
     private Validations validations;
-    private ModeloDatos mod;
+    private Modelo mod;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration);
 
-        Bundle args = getIntent().getBundleExtra("bundle");
-        mod = (ModeloDatos) args.getSerializable("modelo");
+        mod = (Modelo) getApplication();
         validations = new Validations();
 
 
@@ -229,10 +228,7 @@ public class Registration extends AppCompatActivity {
                 // show success message
                 Toast.makeText(mContext, R.string.new_user_success, Toast.LENGTH_SHORT).show();
                 //
-                Bundle args = new Bundle();
-                args.putSerializable("modelo",(Serializable) mod);
                 Intent i = new Intent(mContext, Login.class );
-                i.putExtra("bundle", args);
                 startActivity(i);
             } else {
                 Toast.makeText(mContext, R.string.new_user_error, Toast.LENGTH_SHORT).show();

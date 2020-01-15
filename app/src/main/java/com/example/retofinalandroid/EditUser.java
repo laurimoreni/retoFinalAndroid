@@ -24,7 +24,7 @@ public class EditUser extends AppCompatActivity {
     private String userDni;
     private Usuario user;
     private String dni, firstName, lastName, email, telephone;
-    private ModeloDatos mod;
+    private Modelo mod;
     private Validations validations;
 
     @Override
@@ -33,8 +33,7 @@ public class EditUser extends AppCompatActivity {
         setContentView(R.layout.edit_user);
 
         // get model data
-        Bundle args = getIntent().getBundleExtra("bundle");
-        mod = (ModeloDatos) args.getSerializable("modelo");
+        mod = (Modelo) getApplication();
         validations = new Validations();
 
         // add back button to the action bar
@@ -199,13 +198,9 @@ public class EditUser extends AppCompatActivity {
      * @param v
      */
     public void cancelUser(View v) {
-        // bundle model data
-        Bundle args = new Bundle();
-        args.putSerializable("modelo",(Serializable) mod);
         // add data to the intent and start the new activity
         Intent i = new Intent(this, UserProfile.class);
         i.putExtra("user_dni", userDni);
-        i.putExtra("bundle", args);
         startActivity(i);
     }
 

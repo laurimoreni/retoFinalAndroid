@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class Login extends AppCompatActivity {
 
     private EditText etEmail, etPassword;
-    private ModeloDatos mod;
+    private Modelo mod;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +31,7 @@ public class Login extends AppCompatActivity {
         etEmail = (EditText)findViewById(R.id.etEmail);
         etPassword = (EditText)findViewById(R.id.etPassword);
 
-        Bundle args = getIntent().getBundleExtra("bundle");
-        mod = (ModeloDatos) args.getSerializable("modelo");
+        mod = (Modelo) getApplication();
 
     }
 
@@ -53,10 +52,7 @@ public class Login extends AppCompatActivity {
                 SharedPreferences.Editor editor = preferencias.edit();
                 editor.putString("user_dni", String.valueOf(usuario.getDni()));
                 editor.commit();
-                Bundle args = new Bundle();
-                args.putSerializable("modelo",(Serializable) mod);
-                Intent i = new Intent(this, About.class );
-                i.putExtra("bundle", args);
+                Intent i = new Intent(this, AlojamientoRecyclerView.class );
                 startActivity(i);
             } else {
                 Toast.makeText(this, R.string.user_dont_exist, Toast.LENGTH_SHORT).show();
@@ -71,10 +67,7 @@ public class Login extends AppCompatActivity {
      * @param v
      */
     public void goRegister(View v) {
-        Bundle args = new Bundle();
-        args.putSerializable("modelo",(Serializable) mod);
         Intent i = new Intent(this, Registration.class );
-        i.putExtra("bundle", args);
         startActivity(i);
     }
 

@@ -13,7 +13,7 @@ import java.io.Serializable;
 
 public class About extends AppCompatActivity {
 
-    private ModeloDatos mod;
+    private Modelo mod;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +21,7 @@ public class About extends AppCompatActivity {
         setContentView(R.layout.about);
 
         // get model data
-        Bundle args = getIntent().getBundleExtra("bundle");
-        mod = (ModeloDatos) args.getSerializable("modelo");
+        mod = (Modelo) getApplication();
 
         // add back button to the action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -45,13 +44,9 @@ public class About extends AppCompatActivity {
                 // get user dni from preferences
                 SharedPreferences prefe = getSharedPreferences("datos", Context.MODE_PRIVATE);
                 String userDni = prefe.getString("user_dni","");
-                // bundle model data
-                Bundle args = new Bundle();
-                args.putSerializable("modelo",(Serializable) mod);
                 // add data to the intent and start the new activity
                 Intent userIntent = new Intent(this, UserProfile.class);
                 userIntent.putExtra("user_dni", userDni);
-                userIntent.putExtra("bundle", args);
                 startActivity(userIntent);
                 break;
             case R.id.config:

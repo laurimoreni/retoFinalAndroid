@@ -24,7 +24,7 @@ public class UserProfile extends AppCompatActivity {
     private TextView tvDni, tvName, tvLastName, tvEmail, tvTel;
     private String userDni;
     private Usuario user;
-    private ModeloDatos mod;
+    private Modelo mod;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +32,7 @@ public class UserProfile extends AppCompatActivity {
         setContentView(R.layout.user_profile);
 
         // get model data
-        Bundle args = getIntent().getBundleExtra("bundle");
-        mod = (ModeloDatos) args.getSerializable("modelo");
+        mod = (Modelo) getApplication();
 
         // add back button to the action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -110,13 +109,9 @@ public class UserProfile extends AppCompatActivity {
      * Edit user
      */
     public void editUser(View v) {
-        // bundle model data
-        Bundle args = new Bundle();
-        args.putSerializable("modelo",(Serializable) mod);
         // add data to the intent and start the new activity
         Intent i = new Intent(this, EditUser.class);
         i.putExtra("user_dni", userDni);
-        i.putExtra("bundle", args);
         startActivity(i);
     }
 
@@ -166,10 +161,7 @@ public class UserProfile extends AppCompatActivity {
                 // show success message
                 Toast.makeText(mContext, R.string.new_user_success, Toast.LENGTH_SHORT).show();
                 //
-                Bundle args = new Bundle();
-                args.putSerializable("modelo",(Serializable) mod);
                 Intent i = new Intent(mContext, Login.class );
-                i.putExtra("bundle", args);
                 startActivity(i);
             } else {
                 Toast.makeText(mContext, R.string.new_user_error, Toast.LENGTH_SHORT).show();
