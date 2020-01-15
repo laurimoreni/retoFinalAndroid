@@ -34,10 +34,10 @@ public class About extends AppCompatActivity {
         int id = item.getItemId();
         switch (item.getItemId()) {
             case R.id.userProfile:
-                SharedPreferences prefe=getSharedPreferences("datos", Context.MODE_PRIVATE);
-                String userCod = prefe.getString("user_cod","");
+                SharedPreferences prefe = getSharedPreferences("datos", Context.MODE_PRIVATE);
+                String userDni = prefe.getString("user_dni","");
                 Intent userIntent = new Intent(this, UserProfile.class);
-                userIntent.putExtra("user_cod", userCod);
+                userIntent.putExtra("user_dni", userDni);
                 startActivity(userIntent);
                 break;
             case R.id.config:

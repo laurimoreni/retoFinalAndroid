@@ -192,7 +192,7 @@ public class Inicio extends AppCompatActivity {
                     usuario.setNombre(rs.getString(2));
                     usuario.setApellidos(rs.getString(3));
                     usuario.setContrasena(rs.getString(4));
-                    usuario.setTelefono(rs.getInt(5));
+                    usuario.setTelefono(rs.getString(5));
                     usuario.setEmail(rs.getString(6));
                     usuario.setAdministrador(rs.getInt(7));
                     usuarios.add(usuario);

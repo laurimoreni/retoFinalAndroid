@@ -2,42 +2,38 @@ package com.example.retofinalandroid;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.DatePickerDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
-
+import java.util.ArrayList;
 
 public class Registration extends AppCompatActivity {
 
     private EditText etDni, etFirstName, etLastName, etEmail, etPassword, etPasswordRepeat, etTel;
     private String dni, firstName, lastName, email, password, passwordRepeat, telephone;
     private Validations validations;
+    private ModeloDatos mod;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration);
 
+        Bundle args = getIntent().getBundleExtra("bundle");
+        mod = (ModeloDatos) args.getSerializable("modelo");
         validations = new Validations();
+
 
         // add back button to the action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -81,7 +77,7 @@ public class Registration extends AppCompatActivity {
 
         // if data entered is valid, make the insert
         if (dataValidation()) {
-            new userInsert(dni, firstName, lastName, email, password, telephone, getApplicationContext()).execute();
+            new userInsert(dni, firstName, lastName, email, passwordHashing(password), telephone, getApplicationContext()).execute();
         }
     }
 
@@ -137,6 +133,35 @@ public class Registration extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Metodo que se ancarga de encriptar la contraseña
+     * @param password Contraseña que se quiere encriptar
+     * @return Retorna la contraseña encriptada
+     */
+    public String passwordHashing(String password){
+        String generatedPassword = null;
+        try {
+            // Crea una instancia de MessageDigest para MD5
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            // Agrega la contraseña separada en bytes para separarla
+            md.update(password.getBytes());
+            // Saca los bytes separados
+            byte[] bytes = md.digest();
+            // bytes[] almacena los bytes en formato decimal
+            // Los bytes en decimal pasan a hexadecimal
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i< bytes.length ;i++){
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            // Coge los bytes separados de la contraseña en hexadecimal y los junta en un string
+            generatedPassword = sb.toString();
+        }
+        catch (NoSuchAlgorithmException e){
+            e.printStackTrace();
+        }
+        return generatedPassword;
+    }
+
     public class userInsert extends AsyncTask {
 
         private String dni, firstName, lastName, email, password, telephone;
@@ -182,8 +207,13 @@ public class Registration extends AppCompatActivity {
         @Override
         protected void onPostExecute(Object result) {
             super.onPostExecute(result);
-            if (result.toString() == "1") {
+            if (result.toString().equals("1")) {
+                ArrayList<Usuario> usuarios = mod.getUsuarios();
+                usuarios.add(new Usuario(dni, firstName, lastName, email, password, telephone, 0));
+                mod.setUsuarios(usuarios);
                 Toast.makeText(mContext, R.string.new_user_success, Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(mContext, Login.class );
+                startActivity(i);
             } else {
                 Toast.makeText(mContext, R.string.new_user_error, Toast.LENGTH_SHORT).show();
             }

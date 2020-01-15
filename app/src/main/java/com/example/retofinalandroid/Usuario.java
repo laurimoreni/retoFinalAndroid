@@ -10,14 +10,14 @@ public class Usuario implements Serializable {
     private String apellidos;
     private String email;
     private String contrasena;
-    private int telefono;
+    private String telefono;
     private int administrador;
 
     public Usuario() {
 
     }
 
-    public Usuario(String dni, String nombre, String apellidos, String email, String contrasena, int telefono, int administrador) {
+    public Usuario(String dni, String nombre, String apellidos, String email, String contrasena, String telefono, int administrador) {
         this.dni = dni;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -47,7 +47,7 @@ public class Usuario implements Serializable {
         return contrasena;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
@@ -75,7 +75,7 @@ public class Usuario implements Serializable {
         this.contrasena = contrasena;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
