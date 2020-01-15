@@ -15,18 +15,27 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 public class EditUser extends AppCompatActivity {
 
     private EditText etDni, etFirstName, etLastName, etEmail, etTel;
     private String userDni;
     private Usuario user;
-    private String dni, firstName, lastName, email;
-    private int telephone;
+    private String dni, firstName, lastName, email, telephone;
+    private ModeloDatos mod;
+    private Validations validations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_user);
+
+        // get model data
+        Bundle args = getIntent().getBundleExtra("bundle");
+        mod = (ModeloDatos) args.getSerializable("modelo");
+        validations = new Validations();
 
         // add back button to the action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -35,24 +44,12 @@ public class EditUser extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         userDni = bundle.getString("user_dni");
 
-        // FALTA CARGAR LOS DATOS DEL USUARIO DE BASE DE DATOS
-        // get current user from database and create a User object
-        /*AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this, "todolistBD", null, 1);
-        SQLiteDatabase bd = admin.getWritableDatabase();
-        Cursor row = bd.rawQuery("select * from users where cod = '" + userDni + "'", null);
-        if (row.moveToFirst()) {
-            user = new User(
-                row.getInt(0),
-                row.getString(1),
-                row.getString(2),
-                row.getString(3),
-                row.getString(4),
-                row.getString(5)
-            );
-        } else {
-            Toast.makeText(this, R.string.user_dont_exist, Toast.LENGTH_SHORT).show();
+        ArrayList<Usuario> usuarios = mod.getUsuarios();
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (usuarios.get(i).getDni().equals(userDni)) {
+                user = usuarios.get(i);
+            }
         }
-        bd.close();*/
 
         // get fields
         etDni = (EditText)findViewById(R.id.etDni);
@@ -113,6 +110,10 @@ public class EditUser extends AppCompatActivity {
             Toast.makeText(this, R.string.empty_dni, Toast.LENGTH_SHORT).show();
             return false;
         }
+        if (!validations.validateDNI(dni)) {
+            Toast.makeText(this, R.string.incorrect_dni, Toast.LENGTH_SHORT).show();
+            return false;
+        }
         if (firstName.equals("")) {
             Toast.makeText(this, R.string.empty_firstname, Toast.LENGTH_SHORT).show();
             return false;
@@ -125,11 +126,33 @@ public class EditUser extends AppCompatActivity {
             Toast.makeText(this, R.string.empty_email, Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (telephone == 0) {
+        if (!validations.validateEmail(email)) {
+            Toast.makeText(this, R.string.incorrect_email, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (telephone.equals("")) {
             Toast.makeText(this, R.string.empty_tel, Toast.LENGTH_SHORT).show();
             return false;
         }
+        if (!validations.validatePhoneNumber(telephone)) {
+            Toast.makeText(this, R.string.incorrect_tel, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (checkUserExist(dni, email)) {
+            Toast.makeText(this, R.string.user_exists, Toast.LENGTH_SHORT).show();
+            return false;
+        }
         return true;
+    }
+
+    public boolean checkUserExist(String dni, String email){
+        ArrayList<Usuario> usuarios = mod.getUsuarios();
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (usuarios.get(i).getDni().equals(dni) || usuarios.get(i).getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -163,13 +186,7 @@ public class EditUser extends AppCompatActivity {
         firstName = etFirstName.getText().toString();
         lastName = etLastName.getText().toString();
         email = etEmail.getText().toString();
-        try {
-            if(etTel.getText().toString() != null) {
-                telephone = Integer.parseInt(etTel.getText().toString());
-            }
-        } catch (NumberFormatException e) {
-            telephone = 0;
-        }
+        telephone = etTel.getText().toString();
 
         // if data entered is valid, make the update
         if (dataValidation()) {
@@ -182,8 +199,13 @@ public class EditUser extends AppCompatActivity {
      * @param v
      */
     public void cancelUser(View v) {
-        Intent i = new Intent(this, UserProfile.class );
+        // bundle model data
+        Bundle args = new Bundle();
+        args.putSerializable("modelo",(Serializable) mod);
+        // add data to the intent and start the new activity
+        Intent i = new Intent(this, UserProfile.class);
         i.putExtra("user_dni", userDni);
+        i.putExtra("bundle", args);
         startActivity(i);
     }
 

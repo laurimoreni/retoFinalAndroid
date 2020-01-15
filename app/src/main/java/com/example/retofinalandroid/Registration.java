@@ -160,9 +160,8 @@ public class Registration extends AppCompatActivity {
             MessageDigest md = MessageDigest.getInstance("MD5");
             // Agrega la contraseña separada en bytes para separarla
             md.update(password.getBytes());
-            // Saca los bytes separados
+            // Saca los bytes separados (se almacena los bytes en formato decimal)
             byte[] bytes = md.digest();
-            // bytes[] almacena los bytes en formato decimal
             // Los bytes en decimal pasan a hexadecimal
             StringBuilder sb = new StringBuilder();
             for(int i=0; i< bytes.length ;i++){

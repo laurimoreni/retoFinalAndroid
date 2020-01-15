@@ -3,24 +3,37 @@ package com.example.retofinalandroid;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
 
 public class UserProfile extends AppCompatActivity {
 
     private TextView tvDni, tvName, tvLastName, tvEmail, tvTel;
     private String userDni;
     private Usuario user;
+    private ModeloDatos mod;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_profile);
+
+        // get model data
+        Bundle args = getIntent().getBundleExtra("bundle");
+        mod = (ModeloDatos) args.getSerializable("modelo");
 
         // add back button to the action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -29,26 +42,12 @@ public class UserProfile extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         userDni = bundle.getString("user_dni");
 
-        // FALTA CARGAR LOS DATOS DEL USUARIO DE BASE DE DATOS
-        //access to database
-        /*AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this, "todolistBD", null, 1);
-        SQLiteDatabase bd = admin.getWritableDatabase();
-
-        Cursor row = bd.rawQuery("select * from users where cod = '" + userCod + "'", null);
-        if (row.moveToFirst()) {
-            user = new Usuario(
-                row.getInt(0),
-                row.getString(1),
-                row.getString(2),
-                row.getString(3),
-                row.getString(4),
-                row.getString(5)
-            );
-        } else {
-            Toast.makeText(this, R.string.user_dont_exist, Toast.LENGTH_SHORT).show();
+        ArrayList<Usuario> usuarios = mod.getUsuarios();
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (usuarios.get(i).getDni().equals(userDni)) {
+                user = usuarios.get(i);
+            }
         }
-
-        bd.close();*/
 
         // get fields
         tvDni = (TextView) findViewById(R.id.tvDni);
@@ -104,17 +103,77 @@ public class UserProfile extends AppCompatActivity {
      * Delete user from database
      */
     public void deleteUser(View v) {
-        userDni = user.getDni();
-        // FALTA BORRAR EL USUARIO DE BASE DE DATOS
+        new userDelete(userDni, getApplicationContext()).execute();
     }
 
     /**
      * Edit user
      */
     public void editUser(View v) {
-        userDni = user.getDni();
-        Intent i = new Intent(this, EditUser.class );
-        i.putExtra("user_cod", userDni);
+        // bundle model data
+        Bundle args = new Bundle();
+        args.putSerializable("modelo",(Serializable) mod);
+        // add data to the intent and start the new activity
+        Intent i = new Intent(this, EditUser.class);
+        i.putExtra("user_dni", userDni);
+        i.putExtra("bundle", args);
         startActivity(i);
+    }
+
+    public class userDelete extends AsyncTask {
+
+        private String dni;
+        private Context mContext;
+
+        public userDelete(String dni, Context context){
+            this.dni = dni;
+            this.mContext = context;
+        }
+
+        @Override
+        public Integer doInBackground(Object[] objects) {
+            String url = "jdbc:mysql://188.213.5.150:3306/prueba?useSSL=false";
+            String user = "ldmj";
+            String pass = "ladamijo";
+            Connection con = null;
+            PreparedStatement ps = null;
+            Integer rs = 0;
+            String query = "delete from usuarios where dni = ?";
+            try {
+                con = DriverManager.getConnection(url, user, pass);
+                ps = con.prepareStatement(query);
+                ps.setString(1, dni);
+                rs = ps.executeUpdate();
+            } catch (Exception e) {
+                System.out.println("Error al borrar el usuario de la base de datos");
+                e.printStackTrace();
+            }
+            return rs;
+        }
+
+        @Override
+        protected void onPostExecute(Object result) {
+            super.onPostExecute(result);
+            if (result.toString().equals("1")) {
+                // add new user to users arraylist of the model
+                ArrayList<Usuario> usuarios = mod.getUsuarios();
+                for (int i = 0; i < usuarios.size(); i++) {
+                    if (usuarios.get(i).getDni().equals(dni)) {
+                        usuarios.remove(i);
+                    }
+                }
+                mod.setUsuarios(usuarios);
+                // show success message
+                Toast.makeText(mContext, R.string.new_user_success, Toast.LENGTH_SHORT).show();
+                //
+                Bundle args = new Bundle();
+                args.putSerializable("modelo",(Serializable) mod);
+                Intent i = new Intent(mContext, Login.class );
+                i.putExtra("bundle", args);
+                startActivity(i);
+            } else {
+                Toast.makeText(mContext, R.string.new_user_error, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

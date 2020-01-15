@@ -55,7 +55,7 @@ public class Login extends AppCompatActivity {
                 editor.commit();
                 Bundle args = new Bundle();
                 args.putSerializable("modelo",(Serializable) mod);
-                Intent i = new Intent(this, AlojamientoRecyclerView.class );
+                Intent i = new Intent(this, About.class );
                 i.putExtra("bundle", args);
                 startActivity(i);
             } else {
