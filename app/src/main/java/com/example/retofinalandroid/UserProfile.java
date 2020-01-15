@@ -27,7 +27,7 @@ public class UserProfile extends AppCompatActivity {
 
         // get the current user
         Bundle bundle = getIntent().getExtras();
-        userDni = bundle.getString("user_cod");
+        userDni = bundle.getString("user_dni");
 
         // FALTA CARGAR LOS DATOS DEL USUARIO DE BASE DE DATOS
         //access to database
@@ -79,10 +79,10 @@ public class UserProfile extends AppCompatActivity {
         int id = item.getItemId();
         switch (item.getItemId()) {
             case R.id.userProfile:
-                SharedPreferences prefe=getSharedPreferences("datos", Context.MODE_PRIVATE);
-                String userCod = prefe.getString("user_cod","");
+                SharedPreferences prefe = getSharedPreferences("datos", Context.MODE_PRIVATE);
+                String userDni = prefe.getString("user_dni","");
                 Intent userIntent = new Intent(this, UserProfile.class);
-                userIntent.putExtra("user_cod", userCod);
+                userIntent.putExtra("user_dni", userDni);
                 startActivity(userIntent);
                 break;
             case R.id.config:

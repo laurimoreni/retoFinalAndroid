@@ -1,11 +1,9 @@
 package com.example.retofinalandroid;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,9 +18,9 @@ import androidx.appcompat.app.AppCompatActivity;
 public class EditUser extends AppCompatActivity {
 
     private EditText etDni, etFirstName, etLastName, etEmail, etTel;
-    private String userCod;
+    private String userDni;
     private Usuario user;
-    private String dni, firstName, lastName, username, email;
+    private String dni, firstName, lastName, email;
     private int telephone;
 
     @Override
@@ -35,13 +33,13 @@ public class EditUser extends AppCompatActivity {
 
         // get the current user
         Bundle bundle = getIntent().getExtras();
-        userCod = bundle.getString("user_cod");
+        userDni = bundle.getString("user_dni");
 
         // FALTA CARGAR LOS DATOS DEL USUARIO DE BASE DE DATOS
         // get current user from database and create a User object
         /*AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this, "todolistBD", null, 1);
         SQLiteDatabase bd = admin.getWritableDatabase();
-        Cursor row = bd.rawQuery("select * from users where cod = '" + userCod + "'", null);
+        Cursor row = bd.rawQuery("select * from users where cod = '" + userDni + "'", null);
         if (row.moveToFirst()) {
             user = new User(
                 row.getInt(0),
@@ -86,9 +84,9 @@ public class EditUser extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.userProfile:
                 SharedPreferences prefe = getSharedPreferences("datos", Context.MODE_PRIVATE);
-                String userCod = prefe.getString("user_cod","");
+                String userDni = prefe.getString("user_dni","");
                 Intent userIntent = new Intent(this, UserProfile.class);
-                userIntent.putExtra("user_cod", userCod);
+                userIntent.putExtra("user_dni", userDni);
                 startActivity(userIntent);
                 break;
             case R.id.config:
@@ -185,7 +183,7 @@ public class EditUser extends AppCompatActivity {
      */
     public void cancelUser(View v) {
         Intent i = new Intent(this, UserProfile.class );
-        i.putExtra("user_cod", userCod);
+        i.putExtra("user_dni", userDni);
         startActivity(i);
     }
 
@@ -219,7 +217,7 @@ public class EditUser extends AppCompatActivity {
                     SQLiteDatabase bd = admin.getWritableDatabase();
                     ContentValues datos = new ContentValues();
                     datos.put("password", newPassword);
-                    long result = bd.update("users", datos, "cod=" + userCod, null);
+                    long result = bd.update("users", datos, "cod=" + userDni, null);
                     // check if user password has been updated
                     if (result != -1) {
                         Toast.makeText(EditUser.this, R.string.edit_pass_success, Toast.LENGTH_SHORT).show();
