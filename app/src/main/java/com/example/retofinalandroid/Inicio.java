@@ -127,7 +127,7 @@ public class Inicio extends AppCompatActivity {
                 rs = st.executeQuery(query);
                 while (rs.next()) {
                     Alojamiento aloj = new Alojamiento();
-                    aloj.setSignatura(rs.getInt("signatura"));
+                    aloj.setSignatura(rs.getString("signatura"));
                     aloj.setDocumentname(rs.getString("documentname"));
                     aloj.setTurismdescription(rs.getString("turismdescription"));
                     aloj.setLodgingtype(rs.getString("lodgingtype"));
@@ -150,6 +150,7 @@ public class Inicio extends AppCompatActivity {
                     aloj.setAutocaravana(rs.getInt("autocaravana"));
                     Blob blob = rs.getBlob("imagen");
                     aloj.setImagen(blob);
+                    aloj.setActivo(rs.getInt("activo"));
                     alojamientos.add(aloj);
                 }
             } catch (Exception ex) {
@@ -224,9 +225,9 @@ public class Inicio extends AppCompatActivity {
                         }
                     }
                     res.setFecha(rs.getDate("fecha"));
-                    int signatura = rs.getInt("alojamiento");
+                    String signatura = rs.getString("alojamiento");
                     for (Alojamiento aloj : mod.getAlojamientos()) {
-                        if (aloj.getSignatura() == (signatura)) {
+                        if (aloj.getSignatura().equals(signatura)) {
                             res.setAlojamiento(aloj);
                             break;
                         }

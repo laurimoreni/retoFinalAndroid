@@ -42,7 +42,7 @@ public class JsonReader extends AppCompatActivity {
             for (int i = 0, size = jarray.length(); i < size; i++) {
                 Alojamiento alojamiento = new Alojamiento();
                 JSONObject objectInArray = jarray.getJSONObject(i);
-                alojamiento.setSignatura(objectInArray.getInt("signatura"));
+                alojamiento.setSignatura(objectInArray.getString("signatura"));
                 alojamiento.setDocumentname(objectInArray.getString("documentname"));
                 alojamiento.setTurismdescription(objectInArray.getString("turismdescription"));
                 alojamiento.setLodgingtype(objectInArray.getString("lodgingtype"));

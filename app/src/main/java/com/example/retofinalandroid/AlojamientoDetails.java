@@ -58,7 +58,7 @@ public class AlojamientoDetails extends BaseActivity {
      * Delete alojamiento from database
      */
     public void reservarAlojamiento(View v) {
-        int cod = alojamiento.getSignatura();
+        String cod = alojamiento.getSignatura();
         // FALTA ENVIAR A ACTIVITY DE RESERVA
     }
 
