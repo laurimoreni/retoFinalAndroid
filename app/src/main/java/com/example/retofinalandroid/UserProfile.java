@@ -2,39 +2,26 @@ package com.example.retofinalandroid;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
-public class UserProfile extends AppCompatActivity {
+public class UserProfile extends BaseActivity {
 
     private TextView tvDni, tvName, tvLastName, tvEmail, tvTel;
     private Usuario user;
-    private Modelo mod;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_profile);
-
-        // get model data
-        mod = (Modelo) getApplication();
-
-        // add back button to the action bar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // get the current user
         user = mod.getLoggedUser();
@@ -55,43 +42,6 @@ public class UserProfile extends AppCompatActivity {
     }
 
     /**
-     * Creates the Action Bar menu
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.actionbar_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (item.getItemId()) {
-            case R.id.userProfile:
-                Intent userIntent = new Intent(this, UserProfile.class);
-                startActivity(userIntent);
-                break;
-            case R.id.logout:
-                mod.setLoggedUser(null);
-                Intent logoutIntent = new Intent(this, Login.class);
-                startActivity(logoutIntent);
-                break;
-            case R.id.config:
-                Intent configIntent = new Intent(this, Settings.class);
-                startActivity(configIntent);
-                break;
-            case R.id.about:
-                Intent aboutIntent = new Intent(this, About.class);
-                startActivity(aboutIntent);
-                break;
-            case android.R.id.home:
-                this.finish();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    /**
      * Delete user from database
      */
     public void deleteUser(View v) {
@@ -102,7 +52,6 @@ public class UserProfile extends AppCompatActivity {
      * Edit user
      */
     public void editUser(View v) {
-        // add data to the intent and start the new activity
         Intent i = new Intent(this, EditUser.class);
         startActivity(i);
     }

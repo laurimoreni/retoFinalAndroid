@@ -5,6 +5,7 @@ import android.app.Application;
 import java.util.ArrayList;
 
 public class Modelo extends Application {
+
     private ArrayList<Alojamiento> alojamientos;
     private ArrayList<Usuario> usuarios;
     private ArrayList<Provincia> provincias;

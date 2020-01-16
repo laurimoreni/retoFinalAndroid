@@ -3,33 +3,25 @@ package com.example.retofinalandroid;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.Serializable;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
-public class EditUser extends AppCompatActivity {
+public class EditUser extends BaseActivity {
 
     private EditText etDni, etFirstName, etLastName, etEmail, etTel;
-    private Usuario user;
     private String dni, firstName, lastName, email, telephone;
-    private Modelo mod;
+    private Usuario user;
     private Validations validations;
 
     @Override
@@ -37,12 +29,7 @@ public class EditUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_user);
 
-        // get model data
-        mod = (Modelo) getApplication();
-        validations = new Validations();
-
-        // add back button to the action bar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        validations = new Validations(mod, getApplicationContext());
 
         // get the current user
         user = mod.getLoggedUser();
@@ -63,55 +50,19 @@ public class EditUser extends AppCompatActivity {
     }
 
     /**
-     * Creates the Action Bar menu
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.actionbar_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (item.getItemId()) {
-            case R.id.userProfile:
-                Intent userIntent = new Intent(this, UserProfile.class);
-                startActivity(userIntent);
-                break;
-            case R.id.logout:
-                mod.setLoggedUser(null);
-                Intent logoutIntent = new Intent(this, Login.class);
-                startActivity(logoutIntent);
-                break;
-            case R.id.config:
-                Intent configIntent = new Intent(this, Settings.class);
-                startActivity(configIntent);
-                break;
-            case R.id.about:
-                Intent aboutIntent = new Intent(this, About.class);
-                startActivity(aboutIntent);
-                break;
-            case android.R.id.home:
-                this.finish();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    /**
      * Save a the user data to database
      * @param v
      */
     public void saveUser(View v) {
 
+        // get form values
         dni = etDni.getText().toString();
         firstName = etFirstName.getText().toString();
         lastName = etLastName.getText().toString();
         email = etEmail.getText().toString();
         telephone = etTel.getText().toString();
 
-        // get form values
+        // create new user object
         Usuario newUser = new Usuario(dni, firstName, lastName, email, user.getContrasena(), telephone, user.getAdministrador());
 
         // if data entered is valid, make the update
@@ -125,7 +76,6 @@ public class EditUser extends AppCompatActivity {
      * @param v
      */
     public void cancelUser(View v) {
-        // add data to the intent and start the new activity
         Intent i = new Intent(this, UserProfile.class);
         startActivity(i);
     }
@@ -167,38 +117,8 @@ public class EditUser extends AppCompatActivity {
             Toast.makeText(this, R.string.incorrect_tel, Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (checkUserExist(dni, email)) {
+        if (validations.checkUserExist(dni, email)) {
             Toast.makeText(this, R.string.user_exists, Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
-    }
-
-    public boolean checkUserExist(String dni, String email){
-        ArrayList<Usuario> usuarios = mod.getUsuarios();
-        for (int i = 0; i < usuarios.size(); i++) {
-            if (usuarios.get(i).getDni().equals(dni) || usuarios.get(i).getEmail().equals(email)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Check if data entered by the user is valid
-     * @return
-     */
-    public boolean passwordValidation(String oldPassword, String newPassword) {
-        if (oldPassword.equals("")) {
-            Toast.makeText(this, R.string.empty_old_pass, Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (newPassword.equals("")) {
-            Toast.makeText(this, R.string.empty_new_pass, Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (oldPassword.equals(newPassword)) {
-            Toast.makeText(this, R.string.same_pass, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -218,21 +138,13 @@ public class EditUser extends AppCompatActivity {
         // confirm button action
         dialog.setPositiveButton(R.string.dialog_confirm, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
-                // get form values
-                String oldPassword = etOldPassword.getText().toString();
-                String newPassword = etNewPassword.getText().toString();
-                // if data entered is valid, make the update
-                if (oldPassword.equals("")) {
-                    Toast.makeText(EditUser.this, R.string.empty_old_pass, Toast.LENGTH_SHORT).show();
-                } else if (newPassword.equals("")) {
-                    Toast.makeText(EditUser.this, R.string.empty_new_pass, Toast.LENGTH_SHORT).show();
-                } else if (oldPassword.equals(newPassword)) {
-                    Toast.makeText(EditUser.this, R.string.same_pass, Toast.LENGTH_SHORT).show();
-                } else if (!passwordHashing(oldPassword).equals(user.getContrasena())) {
-                    Toast.makeText(EditUser.this, R.string.wrong_old_pass, Toast.LENGTH_SHORT).show();
-                } else {
-                    new updateUserPassword(user, passwordHashing(newPassword), getApplicationContext()).execute();
-                }
+            // get form values
+            String oldPassword = etOldPassword.getText().toString();
+            String newPassword = etNewPassword.getText().toString();
+            // if data entered is valid, make the update
+            if (validations.newPasswordValidation(user.getContrasena(), oldPassword, newPassword)) {
+                new updateUserPassword(user, validations.passwordHashing(newPassword), getApplicationContext()).execute();
+            }
             }
         });
         // cancel button action
@@ -243,34 +155,6 @@ public class EditUser extends AppCompatActivity {
         });
         dialog.create();
         dialog.show();
-    }
-
-    /**
-     * Metodo que se ancarga de encriptar la contraseña
-     * @param password Contraseña que se quiere encriptar
-     * @return Retorna la contraseña encriptada
-     */
-    public String passwordHashing(String password){
-        String generatedPassword = null;
-        try {
-            // Crea una instancia de MessageDigest para MD5
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            // Agrega la contraseña separada en bytes para separarla
-            md.update(password.getBytes());
-            // Saca los bytes separados (se almacena los bytes en formato decimal)
-            byte[] bytes = md.digest();
-            // Los bytes en decimal pasan a hexadecimal
-            StringBuilder sb = new StringBuilder();
-            for(int i=0; i< bytes.length ;i++){
-                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-            }
-            // Coge los bytes separados de la contraseña en hexadecimal y los junta en un string
-            generatedPassword = sb.toString();
-        }
-        catch (NoSuchAlgorithmException e){
-            e.printStackTrace();
-        }
-        return generatedPassword;
     }
 
     /**

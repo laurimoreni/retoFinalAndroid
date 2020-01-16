@@ -5,10 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.ImageView;
 
 import com.mysql.jdbc.Connection;
 
@@ -20,8 +18,9 @@ import java.util.ArrayList;
 
 
 public class Inicio extends AppCompatActivity {
+
     Modelo mod;
-    ImageView img;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,12 +51,12 @@ public class Inicio extends AppCompatActivity {
     }
 
     private class descargarBD extends AsyncTask<Void, Void, Boolean> {
+
         private String url = "jdbc:mysql://188.213.5.150:3306/prueba";
         private String user = "ldmj";
         private String pass = "ladamijo";
         private Modelo mod;
         private Connection con;
-        private Bitmap btm;
 
         public descargarBD(Modelo mod) {
             this.mod = mod;
@@ -67,17 +66,14 @@ public class Inicio extends AppCompatActivity {
         protected Boolean doInBackground(Void... voids) {
             try {
                 con = (Connection) DriverManager.getConnection(url, user, pass);
-
                 mod.setProvincias(descargarProvincias());
                 mod.setAlojamientos(descargarAlojamientos());
                 mod.setUsuarios(descargarUsuarios());
                 mod.setReservas(descargarReservas());
-
             } catch (Exception ex) {
                 ex.printStackTrace();
                 return false;
             }
-
             return true;
         }
 
@@ -118,7 +114,6 @@ public class Inicio extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-
             return provincias;
         }
 
@@ -155,7 +150,6 @@ public class Inicio extends AppCompatActivity {
                     aloj.setAutocaravana(rs.getInt("autocaravana"));
                     Blob blob = rs.getBlob("imagen");
                     aloj.setImagen(blob);
-
                     alojamientos.add(aloj);
                 }
             } catch (Exception ex) {
@@ -172,7 +166,6 @@ public class Inicio extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-
             return alojamientos;
         }
 
@@ -209,7 +202,6 @@ public class Inicio extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-
             return usuarios;
         }
 
@@ -256,7 +248,6 @@ public class Inicio extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-
             return reservas;
         }
     }

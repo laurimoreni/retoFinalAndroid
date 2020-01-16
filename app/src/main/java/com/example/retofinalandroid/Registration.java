@@ -11,9 +11,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.Serializable;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -21,10 +18,10 @@ import java.util.ArrayList;
 
 public class Registration extends AppCompatActivity {
 
+    private Modelo mod;
+    private Validations validations;
     private EditText etDni, etFirstName, etLastName, etEmail, etPassword, etPasswordRepeat, etTel;
     private String dni, firstName, lastName, email, password, passwordRepeat, telephone;
-    private Validations validations;
-    private Modelo mod;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +29,7 @@ public class Registration extends AppCompatActivity {
         setContentView(R.layout.registration);
 
         mod = (Modelo) getApplication();
-        validations = new Validations();
-
+        validations = new Validations(mod, getApplicationContext());
 
         // add back button to the action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -77,7 +73,7 @@ public class Registration extends AppCompatActivity {
 
         // if data entered is valid, make the insert
         if (dataValidation()) {
-            new userInsert(dni, firstName, lastName, email, passwordHashing(password), telephone, getApplicationContext()).execute();
+            new userInsert(dni, firstName, lastName, email, validations.passwordHashing(password), telephone, getApplicationContext()).execute();
         }
     }
 
@@ -130,49 +126,11 @@ public class Registration extends AppCompatActivity {
             Toast.makeText(this, R.string.incorrect_tel, Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (checkUserExist(dni, email)) {
+        if (validations.checkUserExist(dni, email)) {
             Toast.makeText(this, R.string.user_exists, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
-    }
-
-    public boolean checkUserExist(String dni, String email){
-        ArrayList<Usuario> usuarios = mod.getUsuarios();
-        for (int i = 0; i < usuarios.size(); i++) {
-            if (usuarios.get(i).getDni().equals(dni) || usuarios.get(i).getEmail().equals(email)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Metodo que se ancarga de encriptar la contraseña
-     * @param password Contraseña que se quiere encriptar
-     * @return Retorna la contraseña encriptada
-     */
-    public String passwordHashing(String password){
-        String generatedPassword = null;
-        try {
-            // Crea una instancia de MessageDigest para MD5
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            // Agrega la contraseña separada en bytes para separarla
-            md.update(password.getBytes());
-            // Saca los bytes separados (se almacena los bytes en formato decimal)
-            byte[] bytes = md.digest();
-            // Los bytes en decimal pasan a hexadecimal
-            StringBuilder sb = new StringBuilder();
-            for(int i=0; i< bytes.length ;i++){
-                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-            }
-            // Coge los bytes separados de la contraseña en hexadecimal y los junta en un string
-            generatedPassword = sb.toString();
-        }
-        catch (NoSuchAlgorithmException e){
-            e.printStackTrace();
-        }
-        return generatedPassword;
     }
 
     public class userInsert extends AsyncTask <Void, Void, Integer> {

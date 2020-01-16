@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 public class Usuario implements Serializable {
 
-
     private String dni;
     private String nombre;
     private String apellidos;
