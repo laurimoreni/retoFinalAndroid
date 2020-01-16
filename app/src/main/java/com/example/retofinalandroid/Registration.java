@@ -175,7 +175,7 @@ public class Registration extends AppCompatActivity {
         return generatedPassword;
     }
 
-    public class userInsert extends AsyncTask {
+    public class userInsert extends AsyncTask <Void, Void, Integer> {
 
         private String dni, firstName, lastName, email, password, telephone;
         private Context mContext;
@@ -191,7 +191,7 @@ public class Registration extends AppCompatActivity {
         }
 
         @Override
-        public Integer doInBackground(Object[] objects) {
+        public Integer doInBackground(Void... param) {
             String url = "jdbc:mysql://188.213.5.150:3306/prueba?useSSL=false";
             String user = "ldmj";
             String pass = "ladamijo";
@@ -211,23 +211,22 @@ public class Registration extends AppCompatActivity {
                 ps.setInt(7, 0);
                 rs = ps.executeUpdate();
             } catch (Exception e) {
-                System.out.println("Error al insertar el nuevo usuario en la base de datos");
                 e.printStackTrace();
             }
             return rs;
         }
 
         @Override
-        protected void onPostExecute(Object result) {
-            super.onPostExecute(result);
-            if (result.toString().equals("1")) {
+        protected void onPostExecute(Integer result) {
+            //super.onPostExecute(result);
+            if (result == 1) {
                 // add new user to users arraylist of the model
                 ArrayList<Usuario> usuarios = mod.getUsuarios();
                 usuarios.add(new Usuario(dni, firstName, lastName, email, password, telephone, 0));
                 mod.setUsuarios(usuarios);
                 // show success message
                 Toast.makeText(mContext, R.string.new_user_success, Toast.LENGTH_SHORT).show();
-                //
+                // go to login activity
                 Intent i = new Intent(mContext, Login.class );
                 startActivity(i);
             } else {

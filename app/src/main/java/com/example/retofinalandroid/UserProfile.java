@@ -22,7 +22,6 @@ import java.util.ArrayList;
 public class UserProfile extends AppCompatActivity {
 
     private TextView tvDni, tvName, tvLastName, tvEmail, tvTel;
-    private String userDni;
     private Usuario user;
     private Modelo mod;
 
@@ -38,15 +37,7 @@ public class UserProfile extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // get the current user
-        Bundle bundle = getIntent().getExtras();
-        userDni = bundle.getString("user_dni");
-
-        ArrayList<Usuario> usuarios = mod.getUsuarios();
-        for (int i = 0; i < usuarios.size(); i++) {
-            if (usuarios.get(i).getDni().equals(userDni)) {
-                user = usuarios.get(i);
-            }
-        }
+        user = mod.getLoggedUser();
 
         // get fields
         tvDni = (TextView) findViewById(R.id.tvDni);
@@ -77,10 +68,7 @@ public class UserProfile extends AppCompatActivity {
         int id = item.getItemId();
         switch (item.getItemId()) {
             case R.id.userProfile:
-                SharedPreferences prefe = getSharedPreferences("datos", Context.MODE_PRIVATE);
-                String userDni = prefe.getString("user_dni","");
                 Intent userIntent = new Intent(this, UserProfile.class);
-                userIntent.putExtra("user_dni", userDni);
                 startActivity(userIntent);
                 break;
             case R.id.config:
@@ -102,7 +90,7 @@ public class UserProfile extends AppCompatActivity {
      * Delete user from database
      */
     public void deleteUser(View v) {
-        new userDelete(userDni, getApplicationContext()).execute();
+        new userDelete(user, getApplicationContext()).execute();
     }
 
     /**
@@ -111,60 +99,56 @@ public class UserProfile extends AppCompatActivity {
     public void editUser(View v) {
         // add data to the intent and start the new activity
         Intent i = new Intent(this, EditUser.class);
-        i.putExtra("user_dni", userDni);
         startActivity(i);
     }
 
-    public class userDelete extends AsyncTask {
+    public class userDelete extends AsyncTask<Void, Void, Integer> {
 
-        private String dni;
+        private Usuario user;
         private Context mContext;
 
-        public userDelete(String dni, Context context){
-            this.dni = dni;
+        public userDelete(Usuario user, Context context){
+            this.user = user;
             this.mContext = context;
         }
 
         @Override
-        public Integer doInBackground(Object[] objects) {
+        public Integer doInBackground(Void... voids) {
             String url = "jdbc:mysql://188.213.5.150:3306/prueba?useSSL=false";
-            String user = "ldmj";
-            String pass = "ladamijo";
+            String dbuser = "ldmj";
+            String dbpass = "ladamijo";
             Connection con = null;
             PreparedStatement ps = null;
             Integer rs = 0;
             String query = "delete from usuarios where dni = ?";
             try {
-                con = DriverManager.getConnection(url, user, pass);
+                con = DriverManager.getConnection(url, dbuser, dbpass);
                 ps = con.prepareStatement(query);
-                ps.setString(1, dni);
+                ps.setString(1, user.getDni());
                 rs = ps.executeUpdate();
             } catch (Exception e) {
-                System.out.println("Error al borrar el usuario de la base de datos");
                 e.printStackTrace();
             }
             return rs;
         }
 
         @Override
-        protected void onPostExecute(Object result) {
-            super.onPostExecute(result);
-            if (result.toString().equals("1")) {
-                // add new user to users arraylist of the model
+        protected void onPostExecute(Integer result) {
+            if (result == 1) {
+                // remove user from users arraylist of the model
                 ArrayList<Usuario> usuarios = mod.getUsuarios();
                 for (int i = 0; i < usuarios.size(); i++) {
-                    if (usuarios.get(i).getDni().equals(dni)) {
+                    if (usuarios.get(i).getDni().equals(user.getDni())) {
                         usuarios.remove(i);
                     }
                 }
                 mod.setUsuarios(usuarios);
-                // show success message
-                Toast.makeText(mContext, R.string.new_user_success, Toast.LENGTH_SHORT).show();
-                //
+                // show success message and go to Login view
+                Toast.makeText(mContext, R.string.text_user_delete, Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(mContext, Login.class );
                 startActivity(i);
             } else {
-                Toast.makeText(mContext, R.string.new_user_error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, R.string.text_user_no_delete, Toast.LENGTH_SHORT).show();
             }
         }
     }

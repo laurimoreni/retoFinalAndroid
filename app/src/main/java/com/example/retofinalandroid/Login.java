@@ -48,11 +48,8 @@ public class Login extends AppCompatActivity {
         if (!email.equals("") & !password.equals("")) {
             usuario = checkUserCredentials(email, passwordHashing(password));
             if (usuario != null) {
-                SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferencias.edit();
-                editor.putString("user_dni", String.valueOf(usuario.getDni()));
-                editor.commit();
-                Intent i = new Intent(this, AlojamientoRecyclerView.class );
+                mod.setLoggedUser(usuario);
+                Intent i = new Intent(this, About.class );
                 startActivity(i);
             } else {
                 Toast.makeText(this, R.string.user_dont_exist, Toast.LENGTH_SHORT).show();

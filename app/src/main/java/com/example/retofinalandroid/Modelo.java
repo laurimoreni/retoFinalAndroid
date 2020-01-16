@@ -9,6 +9,7 @@ public class Modelo extends Application {
     private ArrayList<Usuario> usuarios;
     private ArrayList<Provincia> provincias;
     private ArrayList<Reserva> reservas;
+    private Usuario loggedUser;
 
     public ArrayList<Alojamiento> getAlojamientos() {
         return alojamientos;
@@ -40,5 +41,13 @@ public class Modelo extends Application {
 
     public void setReservas(ArrayList<Reserva> reservas) {
         this.reservas = reservas;
+    }
+
+    public Usuario getLoggedUser() {
+        return loggedUser;
+    }
+
+    public void setLoggedUser(Usuario loggedUser) {
+        this.loggedUser = loggedUser;
     }
 }

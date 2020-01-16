@@ -1,7 +1,8 @@
 <resources>
     <!-- Action Bar -->
     <string name="app_name" translatable="false">RetoFinal</string>
-    <string name="btn_profile">Profile</string>
+    <string name="option_profile">Profile</string>
+    <string name="option_logout">Logout</string>
     <string name="option_config">Settings</string>
     <string name="option_about">About</string>
     <!-- Inicio -->
@@ -52,6 +53,7 @@
     <string name="empty_old_pass">You must enter an old password</string>
     <string name="empty_new_pass">You must enter a new password</string>
     <string name="same_pass">New password must be different from old password</string>
+    <string name="wrong_old_pass">Incorrect old password</string>
     <string name="edit_pass_success">Password changed</string>
     <string name="edit_pass_error">An error has ocurred. The password could not be updated.</string>
     <string name="dialog_confirm">Confirm</string>

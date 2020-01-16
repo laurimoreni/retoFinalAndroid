@@ -106,10 +106,7 @@ public class Settings extends AppCompatActivity {
         int id = item.getItemId();
         switch (item.getItemId()) {
             case R.id.userProfile:
-                SharedPreferences prefe = getSharedPreferences("datos", Context.MODE_PRIVATE);
-                String userDni = prefe.getString("user_dni","");
                 Intent userIntent = new Intent(this, UserProfile.class);
-                userIntent.putExtra("user_dni", userDni);
                 startActivity(userIntent);
                 break;
             case R.id.config:

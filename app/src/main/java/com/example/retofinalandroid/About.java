@@ -41,12 +41,7 @@ public class About extends AppCompatActivity {
         int id = item.getItemId();
         switch (item.getItemId()) {
             case R.id.userProfile:
-                // get user dni from preferences
-                SharedPreferences prefe = getSharedPreferences("datos", Context.MODE_PRIVATE);
-                String userDni = prefe.getString("user_dni","");
-                // add data to the intent and start the new activity
                 Intent userIntent = new Intent(this, UserProfile.class);
-                userIntent.putExtra("user_dni", userDni);
                 startActivity(userIntent);
                 break;
             case R.id.config:
