@@ -76,7 +76,8 @@
     <string name="text_alojamiento_desc">Description</string>
     <string name="text_alojamiento_details">More details</string>
     <string name="text_alojamiento_img">Alojamiento image</string>
-    <string name="btn_reservar">Reservar</string>
+    <string name="btn_reservar">Reservation</string>
+    <string name="btn_mapa">See on map</string>
     <string name="text_alojamiento_no_done">Alojamiento could not be marked as done</string>
     <!-- About -->
     <string name="developer">This app has been developed by Laura Moreno Gonzalez.</string>

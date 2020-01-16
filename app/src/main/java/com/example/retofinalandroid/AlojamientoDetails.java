@@ -5,20 +5,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import java.sql.Blob;
 
 public class AlojamientoDetails extends AppCompatActivity {
 
     private TextView tvName, tvDesc, tvLoc, tvType, tvMore, tvPriority;
-    private Button btnReservar;
+    private Button btnReservar, btnMapa;
+    private ImageView imagen;
     private Alojamiento alojamiento;
+    private Modelo mod;
+    private int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,16 +36,22 @@ public class AlojamientoDetails extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // get the current alojamiento
-        Intent i = getIntent();
-        alojamiento = (Alojamiento)i.getSerializableExtra("alojamiento");
+        Bundle extras = getIntent().getExtras();
+        index = extras.getInt("position");
+
+        mod = (Modelo) getApplication();
+        alojamiento = mod.getAlojamientos().get(index);
+
 
         // get fields
         tvName = (TextView) findViewById(R.id.tvName);
-        tvDesc = (TextView) findViewById(R.id.tvLastName);
+        tvDesc = (TextView) findViewById(R.id.tvDesc);
         tvLoc = (TextView) findViewById(R.id.tvLoc);
         tvType = (TextView) findViewById(R.id.tvType);
         tvMore = (TextView) findViewById(R.id.tvMore);
         btnReservar = (Button) findViewById(R.id.btnReservar);
+        btnMapa = (Button) findViewById(R.id.btnMapa);
+        imagen = (ImageView) findViewById(R.id.image);
 
         // show alojamiento info in the fields
         tvName.setText(alojamiento.getDocumentname());
@@ -46,6 +59,14 @@ public class AlojamientoDetails extends AppCompatActivity {
         tvLoc.setText(alojamiento.getProvincia().getNombre() + ", " + alojamiento.getMunicipality());
         tvType.setText(alojamiento.getLodgingtype());
         tvMore.setText("Capacidad:" + alojamiento.getCapacity());
+        Blob blob = alojamiento.getImagen();
+        try {
+            byte[] blobAsBytes = blob.getBytes(1, (int) blob.length());
+            Bitmap btm = BitmapFactory.decodeByteArray(blobAsBytes, 0, blobAsBytes.length);
+            imagen.setImageBitmap(btm);
+        } catch (Exception e) {
+            //holder.image.setImageBitmap(R.mipmap.alerta);
+        }
     }
 
     /**
