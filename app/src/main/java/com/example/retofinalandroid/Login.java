@@ -54,6 +54,7 @@ public class Login extends AppCompatActivity {
                 editor.commit();
                 Intent i = new Intent(this, AlojamientoRecyclerView.class );
                 startActivity(i);
+                finish();
             } else {
                 Toast.makeText(this, R.string.user_dont_exist, Toast.LENGTH_SHORT).show();
             }
