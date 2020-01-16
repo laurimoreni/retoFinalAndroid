@@ -51,6 +51,7 @@ public class Login extends AppCompatActivity {
                 mod.setLoggedUser(usuario);
                 Intent i = new Intent(this, About.class );
                 startActivity(i);
+                finish();
             } else {
                 Toast.makeText(this, R.string.user_dont_exist, Toast.LENGTH_SHORT).show();
             }
