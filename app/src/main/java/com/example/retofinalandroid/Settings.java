@@ -14,11 +14,15 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Settings extends AppCompatActivity {
 
     private Switch swDesc, swDate, swHour;
+    private Modelo mod;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
+
+        // get model data
+        mod = (Modelo) getApplication();
 
         // add back button to the action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -108,6 +112,11 @@ public class Settings extends AppCompatActivity {
             case R.id.userProfile:
                 Intent userIntent = new Intent(this, UserProfile.class);
                 startActivity(userIntent);
+                break;
+            case R.id.logout:
+                mod.setLoggedUser(null);
+                Intent logoutIntent = new Intent(this, Login.class);
+                startActivity(logoutIntent);
                 break;
             case R.id.config:
                 Intent configIntent = new Intent(this, Settings.class);

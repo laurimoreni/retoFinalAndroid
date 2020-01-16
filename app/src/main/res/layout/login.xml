@@ -6,9 +6,10 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     tools:context=".Login">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <EditText
             android:id="@+id/etEmail"

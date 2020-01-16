@@ -12,10 +12,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.sql.Blob;
 import java.util.ArrayList;
@@ -40,6 +43,43 @@ public class AlojamientoRecyclerView extends AppCompatActivity {
         Adaptador_RecyclerView adapter = new Adaptador_RecyclerView();
         rvAlojamientos.setAdapter(adapter);
         rvAlojamientos.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    /**
+     * Creates the Action Bar menu
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actionbar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (item.getItemId()) {
+            case R.id.userProfile:
+                Intent userIntent = new Intent(this, UserProfile.class);
+                startActivity(userIntent);
+                break;
+            case R.id.logout:
+                mod.setLoggedUser(null);
+                Intent logoutIntent = new Intent(this, Login.class);
+                startActivity(logoutIntent);
+                break;
+            case R.id.config:
+                Intent configIntent = new Intent(this, Settings.class);
+                startActivity(configIntent);
+                break;
+            case R.id.about:
+                Intent aboutIntent = new Intent(this, About.class);
+                startActivity(aboutIntent);
+                break;
+            case android.R.id.home:
+                this.finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void pasarADetalles(int position) {

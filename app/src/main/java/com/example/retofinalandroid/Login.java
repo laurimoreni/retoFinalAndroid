@@ -49,7 +49,7 @@ public class Login extends AppCompatActivity {
             usuario = checkUserCredentials(email, passwordHashing(password));
             if (usuario != null) {
                 mod.setLoggedUser(usuario);
-                Intent i = new Intent(this, About.class );
+                Intent i = new Intent(this, AlojamientoRecyclerView.class );
                 startActivity(i);
                 finish();
             } else {

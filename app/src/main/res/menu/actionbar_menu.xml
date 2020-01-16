@@ -5,8 +5,11 @@
     <item
         android:id="@+id/userProfile"
         android:icon="@mipmap/baseline_perm_identity_white_48"
-        android:title="@string/btn_profile"
+        android:title="@string/option_profile"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/logout"
+        android:title="@string/option_logout" />
     <item
         android:id="@+id/config"
         android:title="@string/option_config"

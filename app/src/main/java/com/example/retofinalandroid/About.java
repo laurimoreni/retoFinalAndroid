@@ -44,6 +44,11 @@ public class About extends AppCompatActivity {
                 Intent userIntent = new Intent(this, UserProfile.class);
                 startActivity(userIntent);
                 break;
+            case R.id.logout:
+                mod.setLoggedUser(null);
+                Intent logoutIntent = new Intent(this, Login.class);
+                startActivity(logoutIntent);
+                break;
             case R.id.config:
                 Intent configIntent = new Intent(this, Settings.class);
                 startActivity(configIntent);
