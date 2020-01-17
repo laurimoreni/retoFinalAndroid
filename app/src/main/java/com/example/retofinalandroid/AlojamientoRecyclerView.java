@@ -93,7 +93,8 @@ public class AlojamientoRecyclerView extends BaseActivity {
             holder.tvName.setText(aloj.getDocumentname());
             holder.tvLoc.setText(aloj.getMunicipality());
             holder.tvType.setText(aloj.getLodgingtype());
-            holder.tvDesc.setText(aloj.getTurismdescription().substring(0, 150) + "...");
+            String desc = aloj.getTurismdescription();
+            holder.tvDesc.setText(desc.substring(0, desc.indexOf(".")) + "...");
             Blob blob = aloj.getImagen();
             try {
                 byte[] blobAsBytes = blob.getBytes(1, (int) blob.length());

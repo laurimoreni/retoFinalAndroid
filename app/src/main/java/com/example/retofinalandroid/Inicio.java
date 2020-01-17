@@ -34,7 +34,6 @@ public class Inicio extends AppCompatActivity {
     public void pasarALogin() {
         Intent intent = new Intent(this, Login.class);
         startActivity(intent);
-        finish();
     }
 
     public void errorConexion() {

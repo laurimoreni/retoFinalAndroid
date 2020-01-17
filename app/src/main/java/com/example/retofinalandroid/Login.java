@@ -70,13 +70,20 @@ public class Login extends AppCompatActivity {
             .setTitle(R.string.exitTitle)
             .setMessage(R.string.exitMessage)
             .setPositiveButton(R.string.dialog_confirm, new DialogInterface.OnClickListener() {
-                DialogInterface.OnClickListener context = this;
+                //DialogInterface.OnClickListener context = this;
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    finish();
+                    salirAplicacion();
                 }
             })
             .setNegativeButton(R.string.dialog_cancel, null)
             .show();
+    }
+
+    public void salirAplicacion() {
+        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+        homeIntent.addCategory( Intent.CATEGORY_HOME );
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(homeIntent);
     }
 }
