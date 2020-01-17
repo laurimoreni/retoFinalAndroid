@@ -70,10 +70,11 @@ public class Registration extends AppCompatActivity {
         password = etPassword.getText().toString();
         passwordRepeat = etPasswordRepeat.getText().toString();
         telephone = etTel.getText().toString();
+        Usuario oldUser = validations.checkUserInactive(dni, email);
 
         // if data entered is valid, make the insert
         if (dataValidation()) {
-            new userInsert(dni, firstName, lastName, email, validations.passwordHashing(password), telephone, getApplicationContext()).execute();
+            new userInsert(oldUser, dni, firstName, lastName, email, validations.passwordHashing(password), telephone, getApplicationContext()).execute();
         }
     }
 
@@ -136,16 +137,18 @@ public class Registration extends AppCompatActivity {
     public class userInsert extends AsyncTask <Void, Void, Integer> {
 
         private String dni, firstName, lastName, email, password, telephone;
+        private Usuario oldUser;
         private Context mContext;
 
-        public userInsert(String dni, String firstName, String lastName, String email, String password, String telephone, Context context){
-          this.dni = dni;
-          this.firstName = firstName;
-          this.lastName = lastName;
-          this.email = email;
-          this.password = password;
-          this.telephone = telephone;
-          this.mContext = context;
+        public userInsert(Usuario oldUser, String dni, String firstName, String lastName, String email, String password, String telephone, Context context){
+            this.oldUser = oldUser;
+            this.dni = dni;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.email = email;
+            this.password = password;
+            this.telephone = telephone;
+            this.mContext = context;
         }
 
         @Override
@@ -156,7 +159,16 @@ public class Registration extends AppCompatActivity {
             Connection con = null;
             PreparedStatement ps = null;
             Integer rs = 0;
-            String query = "insert into usuarios (dni, nombre, apellido, contrasena, telefono, email, administrador) values (?, ?, ?, ?, ?, ?, ?)";
+            String query = null;
+            if (oldUser != null) {
+                if(oldUser.getDni().equals(dni)) {
+                    query = "update usuarios set dni = ?, nombre = ?, apellido = ?, contrasena = ?, telefono = ?, email = ?, administrador = ?, activo = ? where dni = ?";
+                } else if(oldUser.getEmail().equals(email)) {
+                    query = "update usuarios set dni = ?, nombre = ?, apellido = ?, contrasena = ?, telefono = ?, email = ?, administrador = ?, activo = ? where email = ?";
+                }
+            } else {
+                query = "insert into usuarios (dni, nombre, apellido, contrasena, telefono, email, administrador, activo) values (?, ?, ?, ?, ?, ?, ?, ?)";
+            }
             try {
                 con = DriverManager.getConnection(url, user, pass);
                 ps = con.prepareStatement(query);
@@ -167,6 +179,14 @@ public class Registration extends AppCompatActivity {
                 ps.setString(5, telephone);
                 ps.setString(6, email);
                 ps.setInt(7, 0);
+                ps.setString(8, "activo");
+                if (oldUser != null) {
+                    if(oldUser.getDni().equals(dni)) {
+                        ps.setString(9, dni);
+                    } else if(oldUser.getEmail().equals(email)) {
+                        ps.setString(9, email);
+                    }
+                }
                 rs = ps.executeUpdate();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -176,11 +196,10 @@ public class Registration extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Integer result) {
-            //super.onPostExecute(result);
             if (result == 1) {
                 // add new user to users arraylist of the model
                 ArrayList<Usuario> usuarios = mod.getUsuarios();
-                usuarios.add(new Usuario(dni, firstName, lastName, email, password, telephone, 0));
+                usuarios.add(new Usuario(dni, firstName, lastName, email, password, telephone, 0, "activo"));
                 mod.setUsuarios(usuarios);
                 // show success message
                 Toast.makeText(mContext, R.string.new_user_success, Toast.LENGTH_SHORT).show();
