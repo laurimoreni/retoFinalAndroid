@@ -62,4 +62,8 @@ public class AlojamientoDetails extends BaseActivity {
         // FALTA ENVIAR A ACTIVITY DE RESERVA
     }
 
+    public void verEnMapa(View v) {
+
+    }
+
 }
