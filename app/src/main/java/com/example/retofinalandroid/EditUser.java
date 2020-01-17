@@ -21,7 +21,7 @@ public class EditUser extends BaseActivity {
 
     private EditText etDni, etFirstName, etLastName, etEmail, etTel;
     private String dni, firstName, lastName, email, telephone;
-    private Usuario user;
+    private Usuario currentUser;
     private Validations validations;
 
     @Override
@@ -31,8 +31,8 @@ public class EditUser extends BaseActivity {
 
         validations = new Validations(mod, getApplicationContext());
 
-        // get the current user
-        user = mod.getLoggedUser();
+        // get the current currentUser
+        currentUser = mod.getLoggedUser();
 
         // get fields
         etDni = (EditText)findViewById(R.id.etDni);
@@ -41,16 +41,16 @@ public class EditUser extends BaseActivity {
         etEmail = (EditText)findViewById(R.id.etEmail);
         etTel = (EditText)findViewById(R.id.etTel);
 
-        // show user info in the fields
-        etDni.setText(user.getDni());
-        etFirstName.setText(user.getNombre());
-        etLastName.setText(user.getApellidos());
-        etEmail.setText(user.getEmail());
-        etTel.setText(user.getTelefono());
+        // show currentUser info in the fields
+        etDni.setText(currentUser.getDni());
+        etFirstName.setText(currentUser.getNombre());
+        etLastName.setText(currentUser.getApellidos());
+        etEmail.setText(currentUser.getEmail());
+        etTel.setText(currentUser.getTelefono());
     }
 
     /**
-     * Save a the user data to database
+     * Save a the currentUser data to database
      * @param v
      */
     public void saveUser(View v) {
@@ -62,12 +62,12 @@ public class EditUser extends BaseActivity {
         email = etEmail.getText().toString();
         telephone = etTel.getText().toString();
 
-        // create new user object
-        Usuario newUser = new Usuario(dni, firstName, lastName, email, user.getContrasena(), telephone, user.getAdministrador());
+        // create new currentUser object
+        Usuario newUser = new Usuario(dni, firstName, lastName, email, currentUser.getContrasena(), telephone, currentUser.getAdministrador(), currentUser.getActivo());
 
         // if data entered is valid, make the update
         if (dataValidation()) {
-            new updateUser(user, newUser, getApplicationContext()).execute();
+            new updateUser(currentUser, newUser, getApplicationContext()).execute();
         }
     }
 
@@ -81,7 +81,7 @@ public class EditUser extends BaseActivity {
     }
 
     /**
-     * Check if data entered by the user is valid
+     * Check if data entered by the currentUser is valid
      * @return
      */
     public boolean dataValidation() {
@@ -125,7 +125,7 @@ public class EditUser extends BaseActivity {
     }
 
     /**
-     * Open a dialog to change the user password
+     * Open a dialog to change the currentUser password
      * @param v
      */
     public void changePassword(View v) {
@@ -142,8 +142,8 @@ public class EditUser extends BaseActivity {
             String oldPassword = etOldPassword.getText().toString();
             String newPassword = etNewPassword.getText().toString();
             // if data entered is valid, make the update
-            if (validations.newPasswordValidation(user.getContrasena(), oldPassword, newPassword)) {
-                new updateUserPassword(user, validations.passwordHashing(newPassword), getApplicationContext()).execute();
+            if (validations.newPasswordValidation(currentUser.getContrasena(), oldPassword, newPassword)) {
+                new updateUserPassword(currentUser, validations.passwordHashing(newPassword), getApplicationContext()).execute();
             }
             }
         });
@@ -158,16 +158,16 @@ public class EditUser extends BaseActivity {
     }
 
     /**
-     * Class for updating user data except password and administrator fields
+     * Class for updating currentUser data except password and administrator fields
      */
     public class updateUser extends AsyncTask<Void, Void, Integer> {
 
-        private Usuario user;
+        private Usuario currentUser;
         private Usuario newUser;
         private Context mContext;
 
-        public updateUser(Usuario user, Usuario newUser, Context context){
-            this.user = user;
+        public updateUser(Usuario currentUser, Usuario newUser, Context context){
+            this.currentUser = currentUser;
             this.newUser = newUser;
             this.mContext = context;
         }
@@ -189,7 +189,7 @@ public class EditUser extends BaseActivity {
                 ps.setString(3, newUser.getApellidos());
                 ps.setString(4, newUser.getTelefono());
                 ps.setString(5, newUser.getEmail());
-                ps.setString(6, user.getDni());
+                ps.setString(6, currentUser.getDni());
                 rs = ps.executeUpdate();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -203,12 +203,12 @@ public class EditUser extends BaseActivity {
                 // update info in the users arraylist of the model
                 ArrayList<Usuario> usuarios = mod.getUsuarios();
                 for (int i = 0; i < usuarios.size(); i++) {
-                    if (usuarios.get(i).getDni().equals(user.getDni())) {
+                    if (usuarios.get(i).getDni().equals(currentUser.getDni())) {
                         usuarios.set(i, newUser);
                     }
                 }
                 mod.setUsuarios(usuarios);
-                // show success message and go to user profile activity
+                // show success message and go to currentUser profile activity
                 Toast.makeText(mContext, R.string.edit_user_success, Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(mContext, UserProfile.class );
                 startActivity(i);
@@ -219,7 +219,7 @@ public class EditUser extends BaseActivity {
     }
 
     /**
-     * Class for updating user password
+     * Class for updating currentUser password
      */
     public class updateUserPassword extends AsyncTask<Void, Void, Integer> {
 
@@ -265,7 +265,7 @@ public class EditUser extends BaseActivity {
                     }
                 }
                 mod.setUsuarios(usuarios);
-                // show success message and go to user profile activity
+                // show success message and go to currentUser profile activity
                 Toast.makeText(mContext, R.string.edit_user_success, Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(mContext, EditUser.class );
                 startActivity(i);

@@ -70,7 +70,7 @@ public class Validations {
     }
 
     /**
-     * Check if an user with especified dni or email already exists
+     * Check if an user with especified dni or email already have an active account
      * @param dni
      * @param email
      * @return
@@ -78,17 +78,41 @@ public class Validations {
     public boolean checkUserExist(String dni, String email){
         ArrayList<Usuario> usuarios = mod.getUsuarios();
         for (int i = 0; i < usuarios.size(); i++) {
-            if (usuarios.get(i).getDni().equals(dni) || usuarios.get(i).getEmail().equals(email)) {
+            if ((usuarios.get(i).getDni().equals(dni) || usuarios.get(i).getEmail().equals(email)) && usuarios.get(i).getActivo().equals("activo")) {
+                // el usuario no puede registrarse
                 return true;
             }
         }
         return false;
     }
 
+    public Usuario checkUserInactive(String dni, String email){
+        ArrayList<Usuario> usuarios = mod.getUsuarios();
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (usuarios.get(i).getDni().equals(dni) && usuarios.get(i).getEmail().equals(email) && usuarios.get(i).getActivo().equals("inactivo")) {
+                // hay un usuario inactivo con el mismo dni e email
+                // update y activar ese usuario
+                return usuarios.get(i);
+            }
+            if (usuarios.get(i).getDni().equals(dni) && usuarios.get(i).getActivo().equals("inactivo")) {
+                // hay un usuario inactivo con el mismo dni
+                // update y activar ese usuario
+                return usuarios.get(i);
+            }
+            if(usuarios.get(i).getEmail().equals(email) && usuarios.get(i).getActivo().equals("inactivo"))  {
+                // hay un usuario inactivo con el mismo email
+                // update y activar ese usuario
+                return usuarios.get(i);
+            }
+        }
+        // nuevo usuario
+        return null;
+    }
+
     public Usuario checkUserCredentials(String email, String password){
         ArrayList<Usuario> usuarios = mod.getUsuarios();
         for (int i = 0; i < usuarios.size(); i++) {
-            if (usuarios.get(i).getEmail().equals(email) && usuarios.get(i).getContrasena().equals(password)) {
+            if (usuarios.get(i).getEmail().equals(email) && usuarios.get(i).getContrasena().equals(password) && usuarios.get(i).getActivo().equals("activo")) {
                 return usuarios.get(i);
             }
         }

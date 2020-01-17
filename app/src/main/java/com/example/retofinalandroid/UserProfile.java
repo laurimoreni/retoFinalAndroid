@@ -74,7 +74,7 @@ public class UserProfile extends BaseActivity {
             Connection con = null;
             PreparedStatement ps = null;
             Integer rs = 0;
-            String query = "delete from usuarios where dni = ?";
+            String query = "update usuarios set activo = 'inactivo' where dni = ?";
             try {
                 con = DriverManager.getConnection(url, dbuser, dbpass);
                 ps = con.prepareStatement(query);
@@ -93,7 +93,7 @@ public class UserProfile extends BaseActivity {
                 ArrayList<Usuario> usuarios = mod.getUsuarios();
                 for (int i = 0; i < usuarios.size(); i++) {
                     if (usuarios.get(i).getDni().equals(user.getDni())) {
-                        usuarios.remove(i);
+                        usuarios.get(i).setActivo("inactivo");
                     }
                 }
                 mod.setUsuarios(usuarios);
