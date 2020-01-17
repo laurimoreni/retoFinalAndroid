@@ -150,8 +150,11 @@ public class Inicio extends AppCompatActivity {
                     aloj.setAutocaravana(rs.getInt("autocaravana"));
                     Blob blob = rs.getBlob("imagen");
                     aloj.setImagen(blob);
-                    aloj.setActivo(rs.getInt("activo"));
-                    alojamientos.add(aloj);
+                    int activo = rs.getInt("activo");
+                    if (activo == 1){
+                        aloj.setActivo(activo);
+                        alojamientos.add(aloj);
+                    }
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -234,7 +237,9 @@ public class Inicio extends AppCompatActivity {
                         }
                     }
                     res.setPersonas(rs.getInt("personas"));
-                    reservas.add(res);
+                    if (res.getAlojamiento().getActivo() == 1) {
+                        reservas.add(res);
+                    }
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
