@@ -1,5 +1,6 @@
 package com.example.retofinalandroid;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -63,7 +64,11 @@ public class AlojamientoDetails extends BaseActivity {
     }
 
     public void verEnMapa(View v) {
-
+        Intent intent = new Intent(this, MapaAlojamiento.class);
+        intent.putExtra("lat", alojamiento.getLatwgs84());
+        intent.putExtra("long", alojamiento.getLonwgs84());
+        intent.putExtra("alojamiento", alojamiento.getDocumentname());
+        startActivity(intent);
     }
 
 }
