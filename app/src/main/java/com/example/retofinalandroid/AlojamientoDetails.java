@@ -1,5 +1,6 @@
 package com.example.retofinalandroid;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -59,7 +60,9 @@ public class AlojamientoDetails extends BaseActivity {
      */
     public void reservarAlojamiento(View v) {
         String cod = alojamiento.getSignatura();
-        // FALTA ENVIAR A ACTIVITY DE RESERVA
+        Intent i = new Intent(this, Reservar.class);
+        i.putExtra("alojamiento", cod);
+        startActivity(i);
     }
 
     public void verEnMapa(View v) {

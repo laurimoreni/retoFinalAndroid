@@ -27,6 +27,7 @@
         <activity android:name=".EditUser" />
         <activity android:name=".Settings" />
         <activity android:name=".About" />
+        <activity android:name=".Reservar" />
     </application>
 
 </manifest>

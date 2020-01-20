@@ -227,7 +227,8 @@ public class Inicio extends AppCompatActivity {
                             break;
                         }
                     }
-                    res.setFecha(rs.getDate("fecha"));
+                    res.setFechaEntrada(rs.getDate("fechaEntrada"));
+                    res.setFechaSalida(rs.getDate("fechaSalida"));
                     String signatura = rs.getString("alojamiento");
                     for (Alojamiento aloj : mod.getAlojamientos()) {
                         if (aloj.getSignatura().equals(signatura)) {
