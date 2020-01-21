@@ -51,6 +51,7 @@ public class AlojamientoRecyclerView extends BaseActivity {
             public TextView tvName;
             public TextView tvLoc;
             public TextView tvType;
+            public TextView tvCap;
             public TextView tvDesc;
             public ImageView image;
             private Context context;
@@ -60,6 +61,7 @@ public class AlojamientoRecyclerView extends BaseActivity {
                 tvName = (TextView) itemView.findViewById(R.id.tvName);
                 tvLoc = (TextView) itemView.findViewById(R.id.tvLoc);
                 tvType = (TextView) itemView.findViewById(R.id.tvType);
+                tvCap = (TextView) itemView.findViewById(R.id.txtCapac);
                 tvDesc = (TextView) itemView.findViewById(R.id.tvDesc);
                 image = (ImageView) itemView.findViewById(R.id.image);
                 this.context = context;
@@ -83,7 +85,7 @@ public class AlojamientoRecyclerView extends BaseActivity {
         public Adaptador_RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             Context context = parent.getContext();
             LayoutInflater inflater = LayoutInflater.from(context);
-            View elementoAloj = inflater.inflate(R.layout.alojamiento, parent, false);
+            View elementoAloj = inflater.inflate(R.layout.alojamiento_2, parent, false);
             Adaptador_RecyclerView.ViewHolder vh  = new Adaptador_RecyclerView.ViewHolder(context, elementoAloj);
             return vh;
         }
@@ -98,6 +100,7 @@ public class AlojamientoRecyclerView extends BaseActivity {
             holder.tvName.setText(aloj.getDocumentname());
             holder.tvLoc.setText(aloj.getMunicipality());
             holder.tvType.setText(aloj.getLodgingtype());
+            holder.tvCap.setText(String.valueOf(aloj.getCapacity()));
             String desc = aloj.getTurismdescription();
             holder.tvDesc.setText(desc.substring(0, desc.indexOf(".")) + "...");
             Blob blob = aloj.getImagen();
