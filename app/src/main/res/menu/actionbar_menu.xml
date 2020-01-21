@@ -3,6 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/filter"
+        android:icon="@mipmap/filter_list_white_48dp"
+        android:title="@string/option_filter"
+        android:visible="false"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/userProfile"
         android:icon="@mipmap/baseline_perm_identity_white_48"
         android:title="@string/option_profile"

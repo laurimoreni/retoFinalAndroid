@@ -118,6 +118,8 @@ public class Inicio extends AppCompatActivity {
 
         private ArrayList<Alojamiento> descargarAlojamientos() {
             ArrayList<Alojamiento> alojamientos = new ArrayList<Alojamiento>();
+            ArrayList<String> tiposAlojamiento = new ArrayList<String>();
+
             ResultSet rs = null;
             Statement st = null;
             String query = "select * from alojamientos";
@@ -154,6 +156,9 @@ public class Inicio extends AppCompatActivity {
                         aloj.setActivo(activo);
                         alojamientos.add(aloj);
                     }
+                    if(!tiposAlojamiento.contains(aloj.getLodgingtype())) {
+                        tiposAlojamiento.add(aloj.getLodgingtype());
+                    }
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -169,6 +174,8 @@ public class Inicio extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+
+            mod.setTiposAlojamiento(tiposAlojamiento);
             return alojamientos;
         }
 

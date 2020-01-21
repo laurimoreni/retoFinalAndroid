@@ -10,6 +10,7 @@ public class Modelo extends Application {
     private ArrayList<Usuario> usuarios;
     private ArrayList<Provincia> provincias;
     private ArrayList<Reserva> reservas;
+    private ArrayList<String> tiposAlojamiento;
     private Usuario loggedUser;
 
     public ArrayList<Alojamiento> getAlojamientos() {
@@ -28,6 +29,14 @@ public class Modelo extends Application {
         return reservas;
     }
 
+    public ArrayList<String> getTiposAlojamiento() {
+        return tiposAlojamiento;
+    }
+
+    public Usuario getLoggedUser() {
+        return loggedUser;
+    }
+
     public void setAlojamientos(ArrayList<Alojamiento> alojamientos) {
         this.alojamientos = alojamientos;
     }
@@ -44,8 +53,8 @@ public class Modelo extends Application {
         this.reservas = reservas;
     }
 
-    public Usuario getLoggedUser() {
-        return loggedUser;
+    public void setTiposAlojamiento(ArrayList<String> tiposAlojamiento) {
+        this.tiposAlojamiento = tiposAlojamiento;
     }
 
     public void setLoggedUser(Usuario loggedUser) {

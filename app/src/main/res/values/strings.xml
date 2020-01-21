@@ -1,6 +1,7 @@
 <resources>
     <!-- Action Bar -->
     <string name="app_name" translatable="false">RetoFinal</string>
+    <string name="option_filter">Filter</string>
     <string name="option_profile">Profile</string>
     <string name="option_logout">Logout</string>
     <string name="option_config">Settings</string>
@@ -83,6 +84,11 @@
     <string name="btn_mapa">See on map</string>
     <string name="text_alojamiento_no_done">Alojamiento could not be marked as done</string>
     <string name="developer">This app has been developed by Laura Moreno Gonzalez.</string>
+    <!-- Filtros -->
+    <string name="filters_title">Filter by</string>
+    <string name="territory">Territory</string>
+    <string name="lodging_type">Lodging type</string>
+    <string name="capacity">Capacity</string>
     <!-- About -->
     <string name="contact">You can send any suggestion or bug report to laura.morenogo@elorrieta-errekamari.com</string>
     <string name="version">Version: 1.0</string>
