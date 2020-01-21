@@ -7,8 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -22,6 +24,9 @@ public class BaseActivity extends AppCompatActivity {
 
     private ArrayList<Integer> checkedTerritory = new ArrayList<Integer>();
     private ArrayList<Integer> checkedType = new ArrayList<Integer>();
+
+    private boolean primeraVez = true;
+    private String maxCap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,29 +75,27 @@ public class BaseActivity extends AppCompatActivity {
             case R.id.filter:
                 View view = getLayoutInflater().inflate( R.layout.filter_panel, null);
                 //inicializar arrays de clicks
-                checkedTerritory.clear();
-                checkedType.clear();
-                LinearLayout lnTerritory = (LinearLayout) view.findViewById(R.id.panelTerritory);
-                LinearLayout lnType = (LinearLayout) view.findViewById(R.id.panelType);
+                LinearLayout lnTerritory = view.findViewById(R.id.panelTerritory);
+                LinearLayout lnType = view.findViewById(R.id.panelType);
+                final EditText edtCapac = view.findViewById(R.id.edtCapac);
                 cargarFiltroTerritory(lnTerritory);
                 cargarFiltroType(lnType);
+                fijarCapacidad(edtCapac);
 
                 AlertDialog.Builder dialog = new AlertDialog.Builder( this );
                 dialog.setView(view);
                 dialog.setPositiveButton(R.string.buttonOk, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        maxCap = edtCapac.getText().toString();
                         aplicarFiltros();
                     }
                 });
                 dialog.setNegativeButton(R.string.dialog_cancel, null);
                 dialog.show();
+                primeraVez = false;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void aplicarFiltros() {
-        Toast.makeText(this, "Filtros aplicados", Toast.LENGTH_SHORT).show();
     }
 
     public void cargarFiltroTerritory(LinearLayout layout) {
@@ -101,7 +104,11 @@ public class BaseActivity extends AppCompatActivity {
         for (int i=0; i<provincias.size();i++) {
             CheckBox chkProv = new CheckBox(this);
             chkProv.setText(provincias.get(i).getNombre());
-            checkedTerritory.add(0);
+            if (primeraVez) {
+                checkedTerritory.add(0);
+            } else if (checkedTerritory.get(i) == 1) {
+                    chkProv.setChecked(true);
+            }
             chkProv.setOnClickListener(new setCheckedTerritory(i));
 
             layout.addView(chkProv);
@@ -130,7 +137,11 @@ public class BaseActivity extends AppCompatActivity {
         for (int i=0; i<tiposAlojamiento.size();i++) {
             CheckBox chkTipo = new CheckBox(this);
             chkTipo.setText(tiposAlojamiento.get(i));
-            checkedType.add(0);
+            if (primeraVez) {
+                checkedType.add(0);
+            }else if (checkedType.get(i) == 1) {
+                chkTipo.setChecked(true);
+            }
             chkTipo.setOnClickListener(new setCheckedType(i));
 
             layout.addView(chkTipo);
@@ -150,6 +161,68 @@ public class BaseActivity extends AppCompatActivity {
                 checkedType.set(pos,1 );
             else
                 checkedType.set(pos, 0);
+        }
+    }
+
+    public void fijarCapacidad(final EditText edtCapac) {
+        if(primeraVez) {
+            edtCapac.setText("0", TextView.BufferType.EDITABLE);
+            edtCapac.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+                public void onFocusChange(View v, boolean hasFocus){
+                    if (hasFocus) {
+                        ((EditText) edtCapac).setText("");
+                    }
+                }
+            });
+
+        } else {
+            edtCapac.setText(maxCap, TextView.BufferType.EDITABLE);
+        }
+    }
+
+    public void aplicarFiltros() {
+        mod.getAlojFiltrados().clear();
+        for (Alojamiento aloj : mod.getAlojamientos()) {
+            if (filtrarTerritory(aloj) && filtrarTipo(aloj) && filtrarCapacidad(aloj)) {
+                mod.getAlojFiltrados().add(aloj);
+            }
+        }
+        mod.getAdapter().notifyDataSetChanged();
+    }
+
+    public boolean filtrarTerritory(Alojamiento aloj) {
+        for(int i=0;i<checkedTerritory.size();i++) {
+            if (checkedTerritory.get(i) == 1) {
+                if(aloj.getProvincia().getId() == mod.getProvincias().get(i).getId()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean filtrarTipo(Alojamiento aloj) {
+        for(int i=0;i<checkedType.size();i++) {
+            if (checkedType.get(i) == 1) {
+                if(aloj.getLodgingtype().equals(mod.getTiposAlojamiento().get(i))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean filtrarCapacidad(Alojamiento aloj) {
+        int capacidad;
+        if (maxCap.equals("")) {
+            capacidad = 0;
+        } else {
+            capacidad = Integer.parseInt(maxCap);
+        }
+        if(aloj.getCapacity() >= capacidad) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

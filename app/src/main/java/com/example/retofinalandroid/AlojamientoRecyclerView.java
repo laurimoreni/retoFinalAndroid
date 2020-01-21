@@ -23,19 +23,19 @@ import java.util.ArrayList;
 
 public class AlojamientoRecyclerView extends BaseActivity {
 
-    private ArrayList<Alojamiento> alojamientos;
+//    private ArrayList<Alojamiento> alojamientos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alojamiento_recycler_view);
 
-        alojamientos = mod.getAlojamientos();
+        mod.setAlojFiltrados(new ArrayList<>(mod.getAlojamientos()));
 
         RecyclerView rvAlojamientos = (RecyclerView) findViewById(R.id.rvAlojamientos);
 
-        Adaptador_RecyclerView adapter = new Adaptador_RecyclerView();
-        rvAlojamientos.setAdapter(adapter);
+        mod.setAdapter(new Adaptador_RecyclerView(mod.getAlojFiltrados()));
+        rvAlojamientos.setAdapter(mod.getAdapter());
         rvAlojamientos.setLayoutManager(new LinearLayoutManager(this));
         rvAlojamientos.setHasFixedSize(true);
         RecyclerView.ItemDecoration itemDecoration = new
@@ -47,6 +47,12 @@ public class AlojamientoRecyclerView extends BaseActivity {
         // Provide a reference to the views for each data item
         // Complex data items may need more than one view per item, and
         // you provide access to all the views for a data item in a view holder
+        private ArrayList<Alojamiento> alojamientos;
+
+        public Adaptador_RecyclerView(ArrayList<Alojamiento> alojamientos) {
+            this.alojamientos = alojamientos;
+        }
+
         public class ViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener {
             // each data item is just a string in this case
             public TextView tvName;
@@ -86,7 +92,7 @@ public class AlojamientoRecyclerView extends BaseActivity {
         public Adaptador_RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             Context context = parent.getContext();
             LayoutInflater inflater = LayoutInflater.from(context);
-            View elementoAloj = inflater.inflate(R.layout.alojamiento_2, parent, false);
+            View elementoAloj = inflater.inflate(R.layout.alojamiento_simple, parent, false);
             Adaptador_RecyclerView.ViewHolder vh  = new Adaptador_RecyclerView.ViewHolder(context, elementoAloj);
             return vh;
         }
@@ -119,7 +125,6 @@ public class AlojamientoRecyclerView extends BaseActivity {
         public int getItemCount() {
             return alojamientos.size();
         }
-
     }
 
     @Override

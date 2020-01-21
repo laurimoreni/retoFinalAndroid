@@ -1,20 +1,29 @@
 package com.example.retofinalandroid;
 
 import android.app.Application;
+import android.widget.Adapter;
 
 import java.util.ArrayList;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 public class Modelo extends Application {
 
     private ArrayList<Alojamiento> alojamientos;
+    private ArrayList<Alojamiento> alojFiltrados;
     private ArrayList<Usuario> usuarios;
     private ArrayList<Provincia> provincias;
     private ArrayList<Reserva> reservas;
     private ArrayList<String> tiposAlojamiento;
     private Usuario loggedUser;
+    private RecyclerView.Adapter adapter;
 
     public ArrayList<Alojamiento> getAlojamientos() {
         return alojamientos;
+    }
+
+    public ArrayList<Alojamiento> getAlojFiltrados() {
+        return alojFiltrados;
     }
 
     public ArrayList<Usuario> getUsuarios() {
@@ -37,8 +46,16 @@ public class Modelo extends Application {
         return loggedUser;
     }
 
+    public RecyclerView.Adapter getAdapter() {
+        return adapter;
+    }
+
     public void setAlojamientos(ArrayList<Alojamiento> alojamientos) {
         this.alojamientos = alojamientos;
+    }
+
+    public void setAlojFiltrados(ArrayList<Alojamiento> alojFiltrados) {
+        this.alojFiltrados = alojFiltrados;
     }
 
     public void setUsuarios(ArrayList<Usuario> usuarios) {
@@ -59,5 +76,9 @@ public class Modelo extends Application {
 
     public void setLoggedUser(Usuario loggedUser) {
         this.loggedUser = loggedUser;
+    }
+
+    public void setAdapter(RecyclerView.Adapter adapter) {
+        this.adapter = adapter;
     }
 }
