@@ -21,7 +21,7 @@ public class BaseActivity extends AppCompatActivity {
     protected Modelo mod;
 
     private ArrayList<Integer> checkedTerritory = new ArrayList<Integer>();
-    private ArrayList<String> checkedType = new ArrayList<String>();
+    private ArrayList<Integer> checkedType = new ArrayList<Integer>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +71,11 @@ public class BaseActivity extends AppCompatActivity {
                 View view = getLayoutInflater().inflate( R.layout.filter_panel, null);
                 //inicializar arrays de clicks
                 checkedTerritory.clear();
+                checkedType.clear();
                 LinearLayout lnTerritory = (LinearLayout) view.findViewById(R.id.panelTerritory);
-                cargarOpcionesFiltro(lnTerritory);
+                LinearLayout lnType = (LinearLayout) view.findViewById(R.id.panelType);
+                cargarFiltroTerritory(lnTerritory);
+                cargarFiltroType(lnType);
 
                 AlertDialog.Builder dialog = new AlertDialog.Builder( this );
                 dialog.setView(view);
@@ -92,7 +95,7 @@ public class BaseActivity extends AppCompatActivity {
         Toast.makeText(this, "Filtros aplicados", Toast.LENGTH_SHORT).show();
     }
 
-    public void cargarOpcionesFiltro(LinearLayout layout) {
+    public void cargarFiltroTerritory(LinearLayout layout) {
         ArrayList<Provincia> provincias = mod.getProvincias();
 
         for (int i=0; i<provincias.size();i++) {
@@ -121,4 +124,32 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    public void cargarFiltroType(LinearLayout layout){
+        ArrayList<String> tiposAlojamiento = mod.getTiposAlojamiento();
+
+        for (int i=0; i<tiposAlojamiento.size();i++) {
+            CheckBox chkTipo = new CheckBox(this);
+            chkTipo.setText(tiposAlojamiento.get(i));
+            checkedType.add(0);
+            chkTipo.setOnClickListener(new setCheckedType(i));
+
+            layout.addView(chkTipo);
+        }
+    }
+
+    public class setCheckedType implements View.OnClickListener {
+        int pos;
+
+        public setCheckedType(int pos) {
+            this.pos = pos;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (checkedType.get(pos) == 0)
+                checkedType.set(pos,1 );
+            else
+                checkedType.set(pos, 0);
+        }
+    }
 }
