@@ -51,7 +51,7 @@ public class Inicio extends AppCompatActivity {
 
     private class descargarBD extends AsyncTask<Void, Void, Boolean> {
 
-        private String url = "jdbc:mysql://188.213.5.150:3306/alojamientos_fac";
+        private String url = "jdbc:mysql://188.213.5.150:3306/alojamientos_fac?useSSL=false";
         private String user = "ldmj";
         private String pass = "ladamijo";
         private Modelo mod;
@@ -227,8 +227,8 @@ public class Inicio extends AppCompatActivity {
                             break;
                         }
                     }
-                    res.setFechaEntrada(rs.getDate("fechaEntrada"));
-                    res.setFechaSalida(rs.getDate("fechaSalida"));
+                    res.setFechaEntrada(rs.getDate("fecha_entrada"));
+                    res.setFechaSalida(rs.getDate("fecha_salida"));
                     String signatura = rs.getString("alojamiento");
                     for (Alojamiento aloj : mod.getAlojamientos()) {
                         if (aloj.getSignatura().equals(signatura)) {

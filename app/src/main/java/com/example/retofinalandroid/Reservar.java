@@ -157,7 +157,7 @@ public class Reservar extends BaseActivity {
             Integer rs = 0;
             ResultSet generatedKeys = null;
             Integer primaryKey = null;
-            String query = "insert into reservas (dni, fechaEntrada, fechaSalida, alojamiento, personas) values (?, ?, ?, ?, ?)";
+            String query = "insert into reservas (dni, fecha_entrada, fecha_salida, alojamiento, personas) values (?, ?, ?, ?, ?)";
             try {
                 con = DriverManager.getConnection(url, dbuser, dbpass);
                 ps = con.prepareStatement(query);
