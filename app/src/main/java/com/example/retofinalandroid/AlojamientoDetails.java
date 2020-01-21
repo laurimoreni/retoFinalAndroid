@@ -61,7 +61,9 @@ public class AlojamientoDetails extends BaseActivity {
      */
     public void reservarAlojamiento(View v) {
         String cod = alojamiento.getSignatura();
-        // FALTA ENVIAR A ACTIVITY DE RESERVA
+        Intent i = new Intent(this, Reservar.class);
+        i.putExtra("alojamiento", cod);
+        startActivity(i);
     }
 
     public void verEnMapa(View v) {

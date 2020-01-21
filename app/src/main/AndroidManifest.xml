@@ -43,6 +43,7 @@
         <activity android:name=".EditUser" />
         <activity android:name=".Settings" />
         <activity android:name=".About" />
+        <activity android:name=".Reservar" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
