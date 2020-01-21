@@ -153,7 +153,7 @@ public class Registration extends AppCompatActivity {
 
         @Override
         public Integer doInBackground(Void... param) {
-            String url = "jdbc:mysql://188.213.5.150:3306/prueba?useSSL=false";
+            String url = "jdbc:mysql://188.213.5.150:3306/alojamientos_fac?useSSL=false";
             String user = "ldmj";
             String pass = "ladamijo";
             Connection con = null;

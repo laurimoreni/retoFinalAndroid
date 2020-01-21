@@ -174,7 +174,7 @@ public class EditUser extends BaseActivity {
 
         @Override
         public Integer doInBackground(Void... voids) {
-            String url = "jdbc:mysql://188.213.5.150:3306/prueba?useSSL=false";
+            String url = "jdbc:mysql://188.213.5.150:3306/alojamientos_fac";
             String dbuser = "ldmj";
             String dbpass = "ladamijo";
             Connection con = null;
@@ -235,7 +235,7 @@ public class EditUser extends BaseActivity {
 
         @Override
         public Integer doInBackground(Void... voids) {
-            String url = "jdbc:mysql://188.213.5.150:3306/prueba?useSSL=false";
+            String url = "jdbc:mysql://188.213.5.150:3306/alojamientos_fac?useSSL=false";
             String dbuser = "ldmj";
             String dbpass = "ladamijo";
             Connection con = null;
