@@ -16,7 +16,7 @@ public class Modelo extends Application {
     private ArrayList<Reserva> reservas;
     private ArrayList<String> tiposAlojamiento;
     private Usuario loggedUser;
-    private RecyclerView.Adapter adapter;
+    private RecyclerView rvAlojamientos;
 
     public ArrayList<Alojamiento> getAlojamientos() {
         return alojamientos;
@@ -46,8 +46,8 @@ public class Modelo extends Application {
         return loggedUser;
     }
 
-    public RecyclerView.Adapter getAdapter() {
-        return adapter;
+    public RecyclerView getRvAlojamientos() {
+        return rvAlojamientos;
     }
 
     public void setAlojamientos(ArrayList<Alojamiento> alojamientos) {
@@ -78,7 +78,7 @@ public class Modelo extends Application {
         this.loggedUser = loggedUser;
     }
 
-    public void setAdapter(RecyclerView.Adapter adapter) {
-        this.adapter = adapter;
+    public void setRvAlojamientos(RecyclerView rvAlojamientos) {
+        this.rvAlojamientos = rvAlojamientos;
     }
 }

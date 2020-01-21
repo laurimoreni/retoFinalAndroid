@@ -28,7 +28,7 @@ public class AlojamientoDetails extends BaseActivity {
         // get the current alojamiento
         Bundle extras = getIntent().getExtras();
         index = extras.getInt("position");
-        alojamiento = mod.getAlojamientos().get(index);
+        alojamiento = mod.getAlojFiltrados().get(index);
 
         // get fields
         tvName = (TextView) findViewById(R.id.tvName);

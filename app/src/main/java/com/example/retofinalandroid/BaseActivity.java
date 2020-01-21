@@ -187,7 +187,8 @@ public class BaseActivity extends AppCompatActivity {
                 mod.getAlojFiltrados().add(aloj);
             }
         }
-        mod.getAdapter().notifyDataSetChanged();
+        mod.getRvAlojamientos().getAdapter().notifyDataSetChanged();
+        mod.getRvAlojamientos().smoothScrollToPosition(0);
     }
 
     public boolean filtrarTerritory(Alojamiento aloj) {

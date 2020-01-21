@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,15 +33,15 @@ public class AlojamientoRecyclerView extends BaseActivity {
 
         mod.setAlojFiltrados(new ArrayList<>(mod.getAlojamientos()));
 
-        RecyclerView rvAlojamientos = (RecyclerView) findViewById(R.id.rvAlojamientos);
+        mod.setRvAlojamientos((RecyclerView) findViewById(R.id.rvAlojamientos));
 
-        mod.setAdapter(new Adaptador_RecyclerView(mod.getAlojFiltrados()));
-        rvAlojamientos.setAdapter(mod.getAdapter());
-        rvAlojamientos.setLayoutManager(new LinearLayoutManager(this));
-        rvAlojamientos.setHasFixedSize(true);
+        RecyclerView.Adapter adapter = new Adaptador_RecyclerView(mod.getAlojFiltrados());
+        mod.getRvAlojamientos().setAdapter(adapter);
+        mod.getRvAlojamientos().setLayoutManager(new LinearLayoutManager(this));
+        mod.getRvAlojamientos().setHasFixedSize(true);
         RecyclerView.ItemDecoration itemDecoration = new
                 DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        rvAlojamientos.addItemDecoration(itemDecoration);
+        mod.getRvAlojamientos().addItemDecoration(itemDecoration);
     }
 
     private class Adaptador_RecyclerView extends RecyclerView.Adapter<Adaptador_RecyclerView.ViewHolder>{
