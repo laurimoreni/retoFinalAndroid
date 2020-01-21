@@ -1,6 +1,7 @@
 package com.example.retofinalandroid;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,6 +36,10 @@ public class AlojamientoRecyclerView extends BaseActivity {
         Adaptador_RecyclerView adapter = new Adaptador_RecyclerView();
         rvAlojamientos.setAdapter(adapter);
         rvAlojamientos.setLayoutManager(new LinearLayoutManager(this));
+        rvAlojamientos.setHasFixedSize(true);
+        RecyclerView.ItemDecoration itemDecoration = new
+                DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        rvAlojamientos.addItemDecoration(itemDecoration);
     }
 
     private class Adaptador_RecyclerView extends RecyclerView.Adapter<Adaptador_RecyclerView.ViewHolder>{
