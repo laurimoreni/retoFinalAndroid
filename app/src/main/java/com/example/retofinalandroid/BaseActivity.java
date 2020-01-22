@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -24,6 +25,9 @@ public class BaseActivity extends AppCompatActivity {
 
     private ArrayList<Integer> checkedTerritory = new ArrayList<Integer>();
     private ArrayList<Integer> checkedType = new ArrayList<Integer>();
+    private int[] checkedExtra = {0,0,0};
+
+    private CheckBox chkRestaurant, chkShop, chkCaravan;
 
     private boolean primeraVez = true;
     private String maxCap;
@@ -78,6 +82,20 @@ public class BaseActivity extends AppCompatActivity {
                 LinearLayout lnTerritory = view.findViewById(R.id.panelTerritory);
                 LinearLayout lnType = view.findViewById(R.id.panelType);
                 final EditText edtCapac = view.findViewById(R.id.edtCapac);
+                chkRestaurant = view.findViewById(R.id.chkRestaurant);
+                chkShop = view.findViewById(R.id.chkShop);
+                chkCaravan = view.findViewById(R.id.chkCaravan);
+                if (checkedExtra[0] == 1) {
+                    chkRestaurant.setChecked(true);
+                }
+                if (checkedExtra[1] == 1) {
+                    chkShop.setChecked(true);
+                }
+                if (checkedExtra[2] == 1) {
+                    chkCaravan.setChecked(true);
+                }
+//                Button btnOk = view.findViewById(R.id.btnOk);
+//                Button btnCancel = view.findViewById(R.id.btnCancel);
                 cargarFiltroTerritory(lnTerritory);
                 cargarFiltroType(lnType);
                 fijarCapacidad(edtCapac);
@@ -88,6 +106,21 @@ public class BaseActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         maxCap = edtCapac.getText().toString();
+                        if (chkRestaurant.isChecked()) {
+                            checkedExtra[0] = 1;
+                        } else {
+                            checkedExtra[0] = 0;
+                        }
+                        if (chkShop.isChecked()) {
+                            checkedExtra[1] = 1;
+                        } else {
+                            checkedExtra[1] = 0;
+                        }
+                        if (chkCaravan.isChecked()) {
+                            checkedExtra[2] = 1;
+                        } else {
+                            checkedExtra[2] = 0;
+                        }
                         aplicarFiltros();
                     }
                 });
@@ -105,9 +138,12 @@ public class BaseActivity extends AppCompatActivity {
             CheckBox chkProv = new CheckBox(this);
             chkProv.setText(provincias.get(i).getNombre());
             if (primeraVez) {
-                checkedTerritory.add(0);
+                checkedTerritory.add(1);
+                chkProv.setChecked(true);
             } else if (checkedTerritory.get(i) == 1) {
                     chkProv.setChecked(true);
+            } else {
+                chkProv.setChecked(false);
             }
             chkProv.setOnClickListener(new setCheckedTerritory(i));
 
@@ -138,9 +174,12 @@ public class BaseActivity extends AppCompatActivity {
             CheckBox chkTipo = new CheckBox(this);
             chkTipo.setText(tiposAlojamiento.get(i));
             if (primeraVez) {
-                checkedType.add(0);
+                checkedType.add(1);
+                chkTipo.setChecked(true);
             }else if (checkedType.get(i) == 1) {
                 chkTipo.setChecked(true);
+            } else {
+                chkTipo.setChecked(false);
             }
             chkTipo.setOnClickListener(new setCheckedType(i));
 
@@ -183,7 +222,7 @@ public class BaseActivity extends AppCompatActivity {
     public void aplicarFiltros() {
         mod.getAlojFiltrados().clear();
         for (Alojamiento aloj : mod.getAlojamientos()) {
-            if (filtrarTerritory(aloj) && filtrarTipo(aloj) && filtrarCapacidad(aloj)) {
+            if (filtrarTerritory(aloj) && filtrarTipo(aloj) && filtrarCapacidad(aloj) && filtrarRestaurant(aloj) && filtrarShop(aloj) && filtrarCaravan(aloj)) {
                 mod.getAlojFiltrados().add(aloj);
             }
         }
@@ -221,6 +260,36 @@ public class BaseActivity extends AppCompatActivity {
             capacidad = Integer.parseInt(maxCap);
         }
         if(aloj.getCapacity() >= capacidad) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean filtrarRestaurant(Alojamiento aloj) {
+        if (!chkRestaurant.isChecked()) {
+            return true;
+        } else if (chkRestaurant.isChecked() && aloj.getRestaurant() == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean filtrarShop(Alojamiento aloj) {
+        if (!chkShop.isChecked()) {
+            return true;
+        } else if (chkShop.isChecked() && aloj.getStore() == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean filtrarCaravan(Alojamiento aloj) {
+        if (!chkCaravan.isChecked()) {
+            return true;
+        } else if (chkCaravan.isChecked() && aloj.getAutocaravana() == 1) {
             return true;
         } else {
             return false;

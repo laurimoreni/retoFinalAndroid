@@ -90,6 +90,10 @@
     <string name="lodging_type">Lodging type</string>
     <string name="capacity">Capacity</string>
     <string name="max">Max.</string>
+    <string name="extras">Extras</string>
+    <string name="resturant">Restaurant</string>
+    <string name="shop">Shop</string>
+    <string name="caravan">Caravan</string>
     <!-- About -->
     <string name="contact">You can send any suggestion or bug report to laura.morenogo@elorrieta-errekamari.com</string>
     <string name="version">Version: 1.0</string>

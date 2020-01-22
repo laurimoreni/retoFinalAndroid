@@ -31,7 +31,7 @@ public class UserProfile extends BaseActivity {
         tvName = (TextView) findViewById(R.id.tvName);
         tvLastName = (TextView) findViewById(R.id.tvLastName);
         tvEmail = (TextView) findViewById(R.id.tvLoc);
-        tvTel = (TextView) findViewById(R.id.tvMore);
+        tvTel = (TextView) findViewById(R.id.tvCapacity);
 
         // show user info
         tvDni.setText(user.getDni());

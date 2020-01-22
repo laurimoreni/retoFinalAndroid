@@ -10,7 +10,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -67,6 +69,9 @@ public class AlojamientoRecyclerView extends BaseActivity {
                 tvType = (TextView) itemView.findViewById(R.id.tvType);
                 tvCap = (TextView) itemView.findViewById(R.id.txtCapac);
                 tvDesc = (TextView) itemView.findViewById(R.id.tvDesc);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    tvDesc.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+                }
                 image = (ImageView) itemView.findViewById(R.id.image);
                 imgRestaurant = (ImageView) itemView.findViewById(R.id.imgRestaurant);
                 imgShop = (ImageView) itemView.findViewById(R.id.imgShop);
@@ -92,7 +97,7 @@ public class AlojamientoRecyclerView extends BaseActivity {
         public Adaptador_RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             Context context = parent.getContext();
             LayoutInflater inflater = LayoutInflater.from(context);
-            View elementoAloj = inflater.inflate(R.layout.alojamiento_simple, parent, false);
+            View elementoAloj = inflater.inflate(R.layout.alojamiento, parent, false);
             Adaptador_RecyclerView.ViewHolder vh  = new Adaptador_RecyclerView.ViewHolder(context, elementoAloj);
             return vh;
         }
