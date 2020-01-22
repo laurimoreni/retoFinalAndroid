@@ -56,12 +56,8 @@ public class AlojamientoRecyclerView extends BaseActivity {
 
         public class ViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener {
             // each data item is just a string in this case
-            public TextView tvName;
-            public TextView tvLoc;
-            public TextView tvType;
-            public TextView tvCap;
-            public TextView tvDesc;
-            public ImageView image;
+            public TextView tvName, tvLoc, tvType, tvCap, tvDesc;
+            public ImageView image, imgRestaurant, imgShop, imgCaravan;
             private Context context;
 
             public ViewHolder(Context context, View itemView) {
@@ -72,6 +68,9 @@ public class AlojamientoRecyclerView extends BaseActivity {
                 tvCap = (TextView) itemView.findViewById(R.id.txtCapac);
                 tvDesc = (TextView) itemView.findViewById(R.id.tvDesc);
                 image = (ImageView) itemView.findViewById(R.id.image);
+                imgRestaurant = (ImageView) itemView.findViewById(R.id.imgRestaurant);
+                imgShop = (ImageView) itemView.findViewById(R.id.imgShop);
+                imgCaravan = (ImageView) itemView.findViewById(R.id.imgCaravan);
                 this.context = context;
                 itemView.setOnClickListener(this);
             }
@@ -119,6 +118,21 @@ public class AlojamientoRecyclerView extends BaseActivity {
             } catch (Exception e) {
                 //holder.image.setImageBitmap(R.mipmap.alerta);
             }
+            if (aloj.getRestaurant() == 1) {
+                holder.imgRestaurant.setImageResource(R.mipmap.baseline_restaurant_black_48dp);
+            } else {
+                holder.imgRestaurant.setImageResource(R.mipmap.baseline_restaurant_grey_48dp);
+            }
+            if (aloj.getStore() == 1) {
+                holder.imgShop.setImageResource(R.mipmap.baseline_shopping_cart_black_48dp);
+            } else {
+                holder.imgShop.setImageResource(R.mipmap.baseline_shopping_cart_grey_48dp);
+            }
+            if (aloj.getAutocaravana() == 1) {
+                holder.imgCaravan.setImageResource(R.mipmap.baseline_rv_hookup_black_48dp);
+            } else {
+                holder.imgCaravan.setImageResource(R.mipmap.baseline_rv_hookup_grey_48dp);
+            }
         }
 
         // Return the size of your dataset (invoked by the layout manager)
@@ -128,28 +142,12 @@ public class AlojamientoRecyclerView extends BaseActivity {
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setIcon(R.mipmap.alerta)
-                .setTitle(R.string.exitTitle)
-                .setMessage(R.string.exitMessage)
-                .setPositiveButton(R.string.dialog_confirm, new DialogInterface.OnClickListener() {
-                    DialogInterface.OnClickListener context = this;
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                })
-                .setNegativeButton(R.string.dialog_cancel, null)
-                .show();
-    }
-
     // Mostrar el botón de filtro del menu
     @Override
     public boolean onPrepareOptionsMenu (Menu menu) {
         menu.getItem(0).setVisible(true);
         return true;
     }
+
 }
 

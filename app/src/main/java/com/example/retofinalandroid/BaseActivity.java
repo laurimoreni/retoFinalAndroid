@@ -70,7 +70,7 @@ public class BaseActivity extends AppCompatActivity {
                 startActivity(aboutIntent);
                 break;
             case android.R.id.home:
-                this.finish();
+                onBackPressed();
                 break;
             case R.id.filter:
                 View view = getLayoutInflater().inflate( R.layout.filter_panel, null);
@@ -225,5 +225,33 @@ public class BaseActivity extends AppCompatActivity {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (this.getClass().getSimpleName().equals("AlojamientoRecyclerView")) {
+            new AlertDialog.Builder(this)
+                    .setIcon(R.mipmap.alerta)
+                    .setTitle(R.string.exitTitle)
+                    .setMessage(R.string.exitMessage)
+                    .setPositiveButton(R.string.dialog_confirm, new DialogInterface.OnClickListener() {
+                        DialogInterface.OnClickListener context = this;
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                                salirAplicacion();
+                        }
+                    })
+                    .setNegativeButton(R.string.dialog_cancel, null)
+                    .show();
+        } else {
+            finish();
+        }
+    }
+
+    public void salirAplicacion() {
+        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+        homeIntent.addCategory( Intent.CATEGORY_HOME );
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(homeIntent);
     }
 }
