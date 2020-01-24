@@ -15,6 +15,7 @@ import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,20 +54,21 @@ public class Reservar extends BaseActivity {
             year1 = currentDate.get(Calendar.YEAR);
             month1 = currentDate.get(Calendar.MONTH);
             day1 = currentDate.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog datePicker = new DatePickerDialog(Reservar.this, new DatePickerDialog.OnDateSetListener() {
-                public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.set(Calendar.YEAR, selectedyear);
-                    calendar.set(Calendar.MONTH, selectedmonth);
-                    calendar.set(Calendar.DAY_OF_MONTH, selectedday);
-                    String myFormat = "dd/MM/yy"; //Change as you need
-                    SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
-                    etFechaEntrada.setText(sdf.format(calendar.getTime()));
-                    day1 = selectedday;
-                    month1 = selectedmonth;
-                    year1 = selectedyear;
+            DatePickerDialog datePicker = new DatePickerDialog(Reservar.this, new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.YEAR, selectedyear);
+                calendar.set(Calendar.MONTH, selectedmonth);
+                calendar.set(Calendar.DAY_OF_MONTH, selectedday);
+                String myFormat = "dd/MM/yy";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
+                etFechaEntrada.setText(sdf.format(calendar.getTime()));
+                day1 = selectedday;
+                month1 = selectedmonth;
+                year1 = selectedyear;
                 }
             }, year1, month1, day1);
+            datePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
             datePicker.show();
             }
         });
@@ -76,24 +78,25 @@ public class Reservar extends BaseActivity {
             @Override
             public void onClick(View v) {
             Calendar currentDate = Calendar.getInstance();
-                year2 = currentDate.get(Calendar.YEAR);
-                month2 = currentDate.get(Calendar.MONTH);
-                day2 = currentDate.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog datePicker = new DatePickerDialog(Reservar.this, new DatePickerDialog.OnDateSetListener() {
-                    public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.set(Calendar.YEAR, selectedyear);
-                        calendar.set(Calendar.MONTH, selectedmonth);
-                        calendar.set(Calendar.DAY_OF_MONTH, selectedday);
-                        String myFormat = "dd/MM/yy"; //Change as you need
-                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
-                        etFechaSalida.setText(sdf.format(calendar.getTime()));
-                        day2 = selectedday;
-                        month2 = selectedmonth;
-                        year2 = selectedyear;
-                    }
-                }, year2, month2, day2);
-                datePicker.show();
+            year2 = currentDate.get(Calendar.YEAR);
+            month2 = currentDate.get(Calendar.MONTH);
+            day2 = currentDate.get(Calendar.DAY_OF_MONTH);
+            DatePickerDialog datePicker = new DatePickerDialog(Reservar.this, new DatePickerDialog.OnDateSetListener() {
+                public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.YEAR, selectedyear);
+                calendar.set(Calendar.MONTH, selectedmonth);
+                calendar.set(Calendar.DAY_OF_MONTH, selectedday);
+                String myFormat = "dd/MM/yy";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
+                etFechaSalida.setText(sdf.format(calendar.getTime()));
+                day2 = selectedday;
+                month2 = selectedmonth;
+                year2 = selectedyear;
+                }
+            }, year2, month2, day2);
+            datePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+            datePicker.show();
             }
         });
     }
@@ -160,7 +163,7 @@ public class Reservar extends BaseActivity {
             String query = "insert into reservas (dni, fecha_entrada, fecha_salida, alojamiento, personas) values (?, ?, ?, ?, ?)";
             try {
                 con = DriverManager.getConnection(url, dbuser, dbpass);
-                ps = con.prepareStatement(query);
+                ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
                 ps.setString(1, user.getDni());
                 ps.setDate(2, fechaEntrada);
                 ps.setDate(3, fechaSalida);
