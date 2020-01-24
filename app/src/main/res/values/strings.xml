@@ -82,6 +82,8 @@
     <string name="text_alojamiento_img">Alojamiento image</string>
     <string name="btn_reservar">Reservation</string>
     <string name="btn_mapa">See on map</string>
+    <string name="list_empty1">We are sorry, there are not alojamientos to show.</string>
+    <string name="list_empty2">Please try changing your filter criteria.</string>
     <string name="text_alojamiento_no_done">Alojamiento could not be marked as done</string>
     <string name="developer">This app has been developed by Laura Moreno Gonzalez.</string>
     <!-- Filtros -->
@@ -103,6 +105,7 @@
     <string name="settings_desc">Description</string>
     <string name="settings_date">Date</string>
     <string name="settings_hour">Hour</string>
+    <string name="settings_card">Card (Small / Big)</string>
     <string name="hint_alojamiento_hour_label">Hour</string>
     <string name="title_activity_mapa_alojamiento">Localización</string>
     <string-array name="alojamientos_types">

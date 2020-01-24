@@ -51,7 +51,7 @@ public class Inicio extends AppCompatActivity {
 
     private class descargarBD extends AsyncTask<Void, Void, Boolean> {
 
-        private String url = "jdbc:mysql://188.213.5.150:3306/alojamientos_fac?useSSL=false";
+        private String url = "jdbc:mysql://188.213.5.150:3306/prueba?useSSL=false";
         private String user = "ldmj";
         private String pass = "ladamijo";
         private Modelo mod;
