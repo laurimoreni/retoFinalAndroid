@@ -1,6 +1,7 @@
 package com.example.retofinalandroid;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -25,13 +27,16 @@ import java.sql.Blob;
 import java.util.ArrayList;
 
 public class AlojamientoRecyclerView extends BaseActivity {
+    ConstraintLayout lyLista, lyEmpty;
 
-//    private ArrayList<Alojamiento> alojamientos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alojamiento_recycler_view);
+
+        lyLista = findViewById(R.id.linearLista);
+        lyEmpty = findViewById(R.id.linearEmpty);
 
         mod.setAlojFiltrados(new ArrayList<>(mod.getAlojamientos()));
 
@@ -94,10 +99,23 @@ public class AlojamientoRecyclerView extends BaseActivity {
         }
 
         @Override
+        public int getItemViewType(int position) {
+            SharedPreferences sharedPref = getSharedPreferences("datos", Context.MODE_PRIVATE);
+            String showCard = sharedPref.getString("show_card", "small");
+            if (showCard.equals("small")) {
+                return R.layout.alojamiento_simple;
+            } else {
+                return R.layout.alojamiento;
+            }
+        }
+
+        @Override
         public Adaptador_RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             Context context = parent.getContext();
+
             LayoutInflater inflater = LayoutInflater.from(context);
-            View elementoAloj = inflater.inflate(R.layout.alojamiento, parent, false);
+            View elementoAloj = inflater.inflate(viewType, parent, false);
+
             Adaptador_RecyclerView.ViewHolder vh  = new Adaptador_RecyclerView.ViewHolder(context, elementoAloj);
             return vh;
         }
@@ -105,6 +123,13 @@ public class AlojamientoRecyclerView extends BaseActivity {
         // Replace the contents of a view (invoked by the layout manager)
         @Override
         public void onBindViewHolder(Adaptador_RecyclerView.ViewHolder holder, int position) {
+            if (alojamientos.size() == 0) {
+                lyEmpty.setVisibility(View.VISIBLE);
+                lyLista.setVisibility(View.GONE);
+            } else {
+                lyEmpty.setVisibility(View.GONE);
+                lyLista.setVisibility(View.VISIBLE);
+            }
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
             Bitmap btm;
@@ -143,6 +168,13 @@ public class AlojamientoRecyclerView extends BaseActivity {
         // Return the size of your dataset (invoked by the layout manager)
         @Override
         public int getItemCount() {
+            if (alojamientos.size() == 0) {
+                lyEmpty.setVisibility(View.VISIBLE);
+                lyLista.setVisibility(View.GONE);
+            } else {
+                lyEmpty.setVisibility(View.GONE);
+                lyLista.setVisibility(View.VISIBLE);
+            }
             return alojamientos.size();
         }
     }
