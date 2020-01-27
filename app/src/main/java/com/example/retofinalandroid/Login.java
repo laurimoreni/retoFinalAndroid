@@ -2,6 +2,7 @@ package com.example.retofinalandroid;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -84,6 +85,7 @@ public class Login extends AppCompatActivity {
         Intent homeIntent = new Intent(Intent.ACTION_MAIN);
         homeIntent.addCategory( Intent.CATEGORY_HOME );
         homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        ActivityCompat.finishAffinity(this);
         startActivity(homeIntent);
     }
 }

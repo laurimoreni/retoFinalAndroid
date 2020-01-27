@@ -1,13 +1,11 @@
 package com.example.retofinalandroid;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -19,11 +17,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.google.android.gms.maps.model.LatLng;
 
 import java.sql.Blob;
 import java.util.ArrayList;
@@ -36,6 +31,8 @@ public class AlojamientoRecyclerView extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alojamiento_recycler_view);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         lyLista = findViewById(R.id.linearLista);
         lyEmpty = findViewById(R.id.linearEmpty);
