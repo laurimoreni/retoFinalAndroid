@@ -23,6 +23,8 @@ import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.sql.Blob;
 import java.util.ArrayList;
 
@@ -184,6 +186,11 @@ public class AlojamientoRecyclerView extends BaseActivity {
     public boolean onPrepareOptionsMenu (Menu menu) {
         menu.getItem(0).setVisible(true);
         return true;
+    }
+
+    public void onGeneralMapPress (View view) {
+        Intent intent = new Intent(this, MapaGeneral.class);
+        startActivity(intent);
     }
 
 }
