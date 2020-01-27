@@ -11,11 +11,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import java.util.ArrayList;
 
@@ -27,7 +29,9 @@ public class BaseActivity extends AppCompatActivity {
     private ArrayList<Integer> checkedType = new ArrayList<Integer>();
     private int[] checkedExtra = {0,0,0};
 
+    private EditText edtCapac;
     private CheckBox chkRestaurant, chkShop, chkCaravan;
+    private SeekBar sbCapacity;
 
     private boolean primeraVez = true;
     private String maxCap;
@@ -81,7 +85,24 @@ public class BaseActivity extends AppCompatActivity {
                 //inicializar arrays de clicks
                 LinearLayout lnTerritory = view.findViewById(R.id.panelTerritory);
                 LinearLayout lnType = view.findViewById(R.id.panelType);
-                final EditText edtCapac = view.findViewById(R.id.edtCapac);
+                edtCapac = view.findViewById(R.id.edtCapac);
+                sbCapacity= view.findViewById(R.id.sbCapacity);
+                sbCapacity.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                        edtCapac.setText(String.valueOf(progress));
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+
+                    }
+                });
                 chkRestaurant = view.findViewById(R.id.chkRestaurant);
                 chkShop = view.findViewById(R.id.chkShop);
                 chkCaravan = view.findViewById(R.id.chkCaravan);
@@ -98,7 +119,7 @@ public class BaseActivity extends AppCompatActivity {
 //                Button btnCancel = view.findViewById(R.id.btnCancel);
                 cargarFiltroTerritory(lnTerritory);
                 cargarFiltroType(lnType);
-                fijarCapacidad(edtCapac);
+                fijarCapacidad();//edtCapac);
 
                 AlertDialog.Builder dialog = new AlertDialog.Builder( this );
                 dialog.setView(view);
@@ -203,19 +224,21 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public void fijarCapacidad(final EditText edtCapac) {
+    public void fijarCapacidad() {//final EditText edtCapac) {
         if(primeraVez) {
             edtCapac.setText("0", TextView.BufferType.EDITABLE);
-            edtCapac.setOnFocusChangeListener(new View.OnFocusChangeListener(){
-                public void onFocusChange(View v, boolean hasFocus){
-                    if (hasFocus) {
-                        ((EditText) edtCapac).setText("");
-                    }
-                }
-            });
+            sbCapacity.setProgress(0);
+//            edtCapac.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+//                public void onFocusChange(View v, boolean hasFocus){
+//                    if (hasFocus) {
+//                        ((EditText) edtCapac).setText("");
+//                    }
+//                }
+//            });
 
         } else {
             edtCapac.setText(maxCap, TextView.BufferType.EDITABLE);
+            sbCapacity.setProgress(Integer.valueOf(maxCap));
         }
     }
 
@@ -321,6 +344,7 @@ public class BaseActivity extends AppCompatActivity {
         Intent homeIntent = new Intent(Intent.ACTION_MAIN);
         homeIntent.addCategory( Intent.CATEGORY_HOME );
         homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        ActivityCompat.finishAffinity(this);
         startActivity(homeIntent);
     }
 }
