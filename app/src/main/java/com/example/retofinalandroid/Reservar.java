@@ -28,6 +28,8 @@ public class Reservar extends BaseActivity {
     private Usuario user;
     private String alojCod;
     private int year1, month1, day1, year2, month2, day2;
+    Date date1 = null;
+    Date date2 = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,15 +48,8 @@ public class Reservar extends BaseActivity {
         etFechaSalida = (EditText)findViewById(R.id.etFechaSalida);
         etNumPersonas = (EditText)findViewById(R.id.etNumPersonas);
 
-        // add date picker to fechaEntrada field
-        etFechaEntrada.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            Calendar currentDate = Calendar.getInstance();
-            year1 = currentDate.get(Calendar.YEAR);
-            month1 = currentDate.get(Calendar.MONTH);
-            day1 = currentDate.get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog datePicker = new DatePickerDialog(Reservar.this, new DatePickerDialog.OnDateSetListener() {
+        // listener for fechaSalida
+        final DatePickerDialog.OnDateSetListener endDateListener = new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(Calendar.YEAR, selectedyear);
@@ -62,14 +57,54 @@ public class Reservar extends BaseActivity {
                 calendar.set(Calendar.DAY_OF_MONTH, selectedday);
                 String myFormat = "dd/MM/yy";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
-                etFechaEntrada.setText(sdf.format(calendar.getTime()));
+                String formatedDate = sdf.format(calendar.getTime());
+                try {
+                    date2 = new java.sql.Date(sdf.parse(formatedDate).getTime());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                etFechaSalida.setText(sdf.format(calendar.getTime()));
+                day2 = selectedday;
+                month2 = selectedmonth;
+                year2 = selectedyear;
+            }
+        };
+
+        // listener for fechaEntrada
+        final DatePickerDialog.OnDateSetListener startDateListener = new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.YEAR, selectedyear);
+                calendar.set(Calendar.MONTH, selectedmonth);
+                calendar.set(Calendar.DAY_OF_MONTH, selectedday);
+                String myFormat = "dd/MM/yy";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
+                String formatedDate = sdf.format(calendar.getTime());
+                try {
+                    date1 = new java.sql.Date(sdf.parse(formatedDate).getTime());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                etFechaEntrada.setText(formatedDate);
                 day1 = selectedday;
                 month1 = selectedmonth;
                 year1 = selectedyear;
+                // update fechaSalida if necessary
+                calendar.add(Calendar.DATE, 1);
+                String formatedDate2 = sdf.format(calendar.getTime());
+                if (date2 == null || (date2 != null && date2.compareTo(date1) < 0)) {
+                    etFechaSalida.setText(formatedDate2);
                 }
-            }, year1, month1, day1);
-            datePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-            datePicker.show();
+            }
+        };
+
+        // add date picker to fechaEntrada field
+        etFechaEntrada.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePicker1 = new DatePickerDialog(Reservar.this, startDateListener, year1, month1, day1);
+                datePicker1.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                datePicker1.show();
             }
         });
 
@@ -77,50 +112,59 @@ public class Reservar extends BaseActivity {
         etFechaSalida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            Calendar currentDate = Calendar.getInstance();
-            year2 = currentDate.get(Calendar.YEAR);
-            month2 = currentDate.get(Calendar.MONTH);
-            day2 = currentDate.get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog datePicker = new DatePickerDialog(Reservar.this, new DatePickerDialog.OnDateSetListener() {
-                public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(Calendar.YEAR, selectedyear);
-                calendar.set(Calendar.MONTH, selectedmonth);
-                calendar.set(Calendar.DAY_OF_MONTH, selectedday);
-                String myFormat = "dd/MM/yy";
-                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
-                etFechaSalida.setText(sdf.format(calendar.getTime()));
-                day2 = selectedday;
-                month2 = selectedmonth;
-                year2 = selectedyear;
+                DatePickerDialog datePicker2 = new DatePickerDialog(Reservar.this, endDateListener, year2, month2, day2);
+                if (date1 == null) {
+                    datePicker2.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                } else {
+                    long date = 0;
+                    String myFormat = "dd/MM/yy";
+                    SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
+                    String formatedDate2 = sdf.format(date1);
+                    try {
+                        date = sdf.parse(formatedDate2).getTime();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    datePicker2.getDatePicker().setMinDate(date);
                 }
-            }, year2, month2, day2);
-            datePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-            datePicker.show();
+                datePicker2.show();
             }
         });
+    }
+
+    public boolean validarReserva(int num) {
+        int numPersonas = 0;
+        Alojamiento selectedAloj = null;
+        ArrayList<Alojamiento> alojamientos = mod.getAlojamientos();
+        ArrayList<Reserva> reservas = mod.getReservas();
+        // get selected alojamiento
+        for (int i = 0; i < alojamientos.size(); i++) {
+            if (alojamientos.get(i).getSignatura().equals(alojCod)) {
+                selectedAloj = alojamientos.get(i);
+            }
+        }
+        // compare dates
+        for (int i = 0; i < reservas.size(); i++) {
+            if (reservas.get(i).getAlojamiento().getSignatura().equals(alojCod)) {
+                if (date2.compareTo(reservas.get(i).getFechaEntrada()) >= 0 && date2.compareTo(reservas.get(i).getFechaSalida()) <= 0) {
+                    numPersonas += reservas.get(i).getPersonas();
+                } else if (date1.compareTo(reservas.get(i).getFechaEntrada()) <= 0 && date2.compareTo(reservas.get(i).getFechaSalida()) >= 0) {
+                    numPersonas += reservas.get(i).getPersonas();
+                }
+            }
+        }
+        // get the sum of persons and compare with the capacity
+        numPersonas += num;
+        if (numPersonas > selectedAloj.getCapacity()) {
+            return false;
+        }
+        return true;
     }
 
     /**
      * Delete alojamiento from database
      */
     public void reservar(View v) {
-        // parse fechaEntrada and fechaSalida as Date type
-        Date date1 = null;
-        Date date2 = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy", Locale.ENGLISH);
-        Calendar calendar1 = Calendar.getInstance();
-        Calendar calendar2 = Calendar.getInstance();
-        calendar1.set(year1, month1, day1);
-        calendar2.set(year2, month2, day2);
-        String formatedDate1 = sdf.format(calendar1.getTime());
-        String formatedDate2 = sdf.format(calendar2.getTime());
-        try {
-            date1 = new java.sql.Date(sdf.parse(formatedDate1).getTime());
-            date2 = new java.sql.Date(sdf.parse(formatedDate2).getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
         // parse numPersonas as int
         String numPersonasString = etNumPersonas.getText().toString();
         int numPersonas = 0;
@@ -130,7 +174,11 @@ public class Reservar extends BaseActivity {
         } catch (NumberFormatException e) {
             numPersonas = 0;
         }
-        new reservaInsert(user, date1, date2, alojCod, numPersonas, getApplicationContext()).execute();
+        if (validarReserva(numPersonas)) {
+            new reservaInsert(user, date1, date2, alojCod, numPersonas, getApplicationContext()).execute();
+        } else {
+            Toast.makeText(this, "El alojamiento esta completo para las fechas seleccionadas", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public class reservaInsert extends AsyncTask<Void, Void, Integer> {
