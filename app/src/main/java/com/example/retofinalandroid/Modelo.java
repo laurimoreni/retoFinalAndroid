@@ -1,7 +1,6 @@
 package com.example.retofinalandroid;
 
 import android.app.Application;
-import android.widget.Adapter;
 
 import java.util.ArrayList;
 
