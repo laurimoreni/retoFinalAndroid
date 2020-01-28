@@ -179,10 +179,14 @@ public class Reservar extends BaseActivity {
         } catch (NumberFormatException e) {
             numPersonas = 0;
         }
-        if (validarReserva(numPersonas)) {
-            new reservaInsert(user, date1, date2, numPersonas, getApplicationContext()).execute();
+        if (numPersonas != 0){
+            if (validarReserva(numPersonas)) {
+                new reservaInsert(user, date1, date2, numPersonas, getApplicationContext()).execute();
+            } else {
+                Toast.makeText(this, R.string.new_reserva_complete_error, Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Toast.makeText(this, "El alojamiento esta completo para las fechas seleccionadas", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.new_reserva_no_people, Toast.LENGTH_SHORT).show();
         }
     }
 

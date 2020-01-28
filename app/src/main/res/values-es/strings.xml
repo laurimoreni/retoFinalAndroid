@@ -50,6 +50,8 @@
     <string name="new_reserva_success">Reserva completada</string>
     <string name="new_reserva_error">Ha ocurrido un error. No se pudo completar la reserva.</string>
     <string name="new_reserva_aloj_error">Ha ocurrido un error. El alojamiento no existe.</string>
+    <string name="new_reserva_complete_error">El alojamiento esta completo para las fechas seleccionadas</string>
+    <string name="new_reserva_no_people">Debes introducir un número de personas</string>
     
     <string name="btn_edit">Editar</string>
     <string name="text_user_delete">Cuenta de usuario eliminada</string>
@@ -87,6 +89,8 @@
     <string name="list_empty2">Intente cambiar sus criterios de filtro.</string>
     <string name="text_alojamiento_no_done">El alojamiento no se pudo marcar como hecho</string>
     <string name="developer">Esta aplicación ha sido desarrollada por Laura Moreno Gonzalez.</string>
+
+    <string name="no_lodging_in_radio">No hay alojamiento para mostrar en esa distancia</string>
     
     <string name="filters_title">Filtrado por</string>
     <string name="territory">Territorio</string>

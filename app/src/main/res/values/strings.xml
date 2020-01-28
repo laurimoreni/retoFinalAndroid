@@ -50,6 +50,8 @@
     <string name="new_reserva_success">reservation completed</string>
     <string name="new_reserva_error">An error has ocurred. The reservation could not be completed.</string>
     <string name="new_reserva_aloj_error">An error has ocurred. The lodging doesn\'t exist.</string>
+    <string name="new_reserva_complete_error">The lodging is complete for selected dates</string>
+    <string name="new_reserva_no_people">You must enter a number for people</string>
     <!-- User Profile -->
     <string name="btn_edit">Edit</string>
     <string name="text_user_delete">User account Deleted</string>
@@ -87,6 +89,8 @@
     <string name="list_empty2">Please try changing your filter criteria.</string>
     <string name="text_alojamiento_no_done">lodging could not be marked as done</string>
     <string name="developer">This app has been developed by Laura Moreno Gonzalez.</string>
+    <!-- Mapas -->
+    <string name="no_lodging_in_radio">No lodgings to show in that distance</string>
     <!-- Filtros -->
     <string name="filters_title">Filter by</string>
     <string name="territory">Territory</string>

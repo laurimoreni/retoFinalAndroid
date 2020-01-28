@@ -22,7 +22,7 @@
         android:layout_marginBottom="24dp"
         android:clickable="true"
         android:onClick="onMapSearch"
-        android:src="@mipmap/baseline_search_white_48dp"
+        android:src="@mipmap/ruler"
         app:layout_constraintBottom_toBottomOf="@+id/mapaGeneral"
         app:layout_constraintEnd_toEndOf="@+id/mapaGeneral" />
 </androidx.constraintlayout.widget.ConstraintLayout>
