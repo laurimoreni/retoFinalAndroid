@@ -1,5 +1,6 @@
 package com.example.retofinalandroid;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -7,6 +8,7 @@ import androidx.fragment.app.FragmentActivity;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -15,6 +17,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -150,5 +153,19 @@ public class MapaGeneral extends FragmentActivity implements OnMapReadyCallback,
 
             return view;
         }
+    }
+
+    public void onMapSearch(View view) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder( this );
+        view = getLayoutInflater().inflate(R.layout.on_map_search_dialog, null);
+        dialog.setView(view);
+        dialog.setPositiveButton(R.string.buttonOk, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        dialog.setNegativeButton(R.string.dialog_cancel, null);
+        dialog.show();
     }
 }

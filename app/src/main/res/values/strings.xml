@@ -112,4 +112,6 @@
         <item>Hostels</item>
         <item>Campings</item>
     </string-array>
+    <!-- Settings -->
+    <string name="dialog_map_title">Search by proximity</string>
 </resources>

@@ -30,7 +30,6 @@ public class BaseActivity extends AppCompatActivity {
     private CheckBox chkRestaurant, chkShop, chkCaravan;
     private SeekBar sbCapacity;
 
-    private boolean primeraVez = true;
     private String maxCap;
 
     @Override
@@ -147,7 +146,6 @@ public class BaseActivity extends AppCompatActivity {
                 });
                 dialog.setNegativeButton(R.string.dialog_cancel, null);
                 dialog.show();
-                primeraVez = false;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -158,10 +156,7 @@ public class BaseActivity extends AppCompatActivity {
         for (int i=0; i<provincias.size();i++) {
             CheckBox chkProv = new CheckBox(this);
             chkProv.setText(provincias.get(i).getNombre());
-//            if (primeraVez) {
-//                checkedTerritory.add(1);
-//                chkProv.setChecked(true);
-//            } else
+
             if (checkedTerritory.get(i) == 1) {
                     chkProv.setChecked(true);
             } else {
@@ -195,10 +190,7 @@ public class BaseActivity extends AppCompatActivity {
         for (int i=0; i<tiposAlojamiento.size();i++) {
             CheckBox chkTipo = new CheckBox(this);
             chkTipo.setText(tiposAlojamiento.get(i));
-//            if (primeraVez) {
-//                checkedType.add(1);
-//                chkTipo.setChecked(true);
-//            }else
+
             if (checkedType.get(i) == 1) {
                 chkTipo.setChecked(true);
             } else {
@@ -226,14 +218,9 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public void fijarCapacidad() {//final EditText edtCapac) {
-        if(primeraVez) {
-            edtCapac.setText("0", TextView.BufferType.EDITABLE);
-            sbCapacity.setProgress(0);
-        } else {
-            edtCapac.setText(maxCap, TextView.BufferType.EDITABLE);
-            sbCapacity.setProgress(Integer.valueOf(maxCap));
-        }
+    public void fijarCapacidad() {
+        edtCapac.setText(maxCap, TextView.BufferType.EDITABLE);
+        sbCapacity.setProgress(Integer.valueOf(maxCap));
     }
 
     public void aplicarFiltros() {
