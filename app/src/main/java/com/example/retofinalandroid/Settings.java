@@ -8,7 +8,7 @@ import android.widget.Switch;
 
 public class Settings extends BaseActivity {
 
-    private Switch swDesc, swDate, swHour, swCard;
+    private Switch swDesc, swCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,14 +17,10 @@ public class Settings extends BaseActivity {
 
         // get fields
         swDesc = (Switch)findViewById(R.id.swDesc);
-        swDate = (Switch)findViewById(R.id.swDate);
-        swHour = (Switch)findViewById(R.id.swHour);
         swCard = (Switch)findViewById(R.id.swCard);
 
         SharedPreferences prefe = getSharedPreferences("datos", Context.MODE_PRIVATE);
         String showDesc = prefe.getString("show_desc","");
-        String showLoc = prefe.getString("show_loc","");
-        String showType = prefe.getString("show_type","");
         String showCard = prefe.getString("show_card", "small");
 
         if (showDesc.equals("false")) {
@@ -32,24 +28,11 @@ public class Settings extends BaseActivity {
         } else {
             swDesc.setChecked(true);
         }
-        if (showLoc.equals("false")) {
-            swDate.setChecked(false);
-        } else {
-            swDate.setChecked(true);
-        }
-        if (showType.equals("false")) {
-            swHour.setChecked(false);
-        } else {
-            swHour.setChecked(true);
-        }
-
         if (showCard.equals("small")) {
             swCard.setChecked(false);
         } else {
             swCard.setChecked(true);
         }
-
-
 
         // add listener to description switch
         swDesc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -62,34 +45,7 @@ public class Settings extends BaseActivity {
                 editor.putString("show_desc", "false");
             }
             editor.commit();
-            }
-        });
-
-        // add listener to date switch
-        swDate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = preferencias.edit();
-            if (swDate.isChecked()) {
-                editor.putString("show_date", "true");
-            } else {
-                editor.putString("show_date", "false");
-            }
-            editor.commit();
-            }
-        });
-
-        // add listener to hour switch
-        swHour.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = preferencias.edit();
-            if (swHour.isChecked()) {
-                editor.putString("show_hour", "true");
-            } else {
-                editor.putString("show_hour", "false");
-            }
-            editor.commit();
+            mod.getRvAlojamientos().getAdapter().notifyDataSetChanged();
             }
         });
 

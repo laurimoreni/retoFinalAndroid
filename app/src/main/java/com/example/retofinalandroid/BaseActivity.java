@@ -112,11 +112,10 @@ public class BaseActivity extends AppCompatActivity {
                 if (checkedExtra[2] == 1) {
                     chkCaravan.setChecked(true);
                 }
-//                Button btnOk = view.findViewById(R.id.btnOk);
-//                Button btnCancel = view.findViewById(R.id.btnCancel);
+
                 cargarFiltroTerritory(lnTerritory);
                 cargarFiltroType(lnType);
-                fijarCapacidad();//edtCapac);
+                fijarCapacidad();
 
                 AlertDialog.Builder dialog = new AlertDialog.Builder( this );
                 dialog.setView(view);
@@ -225,14 +224,6 @@ public class BaseActivity extends AppCompatActivity {
         if(primeraVez) {
             edtCapac.setText("0", TextView.BufferType.EDITABLE);
             sbCapacity.setProgress(0);
-//            edtCapac.setOnFocusChangeListener(new View.OnFocusChangeListener(){
-//                public void onFocusChange(View v, boolean hasFocus){
-//                    if (hasFocus) {
-//                        ((EditText) edtCapac).setText("");
-//                    }
-//                }
-//            });
-
         } else {
             edtCapac.setText(maxCap, TextView.BufferType.EDITABLE);
             sbCapacity.setProgress(Integer.valueOf(maxCap));

@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class AlojamientoRecyclerView extends BaseActivity {
     ConstraintLayout lyLista, lyEmpty;
-
+    SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,8 @@ public class AlojamientoRecyclerView extends BaseActivity {
         setContentView(R.layout.activity_alojamiento_recycler_view);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+        sharedPref = getSharedPreferences("datos", Context.MODE_PRIVATE);
 
         lyLista = findViewById(R.id.linearLista);
         lyEmpty = findViewById(R.id.linearEmpty);
@@ -99,7 +101,6 @@ public class AlojamientoRecyclerView extends BaseActivity {
 
         @Override
         public int getItemViewType(int position) {
-            SharedPreferences sharedPref = getSharedPreferences("datos", Context.MODE_PRIVATE);
             String showCard = sharedPref.getString("show_card", "small");
             if (showCard.equals("small")) {
                 return R.layout.alojamiento_simple;
@@ -137,8 +138,14 @@ public class AlojamientoRecyclerView extends BaseActivity {
             holder.tvLoc.setText(aloj.getMunicipality());
             holder.tvType.setText(aloj.getLodgingtype());
             holder.tvCap.setText(String.valueOf(aloj.getCapacity()));
+            String showDesc = sharedPref.getString("show_desc", "true");
             String desc = aloj.getTurismdescription();
             holder.tvDesc.setText(desc.substring(0, desc.indexOf(".")) + "...");
+            if (showDesc.equals("true")) {
+                holder.tvDesc.setVisibility(View.VISIBLE);
+            } else {
+                holder.tvDesc.setVisibility(View.GONE);
+            }
             Blob blob = aloj.getImagen();
             try {
                 byte[] blobAsBytes = blob.getBytes(1, (int) blob.length());
