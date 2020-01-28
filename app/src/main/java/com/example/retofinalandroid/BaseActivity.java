@@ -22,9 +22,9 @@ public class BaseActivity extends AppCompatActivity {
 
     protected Modelo mod;
 
-    private ArrayList<Integer> checkedTerritory = new ArrayList<Integer>();
-    private ArrayList<Integer> checkedType = new ArrayList<Integer>();
-    private int[] checkedExtra = {0,0,0};
+    private ArrayList<Integer> checkedTerritory;
+    private ArrayList<Integer> checkedType;
+    private int[] checkedExtra;
 
     private EditText edtCapac;
     private CheckBox chkRestaurant, chkShop, chkCaravan;
@@ -39,6 +39,10 @@ public class BaseActivity extends AppCompatActivity {
 
         // get model data
         mod = (Modelo) getApplication();
+        checkedTerritory = mod.getCheckedTerritory();
+        checkedType = mod.getCheckedType();
+        checkedExtra = mod.getCheckedExtra();
+        maxCap = mod.getMaxCap();
 
         // add back button to the action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -154,10 +158,11 @@ public class BaseActivity extends AppCompatActivity {
         for (int i=0; i<provincias.size();i++) {
             CheckBox chkProv = new CheckBox(this);
             chkProv.setText(provincias.get(i).getNombre());
-            if (primeraVez) {
-                checkedTerritory.add(1);
-                chkProv.setChecked(true);
-            } else if (checkedTerritory.get(i) == 1) {
+//            if (primeraVez) {
+//                checkedTerritory.add(1);
+//                chkProv.setChecked(true);
+//            } else
+            if (checkedTerritory.get(i) == 1) {
                     chkProv.setChecked(true);
             } else {
                 chkProv.setChecked(false);
@@ -190,10 +195,11 @@ public class BaseActivity extends AppCompatActivity {
         for (int i=0; i<tiposAlojamiento.size();i++) {
             CheckBox chkTipo = new CheckBox(this);
             chkTipo.setText(tiposAlojamiento.get(i));
-            if (primeraVez) {
-                checkedType.add(1);
-                chkTipo.setChecked(true);
-            }else if (checkedType.get(i) == 1) {
+//            if (primeraVez) {
+//                checkedType.add(1);
+//                chkTipo.setChecked(true);
+//            }else
+            if (checkedType.get(i) == 1) {
                 chkTipo.setChecked(true);
             } else {
                 chkTipo.setChecked(false);

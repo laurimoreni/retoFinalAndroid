@@ -1,6 +1,7 @@
 package com.example.retofinalandroid;
 
 import android.app.Application;
+import android.widget.CheckBox;
 
 import java.util.ArrayList;
 
@@ -16,6 +17,10 @@ public class Modelo extends Application {
     private ArrayList<String> tiposAlojamiento;
     private Usuario loggedUser;
     private RecyclerView rvAlojamientos;
+    private ArrayList<Integer> checkedTerritory;
+    private ArrayList<Integer> checkedType;
+    private int[] checkedExtra = {0,0,0};
+    private String maxCap = "0";
 
     public ArrayList<Alojamiento> getAlojamientos() {
         return alojamientos;
@@ -49,6 +54,22 @@ public class Modelo extends Application {
         return rvAlojamientos;
     }
 
+    public ArrayList<Integer> getCheckedTerritory() {
+        return checkedTerritory;
+    }
+
+    public ArrayList<Integer> getCheckedType() {
+        return checkedType;
+    }
+
+    public int[] getCheckedExtra() {
+        return checkedExtra;
+    }
+
+    public String getMaxCap() {
+        return maxCap;
+    }
+
     public void setAlojamientos(ArrayList<Alojamiento> alojamientos) {
         this.alojamientos = alojamientos;
     }
@@ -80,4 +101,21 @@ public class Modelo extends Application {
     public void setRvAlojamientos(RecyclerView rvAlojamientos) {
         this.rvAlojamientos = rvAlojamientos;
     }
+
+    public void setCheckedTerritory(ArrayList<Integer> checkedTerritory) {
+        this.checkedTerritory = checkedTerritory;
+    }
+
+    public void setCheckedType(ArrayList<Integer> checkedType) {
+        this.checkedType = checkedType;
+    }
+
+    public void setCheckedExtra(int[] checkedExtra) {
+        this.checkedExtra = checkedExtra;
+    }
+
+    public void setMaxCap(String maxCap) {
+        this.maxCap = maxCap;
+    }
+
 }

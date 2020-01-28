@@ -13,31 +13,25 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginLeft="24dp"
             android:layout_marginEnd="24dp"
             android:text="@string/hint_dni"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/tvLastName"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layout_constraintStart_toEndOf="@+id/lblDni"
+            app:layout_constraintTop_toTopOf="@+id/lblDni" />
 
         <TextView
             android:id="@+id/tvName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
             android:text="@string/hint_firstname"
-            android:textSize="24sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/tvLastName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvDni"
             app:layout_constraintTop_toBottomOf="@+id/tvDni"
             app:layout_constraintVertical_bias="0.0"
             app:layout_constraintVertical_chainStyle="packed" />
@@ -46,45 +40,40 @@
             android:id="@+id/tvLastName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
             android:text="@string/hint_lastname"
-            android:textSize="24sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/tvLoc"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvName"
             app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
         <TextView
             android:id="@+id/tvLoc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="16dp"
             android:text="@string/hint_email"
-            android:textSize="24sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/tvCapacity"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvLastName"
             app:layout_constraintTop_toBottomOf="@+id/tvLastName" />
 
         <TextView
             android:id="@+id/tvCapacity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
             android:text="@string/hint_tel"
-            android:textSize="24sp"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvLoc"
             app:layout_constraintTop_toBottomOf="@+id/tvLoc" />
 
         <Button
@@ -122,5 +111,81 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/button" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="24dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/user_profile_title"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/lblDni"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/hint_dni"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/textView11"
+            app:layout_constraintTop_toBottomOf="@+id/textView11"
+            tools:text="@string/hint_dni" />
+
+        <TextView
+            android:id="@+id/lblFirst"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_firstname"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/lblDni"
+            app:layout_constraintTop_toTopOf="@+id/tvName"
+            tools:text="@string/hint_firstname" />
+
+        <TextView
+            android:id="@+id/lblLast"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_lastname"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/lblFirst"
+            app:layout_constraintTop_toTopOf="@+id/tvLastName"
+            tools:text="@string/hint_lastname" />
+
+        <TextView
+            android:id="@+id/lblEmail"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_email"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/lblLast"
+            app:layout_constraintTop_toTopOf="@+id/tvLoc"
+            tools:text="@string/hint_email" />
+
+        <TextView
+            android:id="@+id/lblTelephone"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_tel"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/lblEmail"
+            app:layout_constraintTop_toTopOf="@+id/tvCapacity"
+            tools:text="@string/hint_tel" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

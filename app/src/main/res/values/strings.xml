@@ -14,6 +14,7 @@
     <string name="exitTitle">Exit</string>
     <string name="exitMessage">Are you sure you want to exit App?</string>
     <!-- Register and Login -->
+    <string name="user_profile_title">Current user data</string>
     <string name="hint_dni">DNI</string>
     <string name="hint_firstname">First Name</string>
     <string name="hint_lastname">Last Name</string>

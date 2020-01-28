@@ -30,6 +30,7 @@ public class Reservar extends BaseActivity {
     private int year1, month1, day1, year2, month2, day2;
     Date date1 = null;
     Date date2 = null;
+    Alojamiento selectedAloj = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +95,11 @@ public class Reservar extends BaseActivity {
                 String formatedDate2 = sdf.format(calendar.getTime());
                 if (date2 == null || (date2 != null && date2.compareTo(date1) < 0)) {
                     etFechaSalida.setText(formatedDate2);
+                    try {
+                        date2 = new java.sql.Date(sdf.parse(formatedDate2).getTime());
+                    } catch (ParseException e){
+                        e.printStackTrace();
+                    }
                 }
             }
         };
@@ -134,7 +140,6 @@ public class Reservar extends BaseActivity {
 
     public boolean validarReserva(int num) {
         int numPersonas = 0;
-        Alojamiento selectedAloj = null;
         ArrayList<Alojamiento> alojamientos = mod.getAlojamientos();
         ArrayList<Reserva> reservas = mod.getReservas();
         // get selected alojamiento
@@ -175,7 +180,7 @@ public class Reservar extends BaseActivity {
             numPersonas = 0;
         }
         if (validarReserva(numPersonas)) {
-            new reservaInsert(user, date1, date2, alojCod, numPersonas, getApplicationContext()).execute();
+            new reservaInsert(user, date1, date2, numPersonas, getApplicationContext()).execute();
         } else {
             Toast.makeText(this, "El alojamiento esta completo para las fechas seleccionadas", Toast.LENGTH_SHORT).show();
         }
@@ -189,11 +194,10 @@ public class Reservar extends BaseActivity {
         private int personas;
         private Context mContext;
 
-        public reservaInsert(Usuario user, Date fechaEntrada, Date fechaSalida, String alojCod, int personas, Context context){
+        public reservaInsert(Usuario user, Date fechaEntrada, Date fechaSalida, int personas, Context context){
             this.user = user;
             this.fechaEntrada = fechaEntrada;
             this.fechaSalida = fechaSalida;
-            this.alojCod = alojCod;
             this.personas = personas;
             this.mContext = context;
         }
@@ -215,8 +219,12 @@ public class Reservar extends BaseActivity {
                 ps.setString(1, user.getDni());
                 ps.setDate(2, fechaEntrada);
                 ps.setDate(3, fechaSalida);
-                ps.setString(4, alojCod);
-                ps.setInt(5, personas);
+                ps.setString(4, selectedAloj.getSignatura());
+                if (selectedAloj.getLodgingtype().equals("Agroturismos") || selectedAloj.getLodgingtype().equals("Casas Rurales")) {
+                    ps.setInt(5, selectedAloj.getCapacity());
+                } else {
+                    ps.setInt(5, personas);
+                }
                 rs = ps.executeUpdate();
                 generatedKeys = ps.getGeneratedKeys();
                 if (generatedKeys.next()) {
@@ -234,12 +242,6 @@ public class Reservar extends BaseActivity {
                 // add new reserva to reserva arraylist of the model
                 ArrayList<Reserva> reservas = mod.getReservas();
                 ArrayList<Alojamiento> alojamientos = mod.getAlojamientos();
-                Alojamiento selectedAloj = null;
-                for (int i = 0; i < alojamientos.size(); i++) {
-                    if (alojamientos.get(i).getSignatura().equals(alojCod)) {
-                        selectedAloj = alojamientos.get(i);
-                    }
-                }
                 if (selectedAloj != null) {
                     reservas.add(new Reserva(primaryKey, user, fechaEntrada, fechaSalida, selectedAloj, personas));
                     mod.setReservas(reservas);

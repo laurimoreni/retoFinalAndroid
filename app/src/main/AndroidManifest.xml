@@ -37,8 +37,11 @@
         <activity android:name=".Login" />
         <activity android:name=".Registration" />
         <activity android:name=".AlojamientoDetails" />
-        <activity android:name=".UserProfile" />
-        <activity android:name=".EditUser" />
+        <activity android:name=".UserProfile"
+            android:parentActivityName=".AlojamientoRecyclerView"/>
+        <activity android:name=".EditUser"
+            android:parentActivityName=".UserProfile"/>
+            <!--android:noHistory="true"/>-->
         <activity android:name=".Settings" />
         <activity android:name=".About" />
         <activity android:name=".Reservar" />

@@ -79,6 +79,8 @@ public class Inicio extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean cargaOk) {
             if (cargaOk) {
+                incializarArrayFiltroTerritory();
+                incializarArrayFiltroType();
                 pasarALogin();
             } else {
                 errorConexion();
@@ -263,6 +265,20 @@ public class Inicio extends AppCompatActivity {
                 }
             }
             return reservas;
+        }
+
+        private void incializarArrayFiltroTerritory() {
+            mod.setCheckedTerritory(new ArrayList<Integer>());
+            for (int i=0; i<mod.getProvincias().size();i++) {
+                mod.getCheckedTerritory().add(1);
+            }
+        }
+
+        private void incializarArrayFiltroType() {
+            mod.setCheckedType(new ArrayList<Integer>());
+            for (int i=0; i<mod.getTiposAlojamiento().size();i++) {
+                mod.getCheckedType().add(1);
+            }
         }
     }
 }
