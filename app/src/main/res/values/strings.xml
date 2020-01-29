@@ -14,7 +14,7 @@
     <string name="exitTitle">Exit</string>
     <string name="exitMessage">Are you sure you want to exit App?</string>
     <!-- Register and Login -->
-    <string name="user_profile_title">Current user data</string>
+    <string name="user_profile_title">User</string>
     <string name="hint_dni">DNI</string>
     <string name="hint_firstname">First Name</string>
     <string name="hint_lastname">Last Name</string>
@@ -56,6 +56,8 @@
     <string name="btn_edit">Edit</string>
     <string name="text_user_delete">User account Deleted</string>
     <string name="text_user_no_delete">User account could not be deleted</string>
+    <string name="dialog_user_delete_title">Delete user</string>
+    <string name="dialog_user_delete">Are you sure you want to delete this user?</string>
     <string name="edit_user_success">User saved</string>
     <string name="edit_user_error">An error has ocurred. The user could not be saved.</string>
     <string name="edit_user_pass">Change Password</string>
@@ -72,6 +74,9 @@
     <string name="btn_save_task">Save</string>
     <string name="btn_delete">Delete</string>
     <string name="btn_cancel_task">Cancel</string>
+    <string name="title_reservations">Reservations</string>
+    <string name="reserva_list_nombre">Lodging</string>
+    <string name="reserva_list_fecha">Date</string>
     <!-- lodging List -->
     <string name="alojamiento_list_show">Show:</string>
     <string name="btn_new_alojamiento">New lodging</string>
@@ -94,6 +99,7 @@
     <!-- Filtros -->
     <string name="filters_title">Filter by</string>
     <string name="territory">Territory</string>
+    <string name="municipality">Municipality</string>
     <string name="lodging_type">Lodging type</string>
     <string name="capacity">Capacity</string>
     <string name="max">Max.</string>
@@ -110,12 +116,9 @@
     <string name="settings_desc">Description</string>
     <string name="settings_card">Card (Small / Big)</string>
     <string name="title_activity_mapa_alojamiento">Localización</string>
-    <string-array name="lodgings_types">
-        <item>All</item>
-        <item>Rural lodgings</item>
-        <item>Hostels</item>
-        <item>Campings</item>
-    </string-array>
     <!-- Settings -->
     <string name="dialog_map_title">Search by proximity</string>
+    <!-- Reservation Details -->
+    <string name="reservation_details_title">Reservation</string>
+    <string name="reservation_persons">Persons</string>
 </resources>

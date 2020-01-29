@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MapaGeneral"></activity>
+        <activity android:name=".ReservationDetails"></activity>
+        <activity android:name=".MapaGeneral" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -37,11 +38,12 @@
         <activity android:name=".Login" />
         <activity android:name=".Registration" />
         <activity android:name=".AlojamientoDetails" />
-        <activity android:name=".UserProfile"
-            android:parentActivityName=".AlojamientoRecyclerView"/>
-        <activity android:name=".EditUser"
-            android:parentActivityName=".UserProfile"/>
-            <!--android:noHistory="true"/>-->
+        <activity
+            android:name=".UserProfile"
+            android:parentActivityName=".AlojamientoRecyclerView" />
+        <activity
+            android:name=".EditUser"
+            android:parentActivityName=".UserProfile" /> <!-- android:noHistory="true"/> -->
         <activity android:name=".Settings" />
         <activity android:name=".About" />
         <activity android:name=".Reservar" />

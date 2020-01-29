@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/tvDni"
+            android:id="@+id/tvAlojRsv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -18,39 +19,37 @@
             android:text="@string/hint_dni"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/lblDni"
-            app:layout_constraintTop_toTopOf="@+id/lblDni" />
+            app:layout_constraintStart_toEndOf="@+id/lblAlojRsv"
+            app:layout_constraintTop_toTopOf="@+id/lblAlojRsv" />
 
         <TextView
-            android:id="@+id/tvName"
+            android:id="@+id/tvFechEntradaRsv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
             android:text="@string/hint_firstname"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/tvLastName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tvDni"
-            app:layout_constraintTop_toBottomOf="@+id/tvDni"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/tvAlojRsv"
+            app:layout_constraintTop_toBottomOf="@+id/tvAlojRsv"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
-            android:id="@+id/tvLastName"
+            android:id="@+id/tvFechSalidaRsv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
             android:text="@string/hint_lastname"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/tvLoc"
+            app:layout_constraintBottom_toTopOf="@+id/tvNumPersRsv"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tvName"
-            app:layout_constraintTop_toBottomOf="@+id/tvName" />
+            app:layout_constraintStart_toStartOf="@+id/tvFechEntradaRsv"
+            app:layout_constraintTop_toBottomOf="@+id/tvFechEntradaRsv" />
 
         <TextView
-            android:id="@+id/tvLoc"
+            android:id="@+id/tvNumPersRsv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -61,8 +60,8 @@
             app:layout_constraintBottom_toTopOf="@+id/tvCapacity"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="@+id/tvLastName"
-            app:layout_constraintTop_toBottomOf="@+id/tvLastName" />
+            app:layout_constraintStart_toStartOf="@+id/tvFechSalidaRsv"
+            app:layout_constraintTop_toBottomOf="@+id/tvFechSalidaRsv" />
 
         <TextView
             android:id="@+id/tvCapacity"
@@ -73,44 +72,8 @@
             android:text="@string/hint_tel"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tvLoc"
-            app:layout_constraintTop_toBottomOf="@+id/tvLoc" />
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="24dp"
-            android:background="@color/colorAccent"
-            android:onClick="deleteUser"
-            android:text="@string/btn_delete"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnReservar"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvCapacity" />
-
-        <Button
-            android:id="@+id/btnReservar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="24dp"
-            android:background="@color/colorAccent"
-            android:onClick="editUser"
-            android:text="@string/btn_edit"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button" />
+            app:layout_constraintStart_toStartOf="@+id/tvNumPersRsv"
+            app:layout_constraintTop_toBottomOf="@+id/tvNumPersRsv" />
 
         <TextView
             android:id="@+id/textView11"
@@ -124,13 +87,11 @@
             android:textColor="@color/colorPrimary"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/lblDni"
+            android:id="@+id/lblAlojRsv"
             android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -144,36 +105,36 @@
             tools:text="@string/hint_dni" />
 
         <TextView
-            android:id="@+id/lblFirst"
+            android:id="@+id/lblFechaEntrada"
             android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:text="@string/hint_firstname"
             android:textColor="@color/colorPrimary"
             android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/lblDni"
-            app:layout_constraintTop_toTopOf="@+id/tvName"
+            app:layout_constraintStart_toStartOf="@+id/lblAlojRsv"
+            app:layout_constraintTop_toTopOf="@+id/tvFechEntradaRsv"
             tools:text="@string/hint_firstname" />
 
         <TextView
-            android:id="@+id/lblLast"
+            android:id="@+id/lblFechaSalida"
             android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:text="@string/hint_lastname"
             android:textColor="@color/colorPrimary"
             android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/lblFirst"
-            app:layout_constraintTop_toTopOf="@+id/tvLastName"
+            app:layout_constraintStart_toStartOf="@+id/lblFechaEntrada"
+            app:layout_constraintTop_toTopOf="@+id/tvFechSalidaRsv"
             tools:text="@string/hint_lastname" />
 
         <TextView
-            android:id="@+id/lblEmail"
+            android:id="@+id/lblPersonas"
             android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:text="@string/hint_email"
             android:textColor="@color/colorPrimary"
             android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/lblLast"
-            app:layout_constraintTop_toTopOf="@+id/tvLoc"
+            app:layout_constraintStart_toStartOf="@+id/lblFechaSalida"
+            app:layout_constraintTop_toTopOf="@+id/tvNumPersRsv"
             tools:text="@string/hint_email" />
 
         <TextView
@@ -183,9 +144,118 @@
             android:text="@string/hint_tel"
             android:textColor="@color/colorPrimary"
             android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/lblEmail"
+            app:layout_constraintStart_toStartOf="@+id/lblPersonas"
             app:layout_constraintTop_toTopOf="@+id/tvCapacity"
             tools:text="@string/hint_tel" />
+
+        <TextView
+            android:id="@+id/txtReservas"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:text="@string/title_reservations"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCapacity" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtReservas">
+
+            <TextView
+                android:id="@+id/txtNombreTituloRsv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/reserva_list_nombre"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtFechaTituloRsv"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/reserva_list_fecha"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3"/>
+
+        <LinearLayout
+            android:id="@+id/linearReservas"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginBottom="24dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3"></LinearLayout>
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:background="@android:color/transparent"
+            android:onClick="deleteUser"
+            android:tint="@color/colorAccent"
+            app:layout_constraintBottom_toBottomOf="@+id/textView11"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView11"
+            app:srcCompat="@mipmap/baseline_delete_outline_white_36dp" />
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@android:color/transparent"
+            android:onClick="editUser"
+            android:tint="@color/colorAccent"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButton"
+            app:layout_constraintEnd_toStartOf="@+id/imageButton"
+            app:layout_constraintTop_toTopOf="@+id/imageButton"
+            app:srcCompat="@mipmap/baseline_create_white_36dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

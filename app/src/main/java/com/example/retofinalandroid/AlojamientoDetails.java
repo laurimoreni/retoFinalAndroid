@@ -32,9 +32,9 @@ public class AlojamientoDetails extends BaseActivity {
         alojamiento = mod.getAlojFiltrados().get(index);
 
         // get fields
-        tvName = findViewById(R.id.tvName);
+        tvName = findViewById(R.id.tvFechEntradaRsv);
         tvDesc = findViewById(R.id.tvDesc);
-        tvLoc = findViewById(R.id.tvLoc);
+        tvLoc = findViewById(R.id.tvNumPersRsv);
         tvType = findViewById(R.id.tvType);
         tvCapacidad = findViewById(R.id.tvCapacity);
         btnReservar = findViewById(R.id.btnReservar);

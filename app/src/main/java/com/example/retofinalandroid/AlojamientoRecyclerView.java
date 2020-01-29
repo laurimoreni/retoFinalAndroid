@@ -70,8 +70,8 @@ public class AlojamientoRecyclerView extends BaseActivity {
 
             public ViewHolder(Context context, View itemView) {
                 super(itemView);
-                tvName = (TextView) itemView.findViewById(R.id.tvName);
-                tvLoc = (TextView) itemView.findViewById(R.id.tvLoc);
+                tvName = (TextView) itemView.findViewById(R.id.tvFechEntradaRsv);
+                tvLoc = (TextView) itemView.findViewById(R.id.tvNumPersRsv);
                 tvType = (TextView) itemView.findViewById(R.id.tvType);
                 tvCap = (TextView) itemView.findViewById(R.id.txtCapac);
                 tvDesc = (TextView) itemView.findViewById(R.id.tvDesc);

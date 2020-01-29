@@ -39,7 +39,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvName"
+        android:id="@+id/tvFechEntradaRsv"
         android:layout_width="0dp"
         android:layout_height="35dp"
         android:background="#801D1A1A"
@@ -54,7 +54,7 @@
         app:layout_constraintStart_toStartOf="@+id/image" />
 
     <TextView
-        android:id="@+id/tvLoc"
+        android:id="@+id/tvNumPersRsv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
@@ -66,8 +66,8 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/tvType"
-        app:layout_constraintStart_toStartOf="@+id/tvName"
-        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+        app:layout_constraintStart_toStartOf="@+id/tvFechEntradaRsv"
+        app:layout_constraintTop_toBottomOf="@+id/tvFechEntradaRsv" />
 
     <TextView
         android:id="@+id/tvType"
@@ -80,10 +80,10 @@
         android:text="@string/text_alojamiento_type"
         android:textColor="@color/colorWhite"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/tvLoc"
-        app:layout_constraintEnd_toEndOf="@+id/tvName"
-        app:layout_constraintStart_toEndOf="@+id/tvLoc"
-        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+        app:layout_constraintBottom_toBottomOf="@+id/tvNumPersRsv"
+        app:layout_constraintEnd_toEndOf="@+id/tvFechEntradaRsv"
+        app:layout_constraintStart_toEndOf="@+id/tvNumPersRsv"
+        app:layout_constraintTop_toBottomOf="@+id/tvFechEntradaRsv" />
 
     <TextView
         android:id="@+id/tvDesc"
@@ -94,7 +94,7 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/tvType"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/tvLoc"
+        app:layout_constraintStart_toStartOf="@+id/tvNumPersRsv"
         app:layout_constraintTop_toBottomOf="@+id/imgCap" />
 
     <ImageView
@@ -104,8 +104,8 @@
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="@+id/tvLoc"
-        app:layout_constraintTop_toBottomOf="@+id/tvLoc"
+        app:layout_constraintStart_toStartOf="@+id/tvNumPersRsv"
+        app:layout_constraintTop_toBottomOf="@+id/tvNumPersRsv"
         app:srcCompat="@mipmap/baseline_face_black_48dp" />
 
     <ImageView

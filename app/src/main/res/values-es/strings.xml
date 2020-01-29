@@ -14,7 +14,7 @@
     <string name="exitTitle">Salida</string>
     <string name="exitMessage">¿Seguro que quieres salir de la aplicación?</string>
 
-    <string name="user_profile_title">Datos del usuario actual</string>
+    <string name="user_profile_title">Usuario</string>
     <string name="hint_dni">DNI</string>
     <string name="hint_firstname">Nombre</string>
     <string name="hint_lastname">Apellido</string>
@@ -55,6 +55,8 @@
     
     <string name="btn_edit">Editar</string>
     <string name="text_user_delete">Cuenta de usuario eliminada</string>
+    <string name="dialog_user_delete_title">Borrar usuario</string>
+    <string name="dialog_user_delete">¿Seguro que quiere borrar este usuario?</string>
     <string name="text_user_no_delete">La cuenta de usuario no se pudo eliminar</string>
     <string name="edit_user_success">Usuario guardado</string>
     <string name="edit_user_error">Ha ocurrido un error. El usuario no pudo ser guardado.</string>
@@ -72,6 +74,9 @@
     <string name="btn_save_task">Salvar</string>
     <string name="btn_delete">Eliminar</string>
     <string name="btn_cancel_task">Cancelar</string>
+    <string name="title_reservations">Reservas</string>
+    <string name="reserva_list_nombre">Alojamiento</string>
+    <string name="reserva_list_fecha">Fecha</string>
     
     <string name="alojamiento_list_show">Mostrar:</string>
     <string name="btn_new_alojamiento">Nuevo alojamiento</string>
@@ -94,6 +99,7 @@
     
     <string name="filters_title">Filtrado por</string>
     <string name="territory">Territorio</string>
+    <string name="municipality">Municipio</string>
     <string name="lodging_type">Tipo de alojamiento</string>
     <string name="capacity">Capacidad</string>
     <string name="max">Max.</string>
@@ -110,10 +116,10 @@
     <string name="settings_desc">Descripción</string>
     <string name="settings_card">Tarjeta (pequeña / grande)</string>
     <string name="title_activity_mapa_alojamiento">Localización</string>
-    <string-array name="alojamientos_types">
-        <item>Todos</item>
-        <item>Alojamientos Rurales</item>
-        <item>Albergues</item>
-        <item>Campings</item>
-    </string-array>
+    <!-- Settings -->
+    <string name="dialog_map_title">Buscar por proximidad</string>
+    <!-- Reservation Details -->
+    <string name="reservation_details_title">Reserva</string>
+    <string name="reservation_persons">Personas</string>
+
 --></resources>

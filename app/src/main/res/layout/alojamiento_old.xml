@@ -18,7 +18,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvName"
+        android:id="@+id/tvFechEntradaRsv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvLoc"
+        android:id="@+id/tvNumPersRsv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -42,7 +42,7 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/tvType"
         app:layout_constraintStart_toEndOf="@+id/image"
-        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+        app:layout_constraintTop_toBottomOf="@+id/tvFechEntradaRsv" />
 
     <TextView
         android:id="@+id/tvType"
@@ -56,8 +56,8 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tvLoc"
-        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+        app:layout_constraintStart_toEndOf="@+id/tvNumPersRsv"
+        app:layout_constraintTop_toBottomOf="@+id/tvFechEntradaRsv" />
 
     <TextView
         android:id="@+id/tvDesc"
@@ -70,7 +70,7 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image"
-        app:layout_constraintTop_toBottomOf="@+id/tvLoc" />
+        app:layout_constraintTop_toBottomOf="@+id/tvNumPersRsv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

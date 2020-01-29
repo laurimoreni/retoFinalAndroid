@@ -23,7 +23,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvName"
+        android:id="@+id/tvFechEntradaRsv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -42,7 +42,7 @@
         app:layout_constraintTop_toTopOf="@+id/image" />
 
     <TextView
-        android:id="@+id/tvLoc"
+        android:id="@+id/tvNumPersRsv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:drawablePadding="5dp"
@@ -50,9 +50,9 @@
         android:text="@string/text_alojamiento_loc"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/tvName"
-        app:layout_constraintStart_toStartOf="@+id/tvName"
-        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+        app:layout_constraintEnd_toEndOf="@+id/tvFechEntradaRsv"
+        app:layout_constraintStart_toStartOf="@+id/tvFechEntradaRsv"
+        app:layout_constraintTop_toBottomOf="@+id/tvFechEntradaRsv" />
 
     <TextView
         android:id="@+id/tvType"
@@ -62,9 +62,9 @@
         android:paddingLeft="10dp"
         android:text="@string/text_alojamiento_type"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/tvLoc"
-        app:layout_constraintStart_toStartOf="@+id/tvLoc"
-        app:layout_constraintTop_toBottomOf="@+id/tvLoc" />
+        app:layout_constraintEnd_toEndOf="@+id/tvNumPersRsv"
+        app:layout_constraintStart_toStartOf="@+id/tvNumPersRsv"
+        app:layout_constraintTop_toBottomOf="@+id/tvNumPersRsv" />
 
     <TextView
         android:id="@+id/tvDesc"
@@ -73,7 +73,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/text_alojamiento_desc"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/tvLoc"
+        app:layout_constraintEnd_toEndOf="@+id/tvNumPersRsv"
         app:layout_constraintStart_toStartOf="@+id/image"
         app:layout_constraintTop_toBottomOf="@+id/imgCap" />
 

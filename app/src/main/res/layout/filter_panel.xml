@@ -49,6 +49,30 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearMunicipality"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:layout_marginLeft="16dp">
+
+            <TextView
+                android:id="@+id/txtMunicipality"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/municipality"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spnMunicipality"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/linearType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
