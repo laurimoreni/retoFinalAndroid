@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,16 +14,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Point;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -30,16 +26,14 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.sql.Blob;
 import java.util.ArrayList;
@@ -63,12 +57,15 @@ public class MapaGeneral extends FragmentActivity implements OnMapReadyCallback,
     Location localizacion;
     double homeLat, homeLong;
 
+    FloatingActionButton bola;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa_general);
 
         mod = (Modelo) getApplication();
+        bola = findViewById(R.id.floatingActionButton);
 
         ArrayList<LatLng> posiciones = new ArrayList<LatLng>();
 
@@ -106,6 +103,32 @@ public class MapaGeneral extends FragmentActivity implements OnMapReadyCallback,
             setCamera();
             mapReady = true;
         }
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
+        {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                if(marker.isInfoWindowShown()) {
+                    marker.hideInfoWindow();
+                } else {
+                    marker.showInfoWindow();
+                    ObjectAnimator animation = ObjectAnimator.ofFloat(bola, "translationY", -128f);
+                    animation.setDuration(500);
+                    animation.start();
+                }
+
+                return false;
+            }
+        });
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                ObjectAnimator animation = ObjectAnimator.ofFloat(bola, "translationY", 0f);
+                animation.setDuration(500);
+                animation.start();
+            }
+        });
     }
 
     private void setMarkers() {
@@ -235,15 +258,6 @@ public class MapaGeneral extends FragmentActivity implements OnMapReadyCallback,
 
             Marker marcador = mMap.addMarker(opcionesMarcador);
             builder.include(marcador.getPosition());
-
-//            Double ground_resolution = (Math.cos(homeLat * Math.PI/180) * 2 * Math.PI * 6378137) / (256 * 2 ^ (int)mMap.getMaxZoomLevel());
-//            mMap.addCircle(new CircleOptions()
-//                    .center(new LatLng(homeLat, homeLong))
-//                    .radius(ground_resolution / radio)
-//                    .strokeColor(R.color.bluePlain)
-//                    .strokeWidth(1)
-//                    .fillColor(R.color.blueAlpha));
-
         }
     }
 
