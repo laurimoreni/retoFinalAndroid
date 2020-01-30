@@ -22,6 +22,7 @@ public class Modelo extends Application {
     private ArrayList<Integer> checkedType;
     private int[] checkedExtra = {0,0,0};
     private String maxCap = "0";
+    private String municipioFiltro = "Todos";
 
     public ArrayList<Alojamiento> getAlojamientos() {
         return alojamientos;
@@ -75,6 +76,10 @@ public class Modelo extends Application {
         return maxCap;
     }
 
+    public String getMunicipioFiltro() {
+        return municipioFiltro;
+    }
+
     public void setAlojamientos(ArrayList<Alojamiento> alojamientos) {
         this.alojamientos = alojamientos;
     }
@@ -125,6 +130,10 @@ public class Modelo extends Application {
 
     public void setMaxCap(String maxCap) {
         this.maxCap = maxCap;
+    }
+
+    public void setMunicipioFiltro(String municipioFiltro) {
+        this.municipioFiltro = municipioFiltro;
     }
 
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -100,6 +101,17 @@ public class BaseActivity extends AppCompatActivity {
                 edtCapac = view.findViewById(R.id.edtCapac);
                 sbCapacity= view.findViewById(R.id.sbCapacity);
                 spnMunicipios  = view.findViewById(R.id.spnMunicipality);
+                spnMunicipios.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        mod.setMunicipioFiltro(spnMunicipios.getSelectedItem().toString());
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
                 sbCapacity.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -130,7 +142,7 @@ public class BaseActivity extends AppCompatActivity {
                 }
 
                 cargarFiltroTerritory(lnTerritory);
-                refrescarMunicipios();
+                refrescarMunicipios(municipiosSpinner.indexOf(mod.getMunicipioFiltro()));
                 cargarFiltroType(lnType);
                 fijarCapacidad();
 
@@ -195,11 +207,11 @@ public class BaseActivity extends AppCompatActivity {
             } else {
                 checkedTerritory.set(pos, 0);
             }
-            refrescarMunicipios();
+            refrescarMunicipios(0);
         }
     }
 
-    public void refrescarMunicipios() {
+    public void refrescarMunicipios(int pos) {
         municipiosSpinner.clear();
 
         for (int i=0;i<checkedTerritory.size();i++) {
@@ -216,6 +228,7 @@ public class BaseActivity extends AppCompatActivity {
         municipiosSpinner.add(0, "Todos");
         ArrayAdapter<String> adpaterMunicipios = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, municipiosSpinner);
         spnMunicipios.setAdapter(adpaterMunicipios);
+        spnMunicipios.setSelection(pos);
     }
 
     public void cargarFiltroType(LinearLayout layout){
@@ -260,7 +273,7 @@ public class BaseActivity extends AppCompatActivity {
     public void aplicarFiltros() {
         mod.getAlojFiltrados().clear();
         for (Alojamiento aloj : mod.getAlojamientos()) {
-            if (filtrarTerritory(aloj) && filtrarTipo(aloj) && filtrarCapacidad(aloj) && filtrarRestaurant(aloj) && filtrarShop(aloj) && filtrarCaravan(aloj)) {
+            if (filtrarTerritory(aloj) && filtrarMunicipio(aloj) && filtrarTipo(aloj) && filtrarCapacidad(aloj) && filtrarRestaurant(aloj) && filtrarShop(aloj) && filtrarCaravan(aloj)) {
                 mod.getAlojFiltrados().add(aloj);
             }
         }
@@ -277,6 +290,16 @@ public class BaseActivity extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+    public boolean filtrarMunicipio(Alojamiento aloj) {
+        if (spnMunicipios.getSelectedItem().equals("Todos")) {
+            return true;
+        } else if (spnMunicipios.getSelectedItem().equals(aloj.getMunicipality())){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean filtrarTipo(Alojamiento aloj) {
