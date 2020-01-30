@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -17,6 +19,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
+import java.util.function.ToIntFunction;
+import java.util.function.ToLongFunction;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -32,6 +40,9 @@ public class BaseActivity extends AppCompatActivity {
 
     private String maxCap;
 
+    private Spinner spnMunicipios;
+    private ArrayList<String> municipiosSpinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +53,7 @@ public class BaseActivity extends AppCompatActivity {
         checkedType = mod.getCheckedType();
         checkedExtra = mod.getCheckedExtra();
         maxCap = mod.getMaxCap();
+        municipiosSpinner = new ArrayList<String>();
 
         // add back button to the action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -87,6 +99,7 @@ public class BaseActivity extends AppCompatActivity {
                 LinearLayout lnType = view.findViewById(R.id.panelType);
                 edtCapac = view.findViewById(R.id.edtCapac);
                 sbCapacity= view.findViewById(R.id.sbCapacity);
+                spnMunicipios  = view.findViewById(R.id.spnMunicipality);
                 sbCapacity.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -117,6 +130,7 @@ public class BaseActivity extends AppCompatActivity {
                 }
 
                 cargarFiltroTerritory(lnTerritory);
+                refrescarMunicipios();
                 cargarFiltroType(lnType);
                 fijarCapacidad();
 
@@ -163,7 +177,6 @@ public class BaseActivity extends AppCompatActivity {
                 chkProv.setChecked(false);
             }
             chkProv.setOnClickListener(new setCheckedTerritory(i));
-
             layout.addView(chkProv);
         }
     }
@@ -177,11 +190,32 @@ public class BaseActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            if (checkedTerritory.get(pos) == 0)
-                checkedTerritory.set(pos,1 );
-            else
+            if (checkedTerritory.get(pos) == 0) {
+                checkedTerritory.set(pos, 1);
+            } else {
                 checkedTerritory.set(pos, 0);
+            }
+            refrescarMunicipios();
         }
+    }
+
+    public void refrescarMunicipios() {
+        municipiosSpinner.clear();
+
+        for (int i=0;i<checkedTerritory.size();i++) {
+            if (checkedTerritory.get(i) == 1) {
+                //Provincia prov = mod.getProvincias().get(i);
+                for (Municipio muni : mod.getMunicipios()) {
+                    if (muni.getProvincia().getId() == i + 1) {
+                        municipiosSpinner.add(muni.getMunicipio());
+                    }
+                }
+            }
+        }
+        Collections.sort(municipiosSpinner);
+        municipiosSpinner.add(0, "Todos");
+        ArrayAdapter<String> adpaterMunicipios = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, municipiosSpinner);
+        spnMunicipios.setAdapter(adpaterMunicipios);
     }
 
     public void cargarFiltroType(LinearLayout layout){
@@ -328,4 +362,5 @@ public class BaseActivity extends AppCompatActivity {
         ActivityCompat.finishAffinity(this);
         startActivity(homeIntent);
     }
+
 }

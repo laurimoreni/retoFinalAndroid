@@ -17,6 +17,7 @@ public class Modelo extends Application {
     private ArrayList<String> tiposAlojamiento;
     private Usuario loggedUser;
     private RecyclerView rvAlojamientos;
+    private ArrayList<Municipio> municipios;
     private ArrayList<Integer> checkedTerritory;
     private ArrayList<Integer> checkedType;
     private int[] checkedExtra = {0,0,0};
@@ -52,6 +53,10 @@ public class Modelo extends Application {
 
     public RecyclerView getRvAlojamientos() {
         return rvAlojamientos;
+    }
+
+    public ArrayList<Municipio> getMunicipios() {
+        return municipios;
     }
 
     public ArrayList<Integer> getCheckedTerritory() {
@@ -100,6 +105,10 @@ public class Modelo extends Application {
 
     public void setRvAlojamientos(RecyclerView rvAlojamientos) {
         this.rvAlojamientos = rvAlojamientos;
+    }
+
+    public void setMunicipios(ArrayList<Municipio> municipios) {
+        this.municipios = municipios;
     }
 
     public void setCheckedTerritory(ArrayList<Integer> checkedTerritory) {

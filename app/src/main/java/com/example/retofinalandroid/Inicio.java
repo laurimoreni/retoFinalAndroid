@@ -81,6 +81,7 @@ public class Inicio extends AppCompatActivity {
             if (cargaOk) {
                 incializarArrayFiltroTerritory();
                 incializarArrayFiltroType();
+                mod.setMunicipios(cargarMunicipios());
                 pasarALogin();
             } else {
                 errorConexion();
@@ -265,6 +266,19 @@ public class Inicio extends AppCompatActivity {
                 }
             }
             return reservas;
+        }
+
+        private ArrayList<Municipio> cargarMunicipios() {
+            ArrayList<Municipio> municipios = new ArrayList<Municipio>();
+            ArrayList<String> cacheMunicipios = new ArrayList<String>();
+            for (Alojamiento aloj : mod.getAlojamientos()) {
+                Municipio mun = new Municipio(aloj.getProvincia(), aloj.getMunicipality());
+                if (!cacheMunicipios.contains(mun.getMunicipio())) {
+                    municipios.add(mun);
+                    cacheMunicipios.add(mun.getMunicipio());
+                }
+            }
+            return municipios;
         }
 
         private void incializarArrayFiltroTerritory() {
