@@ -39,8 +39,6 @@ public class AlojamientoRecyclerView extends BaseActivity {
         lyLista = findViewById(R.id.linearLista);
         lyEmpty = findViewById(R.id.linearEmpty);
 
-        mod.setAlojFiltrados(new ArrayList<>(mod.getAlojamientos()));
-
         mod.setRvAlojamientos((RecyclerView) findViewById(R.id.rvAlojamientos));
 
         RecyclerView.Adapter adapter = new Adaptador_RecyclerView(mod.getAlojFiltrados());

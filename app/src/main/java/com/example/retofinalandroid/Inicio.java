@@ -67,6 +67,7 @@ public class Inicio extends AppCompatActivity {
                 con = (Connection) DriverManager.getConnection(url, user, pass);
                 mod.setProvincias(descargarProvincias());
                 mod.setAlojamientos(descargarAlojamientos());
+                mod.setAlojFiltrados(new ArrayList<Alojamiento>(mod.getAlojamientos()));
                 mod.setUsuarios(descargarUsuarios());
                 mod.setReservas(descargarReservas());
             } catch (Exception ex) {
