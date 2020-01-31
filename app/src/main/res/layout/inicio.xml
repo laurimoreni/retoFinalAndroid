@@ -21,7 +21,7 @@
         android:id="@+id/gifImageView"
         android:layout_width="253dp"
         android:layout_height="322dp"
-        android:src="@drawable/cargando"
+        android:src="@drawable/cargando_naranja"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
