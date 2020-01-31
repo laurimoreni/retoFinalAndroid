@@ -50,6 +50,13 @@ public class AlojamientoRecyclerView extends BaseActivity {
         mod.getRvAlojamientos().addItemDecoration(itemDecoration);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mod.getRvAlojamientos().getAdapter().notifyDataSetChanged();
+    }
+
     private class Adaptador_RecyclerView extends RecyclerView.Adapter<Adaptador_RecyclerView.ViewHolder>{
         // Provide a reference to the views for each data item
         // Complex data items may need more than one view per item, and

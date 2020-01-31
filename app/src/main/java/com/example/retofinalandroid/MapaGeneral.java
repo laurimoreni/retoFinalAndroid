@@ -234,7 +234,7 @@ public class MapaGeneral extends FragmentActivity implements OnMapReadyCallback,
                 if (mod.getAlojFiltrados().size() > 0) {
                     setMarkers();
                     setCamera();
-                    mod.getRvAlojamientos().getAdapter().notifyDataSetChanged();
+                    //mod.getRvAlojamientos().getAdapter().notifyDataSetChanged();
                 } else {
                     mostrarMensaje();
                 }
