@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +19,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import java.sql.Blob;
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 public class AlojamientoRecyclerView extends BaseActivity {
     ConstraintLayout lyLista, lyEmpty;
     SharedPreferences sharedPref;
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,11 @@ public class AlojamientoRecyclerView extends BaseActivity {
 
         lyLista = findViewById(R.id.linearLista);
         lyEmpty = findViewById(R.id.linearEmpty);
+        searchView = (SearchView) findViewById(R.id.busqueda);
+
+        // asociar searchview con searchable.xml
+        SearchManager sm = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView.setSearchableInfo(sm.getSearchableInfo(getComponentName()));
 
         mod.setRvAlojamientos((RecyclerView) findViewById(R.id.rvAlojamientos));
 
@@ -45,9 +53,40 @@ public class AlojamientoRecyclerView extends BaseActivity {
         mod.getRvAlojamientos().setAdapter(adapter);
         mod.getRvAlojamientos().setLayoutManager(new LinearLayoutManager(this));
         mod.getRvAlojamientos().setHasFixedSize(true);
-        RecyclerView.ItemDecoration itemDecoration = new
-                DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         mod.getRvAlojamientos().addItemDecoration(itemDecoration);
+
+        // Search
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                mod.getAlojFiltrados().clear();
+                filtrar(query);
+                mod.getRvAlojamientos().getAdapter().notifyDataSetChanged();
+                mod.getRvAlojamientos().smoothScrollToPosition(0);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mod.getAlojFiltrados().clear();
+                filtrar(newText);
+                mod.getRvAlojamientos().getAdapter().notifyDataSetChanged();
+                mod.getRvAlojamientos().smoothScrollToPosition(0);
+                return true;
+            }
+        });
+    }
+
+    public void filtrar(String query) {
+        for (Alojamiento aloj : mod.getAlojamientos()) {
+            boolean name = aloj.getDocumentname().toLowerCase().contains(query.toLowerCase());
+            boolean territory = aloj.getProvincia().getNombre().toLowerCase().contains(query.toLowerCase());
+            boolean municipality = aloj.getMunicipality().toLowerCase().contains(query.toLowerCase());
+            if (name || territory || municipality) {
+                mod.getAlojFiltrados().add(aloj);
+            }
+        }
     }
 
     @Override
@@ -57,7 +96,7 @@ public class AlojamientoRecyclerView extends BaseActivity {
         mod.getRvAlojamientos().getAdapter().notifyDataSetChanged();
     }
 
-    private class Adaptador_RecyclerView extends RecyclerView.Adapter<Adaptador_RecyclerView.ViewHolder>{
+    private class Adaptador_RecyclerView extends RecyclerView.Adapter<Adaptador_RecyclerView.ViewHolder> {
         // Provide a reference to the views for each data item
         // Complex data items may need more than one view per item, and
         // you provide access to all the views for a data item in a view holder
@@ -188,6 +227,7 @@ public class AlojamientoRecyclerView extends BaseActivity {
             }
             return alojamientos.size();
         }
+
     }
 
     // Mostrar el botón de filtro del menu

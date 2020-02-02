@@ -280,6 +280,6 @@ public class MapaGeneral extends FragmentActivity implements OnMapReadyCallback,
     }
 
     private void mostrarMensaje() {
-        Toast.makeText(this, "No hay alojamiento para mostrar en ese radio", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.no_lodging_in_radio, Toast.LENGTH_SHORT).show();
     }
 }

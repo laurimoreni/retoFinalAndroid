@@ -266,7 +266,7 @@ public class EditUser extends BaseActivity {
                 }
                 mod.setUsuarios(usuarios);
                 // show success message and go to currentUser profile activity
-                Toast.makeText(mContext, R.string.edit_user_success, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, R.string.edit_pass_success, Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(mContext, EditUser.class );
                 startActivity(i);
             } else {

@@ -1,24 +1,23 @@
 <resources>
-
+    <!-- Action Bar -->
     <string name="app_name" translatable="false">RetoFinal</string>
     <string name="option_filter">Filtrar</string>
     <string name="option_profile">Perfil</string>
     <string name="option_logout">Cerrar sesión</string>
     <string name="option_config">Configuraciones</string>
     <string name="option_about">Acerca de</string>
-    
+    <!-- Inicio -->
     <string name="connectionError">Error de conexión a la base de datos!</string>
     <string name="errorTitle">Error</string>
     <string name="buttonOk">Confirmar</string>
-    
+    <!-- Confirmación de salida -->
     <string name="exitTitle">Salida</string>
     <string name="exitMessage">¿Seguro que quieres salir de la aplicación?</string>
-
+    <!-- Registro e inicio de sesion -->
     <string name="user_profile_title">Usuario</string>
     <string name="hint_dni">DNI</string>
     <string name="hint_firstname">Nombre</string>
     <string name="hint_lastname">Apellido</string>
-    <string name="hint_username">Nombre de usuario</string>
     <string name="hint_email">Email</string>
     <string name="hint_password">Contraseña</string>
     <string name="hint_password_conf">Confirmar contraseña</string>
@@ -43,17 +42,7 @@
     <string name="user_exists">El usuario con ese dni o correo electrónico ya existe</string>
     <string name="new_user_success">Nuevo usuario creado</string>
     <string name="new_user_error">Ha ocurrido un error. No se pudo crear el nuevo usuario.</string>
-    
-    <string name="hint_fechaEntrada">Fecha de entrada</string>
-    <string name="hint_fechaSalida">Fecha de salida</string>
-    <string name="hint_numPersonas">Numero de personas</string>
-    <string name="new_reserva_success">Reserva completada</string>
-    <string name="new_reserva_error">Ha ocurrido un error. No se pudo completar la reserva.</string>
-    <string name="new_reserva_aloj_error">Ha ocurrido un error. El alojamiento no existe.</string>
-    <string name="new_reserva_complete_error">El alojamiento esta completo para las fechas seleccionadas</string>
-    <string name="new_reserva_no_people">Debes introducir un número de personas</string>
-    
-    <string name="btn_edit">Editar</string>
+    <!-- Perfil de usuario -->
     <string name="text_user_delete">Cuenta de usuario eliminada</string>
     <string name="dialog_user_delete_title">Borrar usuario</string>
     <string name="dialog_user_delete">¿Seguro que quiere borrar este usuario?</string>
@@ -71,55 +60,54 @@
     <string name="edit_pass_error">Ha ocurrido un error. La contraseña no se pudo actualizar.</string>
     <string name="dialog_confirm">Confirmar</string>
     <string name="dialog_cancel">Cancelar</string>
-    <string name="btn_save_task">Salvar</string>
-    <string name="btn_delete">Eliminar</string>
+    <string name="btn_save_task">Guardar</string>
     <string name="btn_cancel_task">Cancelar</string>
     <string name="title_reservations">Reservas</string>
     <string name="reserva_list_nombre">Alojamiento</string>
     <string name="reserva_list_fecha">Fecha</string>
-    
-    <string name="alojamiento_list_show">Mostrar:</string>
-    <string name="btn_new_alojamiento">Nuevo alojamiento</string>
-    <string name="no_alojamientos">No hay alojamiento creado</string>
+    <!-- Reserva -->
+    <string name="hint_fechaEntrada">Fecha de entrada</string>
+    <string name="hint_fechaSalida">Fecha de salida</string>
+    <string name="hint_numPersonas">Número de personas</string>
+    <string name="new_reserva_success">Reserva completada</string>
+    <string name="new_reserva_error">Ha ocurrido un error. No se pudo completar la reserva.</string>
+    <string name="new_reserva_aloj_error">Ha ocurrido un error. El alojamiento no existe.</string>
+    <string name="new_reserva_complete_error">El alojamiento esta completo para las fechas seleccionadas</string>
+    <string name="new_reserva_no_people">Debes introducir un número de personas</string>
+    <!-- Detalles de reserva -->
+    <string name="reservation_details_title">Reserva</string>
+    <string name="reservation_persons">Personas</string>
+    <!-- Detalles de alojamiento -->
     <string name="text_alojamiento_name">Nombre</string>
-    
     <string name="text_alojamiento_loc">Ubicación</string>
     <string name="text_alojamiento_type">Tipo</string>
     <string name="text_alojamiento_desc">Descripción</string>
-    <string name="text_alojamiento_details">Más detalles</string>
     <string name="text_alojamiento_img">Imagen de alojamiento</string>
-    <string name="btn_reservar">Reserva</string>
+    <string name="btn_reservar">Reservar</string>
     <string name="btn_mapa">Ver en el mapa</string>
     <string name="list_empty1">Lo sentimos, no hay alojamientos para mostrar.</string>
     <string name="list_empty2">Intente cambiar sus criterios de filtro.</string>
-    <string name="text_alojamiento_no_done">El alojamiento no se pudo marcar como hecho</string>
-    <string name="developer">Esta aplicación ha sido desarrollada por Laura Moreno Gonzalez.</string>
-
+    <!-- Mapas -->
     <string name="no_lodging_in_radio">No hay alojamiento para mostrar en esa distancia</string>
-    
+    <string name="dialog_map_title">Buscar por proximidad</string>
+    <string name="title_activity_mapa_alojamiento">Localización</string>
+    <!-- Filtros -->
     <string name="filters_title">Filtrado por</string>
     <string name="territory">Territorio</string>
     <string name="municipality">Municipio</string>
     <string name="lodging_type">Tipo de alojamiento</string>
     <string name="capacity">Capacidad</string>
-    <string name="max">Max.</string>
     <string name="extras">Extras</string>
     <string name="resturant">Restaurante</string>
     <string name="shop">Tienda</string>
     <string name="caravan">Caravana</string>
-    
-    <string name="contact">Puede enviar cualquier sugerencia o informe de error a laura.morenogo@elorrieta-errekamari.com</string>
+    <!-- Acerca de -->
+    <string name="developer">Esta aplicación ha sido desarrollada por FAC.</string>
+    <string name="contact">Puede enviar cualquier sugerencia o informe de error a info@elorrieta-errekamari.com</string>
     <string name="version">Versión: 1.0</string>
-    <string name="release_date">Fecha de lanzamiento: 7/2/2020</string>
+    <string name="release_date">Fecha de lanzamiento: 07/02/2020</string>
     <string name="settings_title">Información para mostrar en los alojamientos</string>
-    
+    <!-- Configuracion -->
     <string name="settings_desc">Descripción</string>
     <string name="settings_card">Tarjeta (pequeña / grande)</string>
-    <string name="title_activity_mapa_alojamiento">Localización</string>
-    <!-- Settings -->
-    <string name="dialog_map_title">Buscar por proximidad</string>
-    <!-- Reservation Details -->
-    <string name="reservation_details_title">Reserva</string>
-    <string name="reservation_persons">Personas</string>
-
---></resources>
+</resources>

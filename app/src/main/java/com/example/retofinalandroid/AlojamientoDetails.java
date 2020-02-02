@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.Layout;
 import android.view.View;
 import android.widget.Button;
@@ -44,9 +45,13 @@ public class AlojamientoDetails extends BaseActivity {
         imgShop = findViewById(R.id.imgShop);
         imgCaravan = findViewById(R.id.imgCaravan);
 
+        // parse description
+        String desc = Html.fromHtml(alojamiento.getTurismdescription()).toString();
+        desc = desc.replace("<br/>", "\n");
+
         // show alojamiento info in the fields
         tvName.setText(alojamiento.getDocumentname());
-        tvDesc.setText(alojamiento.getTurismdescription());
+        tvDesc.setText(desc);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             tvDesc.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
         }
