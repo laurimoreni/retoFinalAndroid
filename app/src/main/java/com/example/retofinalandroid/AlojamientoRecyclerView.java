@@ -81,9 +81,8 @@ public class AlojamientoRecyclerView extends BaseActivity {
     public void filtrar(String query) {
         for (Alojamiento aloj : mod.getAlojamientos()) {
             boolean name = aloj.getDocumentname().toLowerCase().contains(query.toLowerCase());
-            boolean territory = aloj.getProvincia().getNombre().toLowerCase().contains(query.toLowerCase());
             boolean municipality = aloj.getMunicipality().toLowerCase().contains(query.toLowerCase());
-            if (name || territory || municipality) {
+            if (name || municipality) {
                 mod.getAlojFiltrados().add(aloj);
             }
         }
@@ -92,8 +91,8 @@ public class AlojamientoRecyclerView extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         mod.getRvAlojamientos().getAdapter().notifyDataSetChanged();
+        searchView.clearFocus();
     }
 
     private class Adaptador_RecyclerView extends RecyclerView.Adapter<Adaptador_RecyclerView.ViewHolder> {

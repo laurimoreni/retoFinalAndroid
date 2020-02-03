@@ -110,4 +110,5 @@
     <!-- Configuracion -->
     <string name="settings_desc">Descripción</string>
     <string name="settings_card">Tarjeta (pequeña / grande)</string>
+    <string name="search_hint">Buscar</string>
 </resources>
