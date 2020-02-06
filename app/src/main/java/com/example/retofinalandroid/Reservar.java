@@ -151,9 +151,7 @@ public class Reservar extends BaseActivity {
         // compare dates
         for (int i = 0; i < reservas.size(); i++) {
             if (reservas.get(i).getAlojamiento().getSignatura().equals(alojCod)) {
-                if (date2.compareTo(reservas.get(i).getFechaEntrada()) >= 0 && date2.compareTo(reservas.get(i).getFechaSalida()) <= 0) {
-                    numPersonas += reservas.get(i).getPersonas();
-                } else if (date1.compareTo(reservas.get(i).getFechaEntrada()) <= 0 && date2.compareTo(reservas.get(i).getFechaSalida()) >= 0) {
+                if (date2.compareTo(reservas.get(i).getFechaEntrada()) >= 0 && date1.compareTo(reservas.get(i).getFechaSalida()) <= 0) {
                     numPersonas += reservas.get(i).getPersonas();
                 }
             }
